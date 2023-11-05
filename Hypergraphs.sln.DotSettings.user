@@ -1,29 +1,9 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	
-	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5bb12381_002D5ce0_002D4aea_002D9f52_002D71531d533836/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="StrongDeleteVertex_OneEdgeAdjacent" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d5c68623_002Dbb0d_002D4a0b_002D9f3d_002D663a4698de2e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Test" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Model.HypergraphTest.StrongDeleteVertex_OneEdgeAdjacent&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Model.HypergraphTest.StrongDeleteVertex_MultipleEdgesAdjacent&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Model.HypergraphTest.StrongDeleteVertex_AllEdgesAdjacent&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a5239dbf_002D0943_002D4fb0_002Db145_002D136def238c05/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="StrongDeleteVertex_AllEdgesAdjacent" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Model.HypergraphTest&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Generators.UniformHypergraphGeneratorTest.GenerateSimpleTest&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Model.GraphTest.AddVertex_MatrixSizeN&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Model.GraphTest.AddVertex_MatrixSizeGreaterThanN&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Model.GraphTest.AddEdge_EdgeDoesNotExist&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Model.GraphTest.AddEdge_EdgeExists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Model.GraphTest.AddEdge_WithWeight&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Model.GraphTest.DeleteVertex_LastVertex&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Model.GraphTest.DeleteVertex_FirstVertex&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Model.GraphTest.DeleteVertex_NeitherFirstOrLastVertex&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Model.GraphTest.DeleteVertex_VertexOutOfBounds_ToLargeN&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Model.GraphTest.DeleteVertex_VertexOutOfBounds_ToSmallN&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Model.GraphTest.DeleteEdge_EdgeExists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Model.GraphTest.DeleteEdge_EdgeDoesNotExist&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Model.GraphTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.AcyclicityTestTest.Test&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.HellyCheckTest.HellyCheck_HypergraphIsHelly_Interval&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.HellyCheckTest.HellyCheck_HypergraphIsHelly_Hypertree&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.HellyCheckTest.HellyCheck_HypergraphIsNotHelly&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

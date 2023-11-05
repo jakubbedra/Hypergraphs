@@ -4,7 +4,7 @@ namespace Hypergraphs.Algorithms;
 
 public class BruteForceColoring
 {
-    private int[] _validColoring;
+    private int[]? _validColoring;
     
     public int[] GetColoring(Hypergraph h)
     {

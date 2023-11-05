@@ -254,4 +254,31 @@ public class Hypergraph
 
         return sb.ToString();
     }
+
+    public bool EdgesIntersect(int e1, int e2)
+    {
+        for (int i = 0; i < _n; i++)
+            if (_matrix[i, e1] > 0 && _matrix[i, e2] > 0)
+                return true;
+        return false;
+    }
+    
+    public List<int> EdgeIntersection(int e1, int e2)
+    {
+        List<int> intersection = new List<int>();
+        for (int v = 0; v < _n; v++)
+            if (_matrix[v, e1] > 0 && _matrix[v, e2] > 0)
+                intersection.Add(v);
+        return intersection;
+    }
+
+    public List<int> EdgeIntersection(List<int> vertices, int e)
+    {
+        List<int> intersection = new List<int>();
+        foreach (int v in vertices)
+            if (_matrix[v, e] > 0) 
+                intersection.Add(v);
+        return intersection;
+    }
+    
 }
