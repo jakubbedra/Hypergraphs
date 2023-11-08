@@ -137,5 +137,30 @@ public class Graph
         _m--;
         return true;
     }
+
+    public List<int> Neighbours(int v)
+    {
+        List<int> neighbours = new List<int>();
+        for (int u = 0; u < _n; u++)
+            if (_matrix[v, u] > 0)
+                neighbours.Add(u);
+        return neighbours;
+    }
+
+    public bool EdgeExists(int v, int u)
+    {
+        return _matrix[v, u] > 0;
+    }
+
+    public int Weight(int v, int u)
+    {
+        return _matrix[v, u];
+    }
+
+    public void SetWeight(int v, int u, int w)
+    {
+        _matrix[v, u] = w;
+        _matrix[u, v] = w;
+    }
     
 }

@@ -1,5 +1,5 @@
 ﻿namespace Hypergraphs.Model;
-//todo: rename to HypergraphBuilder? or dunno xd
+
 public class HypergraphFactory
 {
     public static Hypergraph FromHyperEdgesList(int n, List<List<int>> hyperEdges)

@@ -61,7 +61,7 @@ public class Hypergraph
         return _matrix[vertex, edge] != 0;
     }
 
-    //todo: check the definition in the book once again
+    // todo: check the definition in the book once again
     public int VertexDegree(int v)
     {
         int degree = 0;
@@ -262,7 +262,7 @@ public class Hypergraph
                 return true;
         return false;
     }
-    
+
     public List<int> EdgeIntersection(int e1, int e2)
     {
         List<int> intersection = new List<int>();
@@ -276,9 +276,18 @@ public class Hypergraph
     {
         List<int> intersection = new List<int>();
         foreach (int v in vertices)
-            if (_matrix[v, e] > 0) 
+            if (_matrix[v, e] > 0)
                 intersection.Add(v);
         return intersection;
+    }
+
+    public List<int> GetEdgeVertices(int e)
+    {
+        List<int> vertices = new List<int>();
+        for (int v = 0; v < _n; v++)
+            if (_matrix[v, e] > 0)
+                vertices.Add(v);
+        return vertices;
     }
     
 }

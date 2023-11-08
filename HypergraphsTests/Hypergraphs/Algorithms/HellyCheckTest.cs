@@ -30,6 +30,7 @@ public class HellyCheckTest
             new List<int> { 0, 1, 2 },
             new List<int> { 3, 4, 6, 7 },
             new List<int> { 8, 9, 10 },
+            new List<int>() { 8, 7, 6 },
             new List<int> { 1, 2, 3, 4, 5 },
         };
         int n = 11;
@@ -53,6 +54,24 @@ public class HellyCheckTest
             new List<int> { 5, 6, 7 },
         };
         int n = 8;
+        Hypergraph h = HypergraphFactory.FromHyperEdgesList(n, hyperedges);
+
+        HellyCheck check = new HellyCheck();
+        bool result = check.IsHelly(h);
+        
+        Assert.That(result, Is.False);
+    }
+    
+    [Test]
+    public void HellyCheck_HypergraphIsNotHelly_Hypercycle()
+    {
+        List<List<int>> hyperedges = new List<List<int>>
+        {
+            new List<int> { 0, 1 },
+            new List<int> { 0, 2 },
+            new List<int> { 1, 2 },
+        };
+        int n = 3;
         Hypergraph h = HypergraphFactory.FromHyperEdgesList(n, hyperedges);
 
         HellyCheck check = new HellyCheck();
