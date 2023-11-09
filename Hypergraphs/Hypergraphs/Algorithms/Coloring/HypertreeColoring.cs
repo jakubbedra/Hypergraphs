@@ -1,11 +1,12 @@
-﻿using Hypergraphs.Graphs.Algorithms;
+﻿using Hypergraphs.Common.Algorithms;
+using Hypergraphs.Graphs.Algorithms;
 using Hypergraphs.Graphs.Model;
 using Hypergraphs.Hypergraphs.Factory;
 using Hypergraphs.Model;
 
 namespace Hypergraphs.Algorithms;
 
-public class HypertreeColoring
+public class HypertreeColoring : BaseColoring<Hypergraph>
 {
     private int[] _validColoring;
     public int ChromaticNumber => _validColoring.Max() + 1;
@@ -17,7 +18,7 @@ public class HypertreeColoring
         _greedyColoring = new GreedyColoring();
     } 
     
-    public int[] Apply(Hypergraph h)
+    public override int[] ComputeColoring(Hypergraph h)
     {
         Graph hostTree = HypertreeHostTreeFactory.FromHypertree(h);
         _validColoring = _greedyColoring.Apply(hostTree);

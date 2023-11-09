@@ -19,7 +19,7 @@ public class HypertreeColoringTest
         HypergraphColoringValidator validator = new HypergraphColoringValidator();
         
         HypertreeColoring coloring = new HypertreeColoring();
-        int[] validColoring = coloring.Apply(h);
+        int[] validColoring = coloring.ComputeColoring(h);
         bool result = validator.IsValid(h, validColoring);
         int chromaticNumber = coloring.ChromaticNumber;
 
@@ -44,7 +44,7 @@ public class HypertreeColoringTest
         HypergraphColoringValidator validator = new HypergraphColoringValidator();
         
         HypertreeColoring coloring = new HypertreeColoring();
-        int[] validColoring = coloring.Apply(h);
+        int[] validColoring = coloring.ComputeColoring(h);
         bool result = validator.IsValid(h, validColoring);
         int chromaticNumber = coloring.ChromaticNumber;
 
@@ -69,7 +69,7 @@ public class HypertreeColoringTest
         HypergraphColoringValidator validator = new HypergraphColoringValidator();
         
         HypertreeColoring coloring = new HypertreeColoring();
-        int[] validColoring = coloring.Apply(h);
+        int[] validColoring = coloring.ComputeColoring(h);
         bool result = validator.IsValid(h, validColoring);
         int chromaticNumber = coloring.ChromaticNumber;
 
@@ -98,7 +98,7 @@ public class HypertreeColoringTest
         HypergraphColoringValidator validator = new HypergraphColoringValidator();
         
         HypertreeColoring coloring = new HypertreeColoring();
-        int[] validColoring = coloring.Apply(h);
+        int[] validColoring = coloring.ComputeColoring(h);
         bool result = validator.IsValid(h, validColoring);
         int chromaticNumber = coloring.ChromaticNumber;
 

@@ -1,12 +1,20 @@
-﻿using Hypergraphs.Model;
+﻿using Hypergraphs.Common.Algorithms;
+using Hypergraphs.Model;
 
 namespace Hypergraphs.Algorithms;
 
-public class BruteForceColoring
+public class BruteForceColoring : BaseColoring<Hypergraph>
 {
     private int[]? _validColoring;
+
+    private readonly HypergraphColoringValidator _coloringValidator;
+        
+    public BruteForceColoring()
+    {
+        _coloringValidator = new HypergraphColoringValidator();
+    }
     
-    public int[] GetColoring(Hypergraph h)
+    public override int[] ComputeColoring(Hypergraph h)
     {
         // assuming hypergraph is non-empty
         int numberOfColors = 2;
@@ -41,7 +49,8 @@ public class BruteForceColoring
     {
         if (index == h.N)
         {
-            return IsValidColoring(h);
+            
+            return _coloringValidator.IsValid(h, _validColoring);
         }
 
         for (int i = from[index]; i < to[index]; i++)
@@ -53,40 +62,6 @@ public class BruteForceColoring
         }
 
         return false;
-    }
-    
-    private bool IsValidColoring(Hypergraph h)
-    {
-        for (int i = 0; i < h.M; i++)
-        {
-            bool isMonochromatic = false;
-            // we only need 2 colors, because it is sufficient for telling that an edge is not monochromatic
-            int color1 = -1;
-            int color2 = -1;
-            
-            for (var j = 0; j < h.N; j++)
-            {
-                if (h.Matrix[j, i] > 0)
-                {
-                    if (color1 == -1)
-                    {
-                        color1 = _validColoring[j];
-                    }
-                    else if (_validColoring[j] != color1)
-                    {
-                        color2 = _validColoring[j];
-                        break;
-                    }
-                }
-            }
-            
-            if (color2 == -1)
-            {
-                return false;
-            }
-        }
-
-        return true;
     }
     
 }

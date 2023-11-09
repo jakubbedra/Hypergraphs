@@ -19,7 +19,7 @@ public class UniformHypergraphGeneratorTest
         Assert.That(h.M, Is.EqualTo(m));
         for (int i = 0; i < m; i++)
         {
-            Assert.That(h.EdgeSize(i), Is.EqualTo(r));
+            Assert.That(h.EdgeCardinality(i), Is.EqualTo(r));
         }
     }
 }

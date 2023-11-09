@@ -61,7 +61,6 @@ public class Hypergraph
         return _matrix[vertex, edge] != 0;
     }
 
-    // todo: check the definition in the book once again
     public int VertexDegree(int v)
     {
         int degree = 0;
@@ -73,7 +72,7 @@ public class Hypergraph
         return degree;
     }
 
-    public int EdgeSize(int e)
+    public int EdgeCardinality(int e)
     {
         int size = 0;
         for (int i = 0; i < _n; i++)
@@ -110,6 +109,11 @@ public class Hypergraph
         _n++;
     }
 
+    public void AddVertexToEdge(int v, int e)
+    {
+        _matrix[v, e] = 1;
+    }
+    
     public bool WeakDeleteVertex(int v)
     {
         if (v >= _n || v < 0)

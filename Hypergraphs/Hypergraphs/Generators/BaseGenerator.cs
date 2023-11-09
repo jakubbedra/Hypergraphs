@@ -9,11 +9,11 @@ public abstract class BaseGenerator
         _count = count;
         List<List<T>> result = new List<List<T>>();
         List<T> currentCombination = new List<T>();
-        GenerateSpecificCombinationsRecursive(input, k, 0, currentCombination, result);
+        GenerateSpecificCombinations(input, k, 0, currentCombination, result);
         return result;
     }
 
-    protected void GenerateSpecificCombinationsRecursive<T>(List<T> input, int k, int startIndex, List<T> currentCombination, List<List<T>> result)
+    protected void GenerateSpecificCombinations<T>(List<T> input, int k, int startIndex, List<T> currentCombination, List<List<T>> result)
     {
         if (_count == 0)
         {
@@ -30,7 +30,7 @@ public abstract class BaseGenerator
         for (int i = startIndex; i <= input.Count - k; i++)
         {
             currentCombination.Add(input[i]);
-            GenerateSpecificCombinationsRecursive(input, k - 1, i + 1, currentCombination, result);
+            GenerateSpecificCombinations(input, k - 1, i + 1, currentCombination, result);
             currentCombination.RemoveAt(currentCombination.Count - 1);
         }
     }
