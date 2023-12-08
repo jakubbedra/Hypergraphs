@@ -32,6 +32,20 @@ public class Hypergraph
     {
     }
 
+    public Hypergraph(Hypergraph other)
+    {
+        _n = other._n;
+        _m = other._m;
+        _matrix = new int[_n, _m];
+        for (int v = 0; v < _n; v++)
+        {
+            for (int e = 0; e < _m; e++)
+            {
+                _matrix[v, e] = other._matrix[v, e];
+            }
+        }
+    }
+
     public Hypergraph(int n, int m)
     {
         _n = n;
@@ -113,7 +127,7 @@ public class Hypergraph
     {
         _matrix[v, e] = 1;
     }
-    
+
     public bool WeakDeleteVertex(int v)
     {
         if (v >= _n || v < 0)
@@ -293,5 +307,4 @@ public class Hypergraph
                 vertices.Add(v);
         return vertices;
     }
-    
 }

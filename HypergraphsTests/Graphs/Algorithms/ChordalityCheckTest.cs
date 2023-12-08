@@ -27,6 +27,26 @@ public class ChordalityCheckTest
     }
 
     [Test]
+    public void ChordalityCheck_IsChordal_Diamond()
+    {
+        List<List<int>> edges = new List<List<int>>()
+        {
+            new List<int>() { 0, 1 },
+            new List<int>() { 1, 2 },
+            new List<int>() { 2, 3 },
+            new List<int>() { 3, 0 },
+            new List<int>() { 0, 2 },
+        };
+        int n = 4;
+        Graph graph = GraphFactory.FromEdgesList(n, edges);
+        ChordalityCheck check = new ChordalityCheck();
+
+        bool result = check.Apply(graph);
+        
+        Assert.That(result, Is.True);
+    }
+
+    [Test]
     public void ChordalityCheck_IsChordal_Triangle()
     {
         List<List<int>> edges = new List<List<int>>()
