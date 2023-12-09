@@ -48,5 +48,10 @@
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.HypertreeCheckTest.HypertreeCheck_IsHypertree_LargerHypertree&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.ConsecutiveOnesTest.GetPermutation_NotConsecutiveOnes&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.ConsecutiveOnesTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.PRTreeTest.ConstructTest_SampleValue&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathUtilsTest.OrderPNodeTest_PartialOnLeft&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathUtilsTest.OrderPNodeTest_PartialOnRight&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathUtilsTest.OrderPNodeTest_TwoPartials&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathUtilsTest.OrderCNodeTest_PartialOnLeft_IsOrdered&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

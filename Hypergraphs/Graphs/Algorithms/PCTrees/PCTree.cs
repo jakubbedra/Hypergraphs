@@ -40,57 +40,21 @@ public class PCTree
         }
     }
 
-    public int[] GetPermutation()
+    public int[]? GetPermutation()
     {
-        throw new NotImplementedException();
+        return null;
     }
     
     // creates initial tree with 1 P-Node
     private void InitTree()
     {
         PCNode center = new PCNode() { Type = NodeType.P };
-        PCEdge? first = null;
-        PCEdge? last = null;
         
-        for (int i = 0; i < _columns; i++)
-        {
-            PCNode leaf = new PCNode()
-            {
-                Type = NodeType.Leaf,
-                Column = i,
-            };
-            PCEdge edge = new PCEdge()
-            {
-                NodeA = center,
-                NodeB = leaf,
-                IsParentA = true,
-            };
-            if (first == null)
-            {
-                first = edge;
-                last = edge;
-                edge.Left = edge;
-                edge.Right = edge;
-            }
-            
-            if (_matrix[0, i] == 1)
-            {
-                edge.Right = last!.Right;
-                edge.Left = last;
-                last.Right = edge;
-                edge.Right.Left = edge;
-                last = edge;
-            }
-            else
-            {
-                // add on bottom (append left)
-                // todo: extract to prepend/append
-                edge.Right = first;
-                edge.Left = first.Left;
-                first.Left = edge;
-                edge.Left.Right = edge;
-            }
-        }
+    }
+
+    public void LabelNodes()
+    {
+        
     }
     
 }
