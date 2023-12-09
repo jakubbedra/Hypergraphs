@@ -137,7 +137,7 @@ public class TerminalPathUtilsTest
         node.AppendNeighbour(PCNodesProvider.EmptyLeaf);
         node.AppendNeighbour(PCNodesProvider.EmptyLeaf);
         
-        TerminalPathUtils.OrderPNode(node, leftPartial, null);
+        TerminalPathUtils.OrderCNode(node, leftPartial, null);
         
         Assert.That(node.Neighbours[0], Is.EqualTo(leftPartial));
         Assert.That(node.Neighbours[1].Label, Is.EqualTo(NodeLabel.Full));

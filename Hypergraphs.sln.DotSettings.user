@@ -2,6 +2,13 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=63c1c4ab_002D4171_002D46c7_002Db81b_002D0f2a8e7a8bf5/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetPermutation_NotConsecutiveOnes" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.ConsecutiveOnesTest.GetPermutation_NotConsecutiveOnes&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathUtilsTest.OrderCNodeTest_PartialOnLeft_IsOrdered&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7817aea8_002D6d87_002D4808_002Db1f5_002D04cd4384a08a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="OrderCNodeTest_PartialOnLeft_IsOrdered #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathUtilsTest.OrderCNodeTest_PartialOnLeft_IsOrdered&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Common.Extensions.ListExtensionMethodsTest.RotateLeftTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=94490985_002Ddfef_002D4747_002Da8a8_002Daca69c3da38c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Create_Interval" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
@@ -34,7 +41,7 @@
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.HypertreeColoringTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e9c85e63_002D58d8_002D4734_002Dbdfb_002D4da4f8212429/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Create_Interval #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e9c85e63_002D58d8_002D4734_002Dbdfb_002D4da4f8212429/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Create_Interval #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Model.HypertreeHostTreeFactoryTest.Create_Interval&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.ChordalityCheckTest.ChordalityCheck_IsChordal_Diamond&lt;/TestId&gt;&#xD;
@@ -52,6 +59,12 @@
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathUtilsTest.OrderPNodeTest_PartialOnLeft&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathUtilsTest.OrderPNodeTest_PartialOnRight&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathUtilsTest.OrderPNodeTest_TwoPartials&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathUtilsTest.OrderCNodeTest_PartialOnLeft_IsOrdered&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathUtilsTest.OrderCNodeTest_PartialOnLeft_MustBeFlipped&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=fbf89c7c_002D33e8_002D4d04_002Db655_002D6cdd8b538cad/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="OrderCNodeTest_PartialOnLeft_IsOrdered" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathUtilsTest.OrderCNodeTest_PartialOnLeft_IsOrdered&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

@@ -54,7 +54,7 @@ public static class TerminalPathUtils
 
     public static bool OrderCNode(PCNode current, PCNode? left, PCNode? right)
     {
-        List<PCNode> currentNeighbours = current.Neighbours;
+        List<PCNode> currentNeighbours = current.Neighbours;//todo:cahngeto deep copy?
         // check that between those two from both sides are only Empty/Full nodes respectively
         if (left == null)
         {
@@ -86,10 +86,10 @@ public static class TerminalPathUtils
             int labelChangeCount = 0;
             if (currentNeighbours[1].Label != NodeLabel.Full) // todo: we need to flip all other nodes that came before if we flip a next one xdddd
             {
-                current.Flip(); // make ones be on top of the path
+                //current.Flip(); // make ones be on top of the path
                 currentNeighbours.RotateLeft(1);
                 currentNeighbours.Reverse();
-            }
+            }// todo: current naighbours is shallow copy
 
             for (int j = 2; j < currentNeighbours.Count; j++)
                 if (currentNeighbours[j] != currentNeighbours[j - 1])
