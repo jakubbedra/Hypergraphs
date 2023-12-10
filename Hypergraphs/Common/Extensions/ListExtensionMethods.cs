@@ -25,13 +25,13 @@ public static class ListExtensionMethods
         int rotationIndex = positions % count;
 
         // Handle the case where no rotation is needed
-        if (rotationIndex == 0) return;
+        if (rotationIndex == 0)
+            return;
 
         // Perform cyclic rotation
-        List<T> rotatedPart = list.GetRange(0, count - rotationIndex);
-        rotatedPart.Reverse();
-        list.RemoveRange(0, count - rotationIndex);
-        rotatedPart.ForEach(item => list.Add(item));
+        List<T> rotatedPart = list.GetRange(0, rotationIndex);
+        list.RemoveRange(0, rotationIndex);
+        list.AddRange(rotatedPart);
     }
     
     public static void RotateRight<T>(this List<T> list, int positions)

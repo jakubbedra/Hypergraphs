@@ -16,8 +16,9 @@ public class PCNode
     public List<PCNode> Neighbours
     {
         get { return _neighbours; }
+        init => _neighbours = value;
     }
-    
+
     public PCNode()
     {
         _neighbours = new List<PCNode>();

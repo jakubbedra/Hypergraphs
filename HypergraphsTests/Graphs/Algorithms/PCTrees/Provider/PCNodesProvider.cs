@@ -10,16 +10,37 @@ public class PCNodesProvider
         Label = NodeLabel.Full,
     };
     
+    public static PCNode FullLeafWithColumn (int column) => new PCNode()
+    {
+        Type = NodeType.Leaf,
+        Label = NodeLabel.Full,
+        Column = column
+    };
+    
     public static PCNode EmptyLeaf => new PCNode()
     {
         Type = NodeType.Leaf,
         Label = NodeLabel.Empty,
     };
     
+    public static PCNode EmptyLeafWithColumn (int column) => new PCNode()
+    {
+        Type = NodeType.Leaf,
+        Label = NodeLabel.Empty,
+        Column = column
+    };
+    
     public static PCNode FullP => new PCNode()
     {
         Type = NodeType.P,
         Label = NodeLabel.Full,
+    };
+    
+    public static PCNode FullPWithTwoLeaves => new PCNode()
+    {
+        Type = NodeType.P,
+        Label = NodeLabel.Full,
+        Neighbours = new List<PCNode>(){FullLeaf, FullLeaf}
     };
     
     public static PCNode EmptyP => new PCNode()
@@ -50,6 +71,20 @@ public class PCNodesProvider
     {
         Type = NodeType.C,
         Label = NodeLabel.Partial,
+    };
+
+    public static PCNode EmptyPWithLeaves(List<int> leafColumns) => new PCNode()
+    {
+        Type = NodeType.P,
+        Label = NodeLabel.Empty,
+        Neighbours = leafColumns.Select(x => EmptyLeafWithColumn(x)).ToList()
+    };
+
+    public static PCNode FullPWithLeaves(List<int> leafColumns) => new PCNode()
+    {
+        Type = NodeType.P,
+        Label = NodeLabel.Full,
+        Neighbours = leafColumns.Select(x => EmptyLeafWithColumn(x)).ToList()
     };
     
 }
