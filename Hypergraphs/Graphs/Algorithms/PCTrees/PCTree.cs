@@ -3,10 +3,16 @@
 public class PCTree
 {
     private List<PCNode> _leaves;
+    public List<PCNode> Leaves
+    {
+        get { return _leaves;  }
+    }
+  
     private int _rows;
     private int _columns;
 
     private int[,] _matrix;
+    private int _currentRow;
 
     public PCTree(int[,] matrix, int rows, int columns, bool transpose = false)
     {
@@ -29,6 +35,8 @@ public class PCTree
             for (int j = 0; j < _columns; j++)
                 _matrix[i, j] = matrix[i, j];
         }
+
+        _currentRow = 0;
     }
     
     public void Construct()
@@ -49,12 +57,17 @@ public class PCTree
     private void InitTree()
     {
         PCNode center = new PCNode() { Type = NodeType.P };
-        
+        // add leaves
     }
 
     public void LabelNodes()
     {
         
     }
-    
+
+    public int GetValueInCurrentRow(int column)
+    {
+        return _matrix[_currentRow, column];
+    }
+
 }

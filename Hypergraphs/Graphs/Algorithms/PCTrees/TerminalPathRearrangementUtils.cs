@@ -38,12 +38,10 @@ public static class TerminalPathRearrangementUtils
             };
             if (lowerNode.Neighbours.Count == 1)
                 lowerNode = lowerNode.Neighbours[0];
-
-            
+                    
             // add or merge, do node add if node has no neighbours!!!!
             MergeNode(upperNode, upper, centralCNode);
             MergeNode(lowerNode, lower, centralCNode, true);
-            // todo: MERGE C-NODES !!!!!
         }
 
         lower.Reverse();
@@ -240,11 +238,4 @@ public static class TerminalPathRearrangementUtils
         return true;
     }
 
-    private static int LeafValue(PCNode childNode, int[,] matrix, int row)
-    {
-        if (childNode.Column == null)
-            throw new ArgumentException("Child node should have column index assigned.");
-        return matrix[row, (int)childNode.Column];
-    }
-    
 }
