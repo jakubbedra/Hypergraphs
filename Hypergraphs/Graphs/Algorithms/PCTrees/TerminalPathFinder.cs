@@ -2,51 +2,59 @@
 
 public class TerminalPathFinder
 {
-    public List<PCNode> FindTerminalPath(PCTree tree)
+    private PCTree _tree;
+    private List<PCNode> _partialNodes;
+
+    public TerminalPathFinder(PCTree tree)
+    {
+        _tree = tree;
+        _partialNodes = new List<PCNode>();
+    }
+    
+    public List<PCNode> FindTerminalPath()
     {
         Dictionary<PCNode, bool> visited = new Dictionary<PCNode, bool>();
         List<PCNode> terminalPath = new List<PCNode>();
         
-        
+        // todo: find all partial nodes during labeling
         
         return terminalPath;
     }
 
-    public void LabelNodes(PCTree tree)
+    public void LabelNodes()
     {
-        List<PCNode> treeLeaves = tree.Leaves;
+        List<PCNode> treeLeaves = _tree.Leaves;
         if (treeLeaves.Count == 0) return;
 
-        treeLeaves.ForEach(leaf => AssignLabel(leaf, tree));
-        
-        PCNode firstLeaf = treeLeaves[0];
-        LabelNode(firstLeaf.Parent!, tree);
+        foreach (PCNode leaf in treeLeaves)
+        {
+            if (leaf.Label == NodeLabel.Undefined)
+            {
+                LabelNode(leaf);
+            }
+        }
     }
     
-// todo: check if c-nodes never have parents
-    private void LabelNode(PCNode node, PCTree tree)
+    private void LabelNode(PCNode node)
     {
-        if (node.Type == NodeType.Leaf)
-        {
-            AssignLabel(node, tree);
-            return;
-        }
-        List<PCNode> unlabeledNeighbours = node.Neighbours
-            .Where(n => n != node.Parent && node.Parent != null && node.Parent.Parent != node && n.Label != NodeLabel.Undefined)
-            .ToList();
-        unlabeledNeighbours.ForEach(n => LabelNode(n, tree));
+        // jezeli sa jakies dzieci nieolabelowane to labeluj je
+        List<PCNode> unlabeledChildren = node.Neighbours.Where(n => n.Parent == node && node.Parent != n && n.Label == NodeLabel.Undefined).ToList();
+        unlabeledChildren.ForEach(c => LabelNode(c));
         
-        AssignLabel(node, tree);
-        if (node.Parent != null && node.Parent.Parent != node) LabelNode(node.Parent, tree);
+        // labelujemy
+        AssignLabel(node);
+        
+        // idziemy do przodka
+        if (node.Parent != null && node.Parent.Label == NodeLabel.Undefined) LabelNode(node.Parent);
     }
 
-    private void AssignLabel(PCNode node, PCTree tree)
+    private void AssignLabel(PCNode node)
     {
         if (node.Type == NodeType.Leaf)
         {
-            if (tree.GetValueInCurrentRow((int)node.Column) == 1)
+            if (_tree.GetValueInCurrentRow((int)node.Column) == 1)
                 node.Label = NodeLabel.Full;
-            else if (tree.GetValueInCurrentRow((int)node.Column) == 0)
+            else if (_tree.GetValueInCurrentRow((int)node.Column) == 0)
                 node.Label = NodeLabel.Empty;
         }
         else
