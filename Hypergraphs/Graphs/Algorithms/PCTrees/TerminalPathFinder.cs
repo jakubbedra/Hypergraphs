@@ -5,6 +5,12 @@ public class TerminalPathFinder
     private PCTree _tree;
     private List<PCNode> _partialNodes;
 
+    // used only for testing
+    public TerminalPathFinder(List<PCNode> partialNodes)
+    {
+        _partialNodes = partialNodes;
+    }
+    
     public TerminalPathFinder(PCTree tree)
     {
         _tree = tree;
@@ -13,14 +19,14 @@ public class TerminalPathFinder
     
     public List<PCNode>? FindTerminalPath()
     {
-        Dictionary<PCNode, bool> visited = new Dictionary<PCNode, bool>();
+        // Dictionary<PCNode, bool> visited = new Dictionary<PCNode, bool>();
         List<PCNode> terminalPath = new List<PCNode>();
         
         // check if all nodes labeled
         
         // todo: find all partial nodes during labeling
 
-        if (_partialNodes.Count > 0 && _partialNodes.Count < 3)
+        if (_partialNodes.Count >= 0 && _partialNodes.Count < 3)
             return _partialNodes;
 
         // albo po porstu znalezc dowolnego node'a ktory ma tylko jednego sasiada
