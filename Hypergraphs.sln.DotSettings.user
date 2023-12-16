@@ -12,5 +12,6 @@
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathFinderTest.LabelNodes_OneCNodeTree&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathFinderTest.LabelNodes_TwoPNodeTree&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathFinderTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.PCTreeTest.GetPermutation_EvenMoreComplexTree&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

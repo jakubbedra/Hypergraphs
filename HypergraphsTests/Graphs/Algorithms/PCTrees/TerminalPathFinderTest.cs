@@ -601,7 +601,59 @@ public class TerminalPathFinderTest
     [Test]
     public void Find_TerminalTree()
     {
+        PCNode p1 = new PCNode() {Type = NodeType.P, Label = NodeLabel.Partial};
+        PCNode p2 = new PCNode() {Type = NodeType.P, Label = NodeLabel.Full};
+        PCNode p3 = new PCNode() {Type = NodeType.P, Label = NodeLabel.Partial};
+        PCNode c1 = new PCNode() {Type = NodeType.C, Label = NodeLabel.Partial};
+        PCNode c2 = new PCNode() {Type = NodeType.C, Label = NodeLabel.Partial};
+        PCNode l0 = PCNodesProvider.FullLeafWithColumn(0);
+        PCNode l1 = PCNodesProvider.EmptyLeafWithColumn(1);
+        PCNode l2 = PCNodesProvider.FullLeafWithColumn(2);
+        PCNode l3 = PCNodesProvider.EmptyLeafWithColumn(3);
+        PCNode l4 = PCNodesProvider.EmptyLeafWithColumn(4);
+        PCNode l5 = PCNodesProvider.EmptyLeafWithColumn(5);
+        PCNode l6 = PCNodesProvider.FullLeafWithColumn(6);
+        PCNode l7 = PCNodesProvider.EmptyLeafWithColumn(7);
+        PCNode l8 = PCNodesProvider.FullLeafWithColumn(8);
+        PCNode l9 = PCNodesProvider.FullLeafWithColumn(9);
+        PCNode l10 = PCNodesProvider.EmptyLeafWithColumn(10);
+        //{p1, p3, c1}
+        c2.AppendNeighbour(l9);
+        l9.Parent = c2;
+        l9.AppendNeighbour(c2);
+        c2.AppendNeighbour(p3);
+        p3.AppendNeighbour(c2);
+        c2.AppendNeighbour(l10);
+        l10.Parent = c2;
+        l10.AppendNeighbour(c2);
         
+        p1.AppendNeighbour(p3);
+        p1.AppendNeighbour(l4);
+        p1.AppendNeighbour(l2);
+        p1.Parent = p3;
+        
+        p3.AppendNeighbour(c1);
+        p3.AppendNeighbour(p1);
+        p3.AppendNeighbour(l8);
+        p3.Parent = c1;
+        
+        p2.AppendNeighbour(c1);
+        p2.AppendNeighbour(l6);
+        p2.AppendNeighbour(l0);
+        p2.Parent = c1;
+        
+        c1.AppendNeighbour(p3);
+        c1.AppendNeighbour(l1);
+        c1.AppendNeighbour(l3);
+        c1.AppendNeighbour(l7);
+        c1.AppendNeighbour(l5);
+        c1.AppendNeighbour(p2);
+        
+        TerminalPathFinder finder = new TerminalPathFinder(new List<PCNode>(){p1, c1, p3, c2});
+
+        List<PCNode>? terminalPath = finder.FindTerminalPath();
+        
+        Assert.That(terminalPath, Is.Null);
     }
     
 }
