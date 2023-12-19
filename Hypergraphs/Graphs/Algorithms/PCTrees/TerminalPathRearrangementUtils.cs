@@ -4,6 +4,118 @@ namespace Hypergraphs.Graphs.Algorithms.PCTrees;
 
 public static class TerminalPathRearrangementUtils
 {
+
+    public static PCNode SplitAndMergePathV2(List<PCNode> terminalPath)
+    {
+        PCNode centralCNode = new PCNode()
+        {
+            Type = NodeType.C,
+            Label = NodeLabel.Partial,
+        };
+
+        List<PCNode> lower = new List<PCNode>();
+        List<PCNode> upper = new List<PCNode>();
+        
+        foreach (PCNode currentNode in terminalPath)
+        {
+            PCNode? upperNode = new PCNode()
+            {
+                Type = currentNode.Type,
+                Label = NodeLabel.Full,
+                Column = currentNode.Column,
+                Neighbours = currentNode.Neighbours.Where(n => n.Label == NodeLabel.Full).ToList()
+            };
+
+            if (upperNode.Neighbours.Count > 0)
+            {
+                if (upperNode.Neighbours.Count == 1)
+                {
+                    upperNode.Neighbours.ForEach(n => n.Parent = centralCNode);
+                    upperNode.Neighbours.ForEach(n => n.Neighbours[n.Neighbours.IndexOf(currentNode)] = centralCNode);
+                    // upperNode.Neighbours.ForEach(n => centralCNode.AppendNeighbour(n));
+                    upperNode.Neighbours.ForEach(n => upper.Add(n));
+                }
+                else if (upperNode.Type == NodeType.P)
+                {
+                    upperNode.Neighbours.ForEach(n => n.Parent = upperNode);
+                    upperNode.Neighbours.ForEach(n => n.Neighbours[n.Neighbours.IndexOf(currentNode)] = upperNode);
+                    // centralCNode.AppendNeighbour(upperNode);
+                    upper.Add(upperNode);
+                    upperNode.Parent = centralCNode;
+                    upperNode.AppendNeighbour(centralCNode);
+                }
+                else if (upperNode.Type == NodeType.C)
+                {
+                    upperNode.Neighbours.ForEach(n => n.Parent = centralCNode);
+                    upperNode.Neighbours.ForEach(n => n.Neighbours[n.Neighbours.IndexOf(currentNode)] = centralCNode);
+                    // upperNode.Neighbours.ForEach(n => centralCNode.AppendNeighbour(n));
+                    upperNode.Neighbours.ForEach(n => upper.Add(n));
+                }
+            }
+
+            PCNode? lowerNode = new PCNode()
+            {
+                Type = currentNode.Type,
+                Label = NodeLabel.Empty,
+                Column = currentNode.Column,
+                Neighbours = currentNode.Neighbours.Where(n => n.Label == NodeLabel.Empty).ToList()
+            };
+            if (lowerNode.Neighbours.Count > 0)
+            {
+                List<PCNode> lowerNeighbours = lowerNode.Neighbours;
+                if (lowerNeighbours.Count == 1)
+                {
+                    lowerNeighbours.ForEach(n => n.Parent = centralCNode);
+                    lowerNeighbours.ForEach(n => n.Neighbours[n.Neighbours.IndexOf(currentNode)] = centralCNode);
+                    // todo: add to central c node
+                    // lowerNeighbours.Reverse();
+                    // lowerNeighbours.ForEach(n => centralCNode.PrependNeighbour(n)); // todo: reverse?
+                    lowerNeighbours.ForEach(n => lower.Add(n));
+                }
+                else if (lowerNode.Type == NodeType.P)
+                {
+                    lowerNeighbours.ForEach(n => n.Parent = lowerNode);
+                    lowerNeighbours.ForEach(n => n.Neighbours[n.Neighbours.IndexOf(currentNode)] = lowerNode);
+                    lowerNode.Parent = centralCNode;
+                    lowerNode.AppendNeighbour(centralCNode);
+                    // centralCNode.PrependNeighbour(lowerNode);
+                    lower.Add(lowerNode);
+                }
+                else if (lowerNode.Type == NodeType.C)
+                {
+                    lowerNeighbours.ForEach(n => n.Parent = centralCNode);
+                    lowerNeighbours.ForEach(n => n.Neighbours[n.Neighbours.IndexOf(currentNode)] = centralCNode);
+                    // lowerNeighbours.Reverse();
+                    // lowerNeighbours.ForEach(n => centralCNode.PrependNeighbour(n)); // todo: reverse?
+                    lowerNeighbours.Reverse();// TODO : I think we should reverse here also...
+                    
+                    // todo: reverse only if previous node is on the right?
+                    lowerNeighbours.ForEach(n => lower.Add(n));
+                }
+            }
+        }
+
+        upper.ForEach(n => centralCNode.AppendNeighbour(n));
+        lower.ForEach(n => centralCNode.PrependNeighbour(n));
+
+        if (centralCNode.Neighbours.Count == 2)
+        {
+            // merge
+            PCNode node1 = centralCNode.Neighbours[0];
+            PCNode node2 = centralCNode.Neighbours[1];
+
+            node1.Parent = node2;
+            node1.Neighbours[node1.Neighbours.IndexOf(centralCNode)] = node2;
+            node2.Parent = node1;
+            node2.Neighbours[node2.Neighbours.IndexOf(centralCNode)] = node1;
+            return node1;
+        }
+        
+        // todo: merge c-nodes
+        
+        return centralCNode;
+    }
+    
     // given terminalPath is already rearranged
     public static PCNode SplitAndMergePath(List<PCNode> terminalPath)
     {
@@ -18,30 +130,53 @@ public static class TerminalPathRearrangementUtils
         
         foreach (PCNode currentNode in terminalPath)
         {
-            PCNode upperNode = new PCNode()
+            PCNode? upperNode = new PCNode()
             {
                 Type = currentNode.Type,
                 Label = NodeLabel.Full,
                 Column = currentNode.Column,
                 Neighbours = currentNode.Neighbours.Where(n => n.Label == NodeLabel.Full).ToList()
+                
+                
+                
+                // todo: remove original node from neighbours list (parent is already replaced)
+                
+                
+                
+                
             };// todo: set parent
+            upperNode.Neighbours.ForEach(n => n.Neighbours.Remove(currentNode));
+            //upperNode.Neighbours.ForEach(n => n.Parent = upperNode);
+            //upperNode.Neighbours.ForEach(n => n.AppendNeighbour(upperNode));
+            //upperNode.Neighbours.ForEach(n => n.Neighbours.Remove(currentNode));
 
             if (upperNode.Neighbours.Count == 1)
                 upperNode = upperNode.Neighbours[0];
-            
-            PCNode lowerNode = new PCNode()
+            if (upperNode.Neighbours.Count == 0)
+                upperNode = null;
+
+            PCNode? lowerNode = new PCNode()
             {
                 Type = currentNode.Type,
                 Label = NodeLabel.Empty,
                 Column = currentNode.Column,
                 Neighbours = currentNode.Neighbours.Where(n => n.Label == NodeLabel.Empty).ToList()
             };
+            lowerNode.Neighbours.ForEach(n => n.Neighbours.Remove(currentNode));
+            //lowerNode.Neighbours.ForEach(n => n.Parent = lowerNode);
+            //lowerNode.Neighbours.ForEach(n => n.AppendNeighbour(lowerNode));
+            //lowerNode.Neighbours.ForEach(n => n.Neighbours.Remove(currentNode));
+            
             if (lowerNode.Neighbours.Count == 1)
                 lowerNode = lowerNode.Neighbours[0];
+            else if (lowerNode.Neighbours.Count == 0)
+                lowerNode = null;
                     
-            // add or merge, do node add if node has no neighbours!!!!
-            MergeNode(upperNode, upper, centralCNode);
-            MergeNode(lowerNode, lower, centralCNode, true);
+            // add or merge, do not add if node has no neighbours!!!!
+            if (upperNode != null)
+                MergeNode(upperNode, upper, centralCNode);
+            if (lowerNode != null)
+                MergeNode(lowerNode, lower, centralCNode, true);
         }
 
         lower.Reverse();
@@ -68,29 +203,56 @@ public static class TerminalPathRearrangementUtils
 
     private static void MergeNode(PCNode nodeToMerge, List<PCNode> nodesList, PCNode centralCNode, bool isLower = false)
     {
-        if (nodeToMerge.Neighbours.Count > 0)
-        {
+        // if (nodeToMerge.Neighbours.Count > 0)
+        // {
+        //     // merge C-node
+        //     if (nodeToMerge.Type == NodeType.C)
+        //     {
+        //         if (isLower) nodeToMerge.Neighbours.Reverse();
+        //         nodeToMerge.Neighbours.ForEach(node => nodesList.Add(node));
+        //         nodeToMerge.Neighbours.ForEach(node => node.PrependNeighbour(centralCNode));
+        //         nodeToMerge.Neighbours.ForEach(node => node.Parent = centralCNode);
+        //     }
+        //     else // link P-node
+        //     {
+        //         nodeToMerge.Parent = centralCNode;
+        //         nodeToMerge.PrependNeighbour(centralCNode);
+        //         nodesList.Add(nodeToMerge);
+        //     }
+        // }
+        // else if (nodeToMerge.Type == NodeType.Leaf)
+        // {
+        //     nodeToMerge.Parent = centralCNode;
+        //     nodeToMerge.PrependNeighbour(centralCNode);
+        //     nodesList.Add(nodeToMerge);
+        // }
+        // if (nodeToMerge.Type != NodeType.Leaf)
+        // {
             // merge C-node
-            if (nodeToMerge.Type == NodeType.C)
+            if (nodeToMerge.Neighbours.Count != 0)
             {
-                if (isLower) nodeToMerge.Neighbours.Reverse();
-                nodeToMerge.Neighbours.ForEach(node => nodesList.Add(node));
-                nodeToMerge.Neighbours.ForEach(node => node.PrependNeighbour(centralCNode));
-                nodeToMerge.Neighbours.ForEach(node => node.Parent = centralCNode);
+                if (nodeToMerge.Type == NodeType.C)
+                {
+                    if (isLower) nodeToMerge.Neighbours.Reverse();
+                    nodeToMerge.Neighbours.ForEach(node => nodesList.Add(node));
+                    nodeToMerge.Neighbours.ForEach(node => node.PrependNeighbour(centralCNode));
+                    nodeToMerge.Neighbours.ForEach(node => node.Parent = centralCNode);
+                    nodeToMerge.Neighbours.ForEach(node => node.Neighbours.Remove(nodeToMerge));
+                }
+                else // link P-node/leaf
+                {
+                    nodeToMerge.Parent = centralCNode;
+                    nodeToMerge.PrependNeighbour(centralCNode);
+                    nodesList.Add(nodeToMerge);
+                }
             }
-            else // link P-node
-            {
-                nodeToMerge.Parent = centralCNode;
-                nodeToMerge.PrependNeighbour(centralCNode);
-                nodesList.Add(nodeToMerge);
-            }
-        }
-        else if (nodeToMerge.Type == NodeType.Leaf)
-        {
-            nodeToMerge.Parent = centralCNode;
-            nodeToMerge.PrependNeighbour(centralCNode);
-            nodesList.Add(nodeToMerge);
-        }
+            // }
+        // else
+        // {
+            // nodeToMerge.Parent = centralCNode;
+            // nodeToMerge.PrependNeighbour(centralCNode);
+            // nodesList.Add(nodeToMerge);
+        // }
     }
 
     // terminalPath must be already labeled (probably matrix and row will not be needed)
@@ -127,7 +289,7 @@ public static class TerminalPathRearrangementUtils
             }
             else
             {
-                if (partialNeighboursCount > 0) return false;
+                if (partialNeighboursCount > 0) return false;//todo: nie powinno byc true?
             }
 
             // find the partial node(s)
@@ -156,7 +318,8 @@ public static class TerminalPathRearrangementUtils
             int rotationsLeft = currentNeighbours.IndexOf(right);
             currentNeighbours.RotateLeft(rotationsLeft);
             // check if 1s and 0s are consecutive
-            if (currentNeighbours[1].Label == NodeLabel.Full)
+            // if (currentNeighbours[1].Label == NodeLabel.Full)
+            if (CheckCOrder(current))
             {
                 //current.Flip(); // make ones be on top of the path
                 currentNeighbours.RotateLeft(1);
@@ -165,14 +328,15 @@ public static class TerminalPathRearrangementUtils
 
             if (LabelChangeCountExceeded(currentNeighbours)) return false;
         }
-        else if (right == null)
+        else if (right == null && left != null)
         {
             // rightmost                    
             // order neighbours from right to left
             int rotationsLeft = currentNeighbours.IndexOf(left);
             currentNeighbours.RotateLeft(rotationsLeft);
             // check if 1s and 0s are consecutive
-            if (currentNeighbours[1].Label != NodeLabel.Full) // todo: we need to flip all other nodes that came before if we flip a next one xdddd
+            // if (currentNeighbours[1].Label != NodeLabel.Full) // todo: we need to flip all other nodes that came before if we flip a next one xdddd
+            if (!CheckCOrder(current)) // todo: we need to flip all other nodes that came before if we flip a next one xdddd
             {
                 //current.Flip(); // make ones be on top of the path
                 currentNeighbours.RotateLeft(1);
@@ -180,13 +344,13 @@ public static class TerminalPathRearrangementUtils
             }// todo: current naighbours is shallow copy
             if (LabelChangeCountExceeded(currentNeighbours)) return false;
         }
-        else
+        else if (right != null && left != null)
         {
             // somewhere in the middle
-            int rotationsLeft = currentNeighbours.IndexOf(left);
+            int rotationsLeft = currentNeighbours.IndexOf(left);//todo: might be null!!!!!!
             currentNeighbours.RotateLeft(rotationsLeft);
             // check if 1s and 0s are consecutive
-            if (currentNeighbours[1].Label != NodeLabel.Full)
+            if (!CheckCOrder(current))// todo: problem w tym ze i tak czy srak nie mamy fulli tutaj, wiec trzeba sprawdzac caly porzadek cykliczny w sensie left -> full -> right -> empty
             {
                 //current.Flip(); // make ones be on top of the path
                 currentNeighbours.RotateLeft(1);
@@ -194,9 +358,43 @@ public static class TerminalPathRearrangementUtils
             }
             if (LabelChangeCountExceeded(currentNeighbours, 2)) return false;
         }
+        else if (right == null && left == null)
+        {
+            PCNode? fullNode = currentNeighbours.FirstOrDefault(n => n.Label == NodeLabel.Full);
+            if (fullNode != null)
+            {
+                int rotationsLeft = currentNeighbours.IndexOf(fullNode);
+                currentNeighbours.RotateLeft(rotationsLeft);
+            }
+
+            if (LabelChangeCountExceeded(currentNeighbours))
+            {
+                PCNode? emptyNode = currentNeighbours.FindLast(n => n.Label == NodeLabel.Empty);
+                int rotationsLeft = currentNeighbours.IndexOf(emptyNode) + 1;
+                currentNeighbours.RotateLeft(rotationsLeft);
+            }
+        }
         return true;
     }
 
+    // we assume that the right partial is on the right and left is on the left
+    private static bool CheckCOrder(PCNode cNode)
+    {
+        bool anyFullNeighboursPresent = cNode.Neighbours.Any(n => n.Label == NodeLabel.Full);
+        bool anyEmptyNeighboursPresent = cNode.Neighbours.Any(n => n.Label == NodeLabel.Empty);
+
+        if (anyFullNeighboursPresent)
+        {
+            return cNode.Neighbours[1].Label == NodeLabel.Full;
+        }
+        if (anyEmptyNeighboursPresent)
+        {
+            return cNode.Neighbours[1].Label == NodeLabel.Partial && cNode.Neighbours[2].Label == NodeLabel.Empty;
+        }
+        
+        return true;
+    }
+    
     private static bool LabelChangeCountExceeded(List<PCNode> currentNeighbours, int maxCount = 1)
     {
         int labelChangeCount = 0;

@@ -77,6 +77,7 @@ public class TerminalPathFinder
 
     private void AssignLabel(PCNode node)
     {
+        if (node.Label != NodeLabel.Undefined) return;
         if (node.Type == NodeType.Leaf)
         {
             if (_tree.GetValueInCurrentRow((int)node.Column) == 1)
@@ -87,24 +88,41 @@ public class TerminalPathFinder
         else
         {
             int fullNeighboursCount = node.Neighbours.Count(n => n.Label == NodeLabel.Full);
+            int emptyNeighboursCount = node.Neighbours.Count(n => n.Label == NodeLabel.Empty);
             if (fullNeighboursCount == node.Neighbours.Count - 1)
             {
                 node.Label = NodeLabel.Full;
             }
-            else if (fullNeighboursCount > 0)
+            else if (emptyNeighboursCount == node.Neighbours.Count - 1)
+            {
+                node.Label = NodeLabel.Empty; // todo: is this ok?
+            }
+            else 
             {
                 node.Label = NodeLabel.Partial;
                 _partialNodes.Add(node);
             }
-            else
-            {
-                node.Label = NodeLabel.Empty; // todo: is this ok?
-            }
         }
     }
     
-    public void ClearNodeLabels(PCTree tree)
+    public void ClearNodeLabels()
     {
+        PCNode node = _tree.Leaves[0];
+        Queue<PCNode> queue = new Queue<PCNode>();
+        queue.Enqueue(node);
+        HashSet<PCNode> visited = new HashSet<PCNode>();
+
+        while (queue.Count != 0)
+        {
+            node = queue.Dequeue();
+            foreach (PCNode neighbour in node.Neighbours.Where(n => n.Label != NodeLabel.Undefined))
+            {
+                queue.Enqueue(neighbour);
+            }
+
+            visited.Add(node);
+            node.Label = NodeLabel.Undefined;
+        }
         _partialNodes.Clear();
     }
     

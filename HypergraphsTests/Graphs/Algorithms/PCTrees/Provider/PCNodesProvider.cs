@@ -29,7 +29,14 @@ public class PCNodesProvider
         Label = NodeLabel.Empty,
         Column = column
     };
-    
+
+    public static PCNode UnlabeledLeafWithColumn(int column) => new PCNode()
+    {
+        Type = NodeType.Leaf,
+        Label = NodeLabel.Undefined,
+        Column = column
+    };
+
     public static PCNode FullP => new PCNode()
     {
         Type = NodeType.P,

@@ -4,7 +4,19 @@
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathFinderTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7817aea8_002D6d87_002D4808_002Db1f5_002D04cd4384a08a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="OrderCNodeTest_PartialOnLeft_IsOrdered #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5ca88b4a_002D5bff_002D45f6_002D81fe_002D7cd141699030/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Find_TwoTerminalNodes_MoreComplexCase" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathFinderTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.PCTreeTest.GetPermutation_EvenMoreComplexTree&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.PCTreeTest.GetPermutation_MoreComplexTree&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.PCTreeTest.GetPermutation_BasicTree&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.PCTreeTest.ConstructTest_SampleValue&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathRearrangementUtilsTest.SplitAndMergePath_OnePNodePath&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathRearrangementUtilsTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.PCTreeTest&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7817aea8_002D6d87_002D4808_002Db1f5_002D04cd4384a08a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="OrderCNodeTest_PartialOnLeft_IsOrdered #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathUtilsTest.OrderCNodeTest_PartialOnLeft_IsOrdered&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Common.Extensions.ListExtensionMethodsTest.RotateLeftTest&lt;/TestId&gt;&#xD;
@@ -13,5 +25,20 @@
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathFinderTest.LabelNodes_TwoPNodeTree&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathFinderTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.PCTreeTest.GetPermutation_EvenMoreComplexTree&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c4f0f5b3_002D7b96_002D4bac_002Dbc9b_002D2603bfa85b4c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetPermutation_EvenMoreComplexTree" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.PCTreeTest.GetPermutation_EvenMoreComplexTree&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathRearrangementUtilsTest.SplitAndMergePath_MoreComplexCase&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ff4235df_002D3d7a_002D4e50_002Dbc91_002Db78baf3c4f32/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="SplitAndMergePath_TwoPNodeTree" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.TerminalPathRearrangementUtilsTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.PCTreeTest.ConstructTest_SampleValue&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.PCTreeTest.ConstructTest_SampleValue2&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.PCTreeTest.ConstructTest_SampleValue_HasCircularOnes&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Graphs.Algorithms.PCTrees.PCTreeTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

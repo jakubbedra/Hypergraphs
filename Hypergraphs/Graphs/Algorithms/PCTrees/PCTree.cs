@@ -17,9 +17,15 @@ public class PCTree
     private int[,] _matrix;
     private int _currentRow;
 
-    public static PCTree TestInstance(List<PCNode> leaves)
+    public static PCTree TestInstance(List<PCNode> leaves, int[,] matrix, int rows, int columns)
     {
-        return new PCTree() { _leaves = leaves };
+        return new PCTree()
+        {
+            _leaves = leaves,
+            _matrix = matrix,
+            _rows =  rows,
+            _columns = columns
+        };
     }
 
     private PCTree()
@@ -51,16 +57,47 @@ public class PCTree
         _currentRow = 0;
     }
 
-    public void Construct()
+    public bool Construct()
     {
         InitTree();
-        for (int i = 1; i < _rows; i++)
+
+        TerminalPathFinder finder = new TerminalPathFinder(this);
+
+        for (int i = 0; i < _rows; i++)
         {
+            finder.LabelNodes();
+            List<PCNode>? terminalPath = finder.FindTerminalPath();
+            if (terminalPath == null)
+                return false;
+            if(!TerminalPathRearrangementUtils.RearrangePath(terminalPath))
+                return false;
+            
+            
+            // tODO: dla i=3 niepotrzebnie flipujemy 1 z nullem chyba
+            // yup, zamienilo sie miejscami z jedynka xd ( ale moze chodzilo o to zeby wyrownac z prawa i lewa, idk)
+            
+            
+            TerminalPathRearrangementUtils.SplitAndMergePathV2(terminalPath);
+            finder.ClearNodeLabels();
+            _currentRow++;
         }
+
+        _currentRow--;
+        
+        return true;
     }
 
     private void Dfs(PCNode node, List<int> columnOrder, HashSet<PCNode> visited)
     {
+        if (node.Type == NodeType.P)
+        {
+            TerminalPathRearrangementUtils.OrderPNode(node, node.Neighbours.FirstOrDefault(n => n.Type is NodeType.C or NodeType.P), null);
+        }
+
+        if (node.Type == NodeType.C)
+        {
+            TerminalPathRearrangementUtils.OrderCNode(node, node.Neighbours.FirstOrDefault(n => n.Type is NodeType.C or NodeType.P), null);
+        }
         visited.Add(node);
         if (node.Type == NodeType.Leaf)
             columnOrder.Add((int)node.Column!);
@@ -68,17 +105,58 @@ public class PCTree
             Dfs(neighbour, columnOrder, visited);
     }
 
-    private void TraverseNode(PCNode currentNode, List<PCNode> terminalPath)
+    private void TraverseNode(PCNode node, List<PCNode> terminalPath, int i, List<int> columnOrder, HashSet<PCNode> visited)
     {
         // todo: traverse single node : top, right (recursive), bottom
+        visited.Add(node);
+        
+        if (terminalPath.Count > 1)
+        {
+            if (i == 0)
+            {
+                node.Neighbours.RotateLeft(node.Neighbours.IndexOf(terminalPath[1])+1);
+                foreach (PCNode neighbour in node.Neighbours)
+                {
+                    if (neighbour == terminalPath[1]) break;
+                    Dfs(neighbour, columnOrder, visited);
+                }
+                TraverseNode(terminalPath[1], terminalPath, 1, columnOrder, visited);
+            }
+            else if (i == terminalPath.Count - 1)
+            {
+                node.Neighbours.RotateLeft(node.Neighbours.IndexOf(terminalPath[i-1])+1);
+                foreach (PCNode neighbour in node.Neighbours)
+                {
+                    if (neighbour == terminalPath[i-1]) break;
+                    Dfs(neighbour, columnOrder, visited);
+                }
+            }
+            else
+            {
+                foreach (PCNode neighbour in node.Neighbours)
+                {
+                    if (neighbour == terminalPath[i+1])
+                        TraverseNode(neighbour, terminalPath, i+1, columnOrder, visited);
+                    else if (neighbour != terminalPath[i-1])
+                        Dfs(neighbour, columnOrder, visited);
+                }
+                
+            }
+        }
+        else if (terminalPath.Count == 1)
+        {
+            foreach (PCNode neighbour in node.Neighbours)
+            {
+                Dfs(neighbour, columnOrder, visited);
+            }
+        }
     }
-    
+
     public int[]? GetPermutation()
     {
         // todo
         HashSet<PCNode> visited = new HashSet<PCNode>();
         List<int> columnOrder = new List<int>();
-        int currentSlot = 0;
 
         TerminalPathFinder finder = new TerminalPathFinder(this);
         finder.LabelNodes(); // todo: Implement cleaning node labels
@@ -86,44 +164,18 @@ public class PCTree
         if (terminalPath == null)
             return null;
 
-        PCNode? previous = null;
-        for (var i = 0; i < terminalPath.Count; i++)
-        {
-            // todo: make sure the i-1th node is first and i+1th node is second
-            // todo: ej wsm, to moge przerotwowac p1 na pozycje 0 i po prostu zrobic dfs'a na tym nodzie
-            List<PCNode> neighbours = terminalPath[0].Neighbours;
-            if (terminalPath.Count != 1)
-            {
-                if (i == 0)
-                {
-                    // if previous is null
-                    neighbours.RotateLeft(neighbours.IndexOf(terminalPath[i+1])+1);
-                }
-                else if (i == terminalPath.Count - 1)
-                {
-                    // if next is null
-                    neighbours.RotateLeft(neighbours.IndexOf(terminalPath[i-1]));
-                }
-                else
-                {
-                    
-                }
-            }
-            // get upper
-            // go next
-            // get lower
-            
-        }
-        
+        TerminalPathRearrangementUtils.RearrangePath(terminalPath);//todo: check if it works
+        TraverseNode(terminalPath[0], terminalPath, 0, columnOrder, visited);
+
         // while there are still unvisited leaves
         // foreach (PCNode leaf in _leaves)
         // {
-            // if (!visited.Contains(leaf))
-            // {
-                // Dfs(leaf, columnOrder, visited);
-            // }
+        // if (!visited.Contains(leaf))
+        // {
+        // Dfs(leaf, columnOrder, visited);
         // }
-        
+        // }
+
         return columnOrder.ToArray();
     }
 
@@ -141,11 +193,12 @@ public class PCTree
                 Parent = center,
                 Neighbours = new List<PCNode>() { center }
             };
+            _leaves.Add(leaf);
             center.AppendNeighbour(leaf);
         }
     }
 
-    public int GetValueInCurrentRow(int column) // todo might have circular dependency -> eliminate it
+    public int GetValueInCurrentRow(int column) // todo might have circular dependency -> eliminate it?
     {
         return _matrix[_currentRow, column];
     }

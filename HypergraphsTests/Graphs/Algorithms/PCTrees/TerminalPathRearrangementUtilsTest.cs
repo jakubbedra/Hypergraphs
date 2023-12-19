@@ -815,25 +815,27 @@ public class TerminalPathRearrangementUtilsTest
             PCNodesProvider.EmptyLeafWithColumn(0),
         };
         neighbours1.ForEach(node => node1.AppendNeighbour(node));
+        neighbours1.ForEach(node => node.AppendNeighbour(node1));
+        neighbours1.ForEach(node => node.Parent = node1);
 
-        PCNode neighbour1 = TerminalPathRearrangementUtils.SplitAndMergePath(new List<PCNode>() { node1 });
-        PCNode neighbour2 = neighbour1.Parent!;
+        PCNode neighbour2 = TerminalPathRearrangementUtils.SplitAndMergePathV2(new List<PCNode>() { node1 });
+        PCNode neighbour1 = neighbour2.Parent!;
         
         Assert.That(neighbour1.Neighbours.Count, Is.EqualTo(5));
         Assert.That(neighbour2.Neighbours.Count, Is.EqualTo(6));
         
-        Assert.True(neighbour1.Neighbours[0] == neighbour2);
-        Assert.True(neighbour1.Neighbours[1].Column == 1);
-        Assert.True(neighbour1.Neighbours[2].Column == 2);
-        Assert.True(neighbour1.Neighbours[3].Column == 4);
-        Assert.True(neighbour1.Neighbours[4].Column == 8);
+        Assert.True(neighbour1.Neighbours[4] == neighbour2);
+        Assert.True(neighbour1.Neighbours[0].Column == 1);
+        Assert.True(neighbour1.Neighbours[1].Column == 2);
+        Assert.True(neighbour1.Neighbours[2].Column == 4);
+        Assert.True(neighbour1.Neighbours[3].Column == 8);
         
-        Assert.True(neighbour2.Neighbours[0] == neighbour1);
-        Assert.True(neighbour2.Neighbours[1].Column == 7);
-        Assert.True(neighbour2.Neighbours[2].Column == 6);
-        Assert.True(neighbour2.Neighbours[3].Column == 5);
-        Assert.True(neighbour2.Neighbours[4].Column == 3);
-        Assert.True(neighbour2.Neighbours[5].Column == 0);
+        Assert.True(neighbour2.Neighbours[5] == neighbour1);
+        Assert.True(neighbour2.Neighbours[0].Column == 7);
+        Assert.True(neighbour2.Neighbours[1].Column == 6);
+        Assert.True(neighbour2.Neighbours[2].Column == 5);
+        Assert.True(neighbour2.Neighbours[3].Column == 3);
+        Assert.True(neighbour2.Neighbours[4].Column == 0);
     }
     
     [Test]
@@ -854,19 +856,21 @@ public class TerminalPathRearrangementUtilsTest
         };
         
         neighbours1.ForEach(node => node1.AppendNeighbour(node));
+        neighbours1.ForEach(node => node.AppendNeighbour(node1));
+        neighbours1.ForEach(node => node.Parent = node1);
         
-        PCNode neighbour1 = TerminalPathRearrangementUtils.SplitAndMergePath(new List<PCNode>() { node1 });
-        PCNode neighbour2 = neighbour1.Parent!;
+        PCNode neighbour2 = TerminalPathRearrangementUtils.SplitAndMergePathV2(new List<PCNode>() { node1 });
+        PCNode neighbour1 = neighbour2.Parent!;
 
 
         Assert.That(neighbour1.Neighbours.Count, Is.EqualTo(3));
-        Assert.True(neighbour1.Neighbours[1] == neighbours1[3]);
-        Assert.True(neighbour1.Neighbours[2] == neighbours1[4]);
+        Assert.True(neighbour1.Neighbours[0] == neighbours1[3]);
+        Assert.True(neighbour1.Neighbours[1] == neighbours1[4]);
         
         Assert.That(neighbour2.Neighbours.Count, Is.EqualTo(4));
-        Assert.True(neighbour2.Neighbours[1] == neighbours1[0]);
-        Assert.True(neighbour2.Neighbours[2] == neighbours1[1]);
-        Assert.True(neighbour2.Neighbours[3] == neighbours1[2]);
+        Assert.True(neighbour2.Neighbours[0] == neighbours1[0]);
+        Assert.True(neighbour2.Neighbours[1] == neighbours1[1]);
+        Assert.True(neighbour2.Neighbours[2] == neighbours1[2]);
     }
 
     [Test]
@@ -894,18 +898,22 @@ public class TerminalPathRearrangementUtilsTest
         };
         
         neighbours1.ForEach(node => node1.AppendNeighbour(node));
+        neighbours1.ForEach(node => node.AppendNeighbour(node1));
+        neighbours1.ForEach(node => node.Parent=node1);
         neighbours2.ForEach(node => node2.AppendNeighbour(node));
+        neighbours2.ForEach(node => node.AppendNeighbour(node2));
+        neighbours2.ForEach(node => node.Parent=node2);
         
         node1.PrependNeighbour(node2);
         node2.PrependNeighbour(node1);
         
-        PCNode centralCNode = TerminalPathRearrangementUtils.SplitAndMergePath(new List<PCNode>() { node1, node2 });
+        PCNode centralCNode = TerminalPathRearrangementUtils.SplitAndMergePathV2(new List<PCNode>() { node1, node2 });
 
         Assert.That(centralCNode.Neighbours.Count, Is.EqualTo(4));
-        Assert.True(centralCNode.Neighbours[0] == neighbours1[1]);
-        Assert.True(centralCNode.Neighbours[1] == neighbours2[0]);
-        Assert.True(centralCNode.Neighbours[2] == neighbours2[1]);
-        Assert.True(centralCNode.Neighbours[3] == neighbours1[0]);
+        Assert.True(centralCNode.Neighbours[0] == neighbours2[1]);
+        Assert.True(centralCNode.Neighbours[1] == neighbours1[0]);
+        Assert.True(centralCNode.Neighbours[2] == neighbours1[1]);
+        Assert.True(centralCNode.Neighbours[3] == neighbours2[0]);
     }
 
     [Test]
@@ -933,22 +941,176 @@ public class TerminalPathRearrangementUtilsTest
             PCNodesProvider.EmptyLeafWithColumn(3),
             PCNodesProvider.EmptyLeafWithColumn(4),
         };
-        
+
         neighbours1.ForEach(node => node1.AppendNeighbour(node));
+        neighbours1.ForEach(node => node.Parent = node1);
+        neighbours1.ForEach(node => node.AppendNeighbour(node1));
         neighbours2.ForEach(node => node2.AppendNeighbour(node));
-        
+        neighbours2.ForEach(node => node.Parent = node2);
+        neighbours2.ForEach(node => node.AppendNeighbour(node2));
+
         node1.PrependNeighbour(node2);
+        node1.Parent = node2;
         node2.PrependNeighbour(node1);
-        
-        PCNode centralCNode = TerminalPathRearrangementUtils.SplitAndMergePath(new List<PCNode>() { node1, node2 });
+
+        PCNode centralCNode = TerminalPathRearrangementUtils.SplitAndMergePathV2(new List<PCNode>() { node1, node2 });
 
         Assert.That(centralCNode.Neighbours.Count, Is.EqualTo(5));
-        Assert.True(centralCNode.Neighbours[0].Label == NodeLabel.Full);
-        Assert.True(centralCNode.Neighbours[1] == neighbours2[0]);
+        Assert.True(centralCNode.Neighbours[0] == neighbours2[1]);
+        Assert.True(centralCNode.Neighbours[1] == neighbours2[2]);
+        Assert.True(centralCNode.Neighbours[2] == neighbours1[0]);
+        Assert.True(centralCNode.Neighbours[3].Label == NodeLabel.Full);
+        Assert.True(centralCNode.Neighbours[4] == neighbours2[0]);
+    }
+
+    [Test]
+    public void SplitAndMergePath_TwoPNodeTree()
+    {
+        PCNode node1 = new PCNode()
+        {
+            Type = NodeType.P,
+            Label = NodeLabel.Partial
+        };
+        List<PCNode> neighbours1 = new List<PCNode>()
+        {
+            PCNodesProvider.FullLeafWithColumn(2),
+            PCNodesProvider.FullLeafWithColumn(4),
+            PCNodesProvider.EmptyLeafWithColumn(1),
+            PCNodesProvider.EmptyLeafWithColumn(8),
+        };
+        PCNode node2 = new PCNode()
+        {
+            Type = NodeType.P,
+            Label = NodeLabel.Empty
+        };
+        List<PCNode> neighbours2 = new List<PCNode>()
+        {
+            PCNodesProvider.EmptyLeafWithColumn(0),
+            PCNodesProvider.EmptyLeafWithColumn(3),
+            PCNodesProvider.EmptyLeafWithColumn(5),
+            PCNodesProvider.EmptyLeafWithColumn(6),
+            PCNodesProvider.EmptyLeafWithColumn(7),
+        };
+
+        neighbours1.ForEach(node => node1.AppendNeighbour(node));
+        neighbours1.ForEach(node => node.Parent = node1);
+        neighbours1.ForEach(node => node.AppendNeighbour(node1));
+        neighbours2.ForEach(node => node2.AppendNeighbour(node));
+        neighbours2.ForEach(node => node.Parent = node2);
+        neighbours2.ForEach(node => node.AppendNeighbour(node2));
         
-        Assert.True(centralCNode.Neighbours[2] == neighbours2[1]);
-        Assert.True(centralCNode.Neighbours[3] == neighbours2[2]);
-        Assert.True(centralCNode.Neighbours[4] == neighbours1[0]);
+        node1.PrependNeighbour(node2);
+        node1.Parent = node2;
+        node2.PrependNeighbour(node1);
+        node2.Parent = node1;
+
+        PCNode centralCNode = TerminalPathRearrangementUtils.SplitAndMergePathV2(new List<PCNode>() { node1 });
+
+        Assert.That(centralCNode.Neighbours.Count, Is.EqualTo(4));//todo
+    }
+    
+    [Test]
+    public void SplitAndMergePath_SampleTestIEqualTo3()
+    {
+        PCNode p1 = new PCNode()
+        {
+            Type = NodeType.P,
+            Label = NodeLabel.Partial
+        };
+        List<PCNode> neighboursP1 = new List<PCNode>()
+        {
+            PCNodesProvider.EmptyLeafWithColumn(3),
+            PCNodesProvider.FullLeafWithColumn(7),
+        };
+
+        PCNode p2 = new PCNode()
+        {
+            Type = NodeType.P,
+            Label = NodeLabel.Partial
+        };
+        List<PCNode> neighbours2 = new List<PCNode>()
+        {
+            PCNodesProvider.FullLeafWithColumn(5),
+            PCNodesProvider.EmptyLeafWithColumn(6),
+            PCNodesProvider.EmptyLeafWithColumn(0),
+        };
+
+        PCNode p3 = new PCNode()
+        {
+            Type = NodeType.P,
+            Label = NodeLabel.Empty
+        };
+        List<PCNode> neighbours3 = new List<PCNode>()
+        {
+            PCNodesProvider.EmptyLeafWithColumn(8),
+        };
+        
+        PCNode p4 = new PCNode()
+        {
+            Type = NodeType.P,
+            Label = NodeLabel.Empty
+        };
+        List<PCNode> neighbours4 = new List<PCNode>()
+        {
+            PCNodesProvider.EmptyLeafWithColumn(2),
+            PCNodesProvider.EmptyLeafWithColumn(4),
+        };
+        
+        PCNode c1 = new PCNode()
+        {
+            Type = NodeType.C,
+            Label = NodeLabel.Partial
+        };
+        List<PCNode> neighboursC1 = new List<PCNode>()
+        {
+            PCNodesProvider.EmptyLeafWithColumn(1),
+        };
+
+        p1.Parent = c1;
+        p1.AppendNeighbour(c1);
+        c1.AppendNeighbour(p1);
+        neighboursP1.ForEach(n => p1.AppendNeighbour(n));
+        neighboursP1.ForEach(n => n.AppendNeighbour(p1));
+        neighboursP1.ForEach(n => n.Parent = p1);
+
+        p2.Parent = c1;
+        p2.AppendNeighbour(c1);
+        c1.AppendNeighbour(p2);
+        neighbours2.ForEach(n => p2.AppendNeighbour(n));
+        neighbours2.ForEach(n => n.AppendNeighbour(p2));
+        neighbours2.ForEach(n => n.Parent = p2);
+
+        p4.Parent = p3;
+        p4.AppendNeighbour(p3);
+        p3.AppendNeighbour(p4);
+        neighbours4.ForEach(n => p4.AppendNeighbour(n));
+        neighbours4.ForEach(n => n.AppendNeighbour(p4));
+        neighbours4.ForEach(n => n.Parent = p4);
+        
+        p3.Parent = c1;
+        neighbours3.ForEach(n => p3.AppendNeighbour(n));
+        neighbours3.ForEach(n => n.AppendNeighbour(p3));
+        neighbours3.ForEach(n => n.Parent = p3);
+        p3.AppendNeighbour(c1);
+        c1.AppendNeighbour(p3);
+
+        neighboursC1.ForEach(n => c1.AppendNeighbour(n));
+        neighboursC1.ForEach(n => n.AppendNeighbour(c1));
+        neighboursC1.ForEach(n => n.Parent = c1);
+        // todo: przesunac kolejnosc w cnodzie tak aby to z lewej (p2) bylo jako pierwsze
+        
+        // c1.Flip();
+        // c1.Neighbours.RotateLeft(c1.Neighbours.IndexOf(p2)); // take the left one to 0th slot
+        // List<PCNode> terminalPath = new List<PCNode>() { p2, c1, p1 };
+        List<PCNode> terminalPath = new List<PCNode>() { p1, c1, p2 };
+        TerminalPathRearrangementUtils.RearrangePath(terminalPath);
+        PCNode centralCNode = TerminalPathRearrangementUtils.SplitAndMergePathV2(terminalPath);
+
+        Assert.That(centralCNode.Neighbours.Count, Is.EqualTo(4));//todo
+        
+        
+        //todo: add unit test for rearrangement utils with cnode with empty top and empty bottom
+        
     }
 
     [Test]
@@ -990,25 +1152,33 @@ public class TerminalPathRearrangementUtilsTest
         };//prepend 2
         
         neighbours1.ForEach(node => node1.AppendNeighbour(node));
+        neighbours1.ForEach(node => node.Parent = node1);
+        neighbours1.ForEach(node => node.AppendNeighbour(node1));
         neighbours2.ForEach(node => node2.AppendNeighbour(node));
+        neighbours2.ForEach(node => node.Parent = node2);
+        neighbours2.ForEach(node => node.AppendNeighbour(node2));
         neighbours3.ForEach(node => node3.AppendNeighbour(node));
-        
+        neighbours3.ForEach(node => node.Parent = node3);
+        neighbours3.ForEach(node => node.AppendNeighbour(node3));
+
         node1.PrependNeighbour(node2);
         node2.PrependNeighbour(node1);
         node2.AppendNeighbour(node3);
         node3.PrependNeighbour(node2);
 
-        PCNode centralCNode = TerminalPathRearrangementUtils.SplitAndMergePath(new List<PCNode>() { node1, node2, node3 });
+        // PCNode centralCNode = TerminalPathRearrangementUtils.SplitAndMergePath(new List<PCNode>() { node1, node2, node3 });
+        PCNode centralCNode = TerminalPathRearrangementUtils.SplitAndMergePathV2(new List<PCNode>() { node1, node2, node3 });
         
         Assert.That(centralCNode.Neighbours.Count, Is.EqualTo(8));
-        Assert.True(centralCNode.Neighbours[0] == neighbours1[4]);
-        Assert.True(centralCNode.Neighbours[1] == neighbours2[0]);
-        Assert.True(centralCNode.Neighbours[2] == neighbours3[0]);
-        Assert.True(centralCNode.Neighbours[3] == neighbours3[1]);
-        Assert.True(centralCNode.Neighbours[4] == neighbours1[0]);
-        Assert.True(centralCNode.Neighbours[5] == neighbours1[1]);
-        Assert.True(centralCNode.Neighbours[6] == neighbours1[2]);
-        Assert.True(centralCNode.Neighbours[7] == neighbours1[3]);
+        
+        Assert.True(centralCNode.Neighbours[0] == neighbours3[1]);
+        Assert.True(centralCNode.Neighbours[1] == neighbours1[0]);
+        Assert.True(centralCNode.Neighbours[2] == neighbours1[1]);
+        Assert.True(centralCNode.Neighbours[3] == neighbours1[2]);
+        Assert.True(centralCNode.Neighbours[4] == neighbours1[3]);
+        Assert.True(centralCNode.Neighbours[5] == neighbours1[4]);
+        Assert.True(centralCNode.Neighbours[6] == neighbours2[0]);
+        Assert.True(centralCNode.Neighbours[7] == neighbours3[0]);
     }
     
 }

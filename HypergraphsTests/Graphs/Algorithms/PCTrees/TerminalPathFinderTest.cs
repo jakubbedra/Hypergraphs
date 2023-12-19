@@ -322,6 +322,164 @@ public class TerminalPathFinderTest
         Assert.That(l7.Label, Is.EqualTo(NodeLabel.Empty));
         Assert.That(l8.Label, Is.EqualTo(NodeLabel.Full));
     }
+    
+    [Test]
+    public void LabelNodes_EvenMoreComplexCase()
+    {
+        PCNode p1 = new PCNode() {Type = NodeType.P};
+        PCNode p2 = new PCNode() {Type = NodeType.P};
+        PCNode p3 = new PCNode() {Type = NodeType.P};
+        PCNode p4 = new PCNode() {Type = NodeType.P};
+        PCNode p5 = new PCNode() {Type = NodeType.P};
+        PCNode p6 = new PCNode() {Type = NodeType.P};
+        PCNode p7 = new PCNode() {Type = NodeType.P};
+        PCNode c1 = new PCNode() {Type = NodeType.C};
+        PCNode c2 = new PCNode() {Type = NodeType.C};
+        PCNode l1 = PCNodesProvider.UnlabeledLeafWithColumn(0);
+        PCNode l2 = PCNodesProvider.UnlabeledLeafWithColumn(1);
+        PCNode l3 = PCNodesProvider.UnlabeledLeafWithColumn(2);
+        PCNode l4 = PCNodesProvider.UnlabeledLeafWithColumn(3);
+        PCNode l5 = PCNodesProvider.UnlabeledLeafWithColumn(4);
+        PCNode l6 = PCNodesProvider.UnlabeledLeafWithColumn(5);
+        PCNode l7 = PCNodesProvider.UnlabeledLeafWithColumn(6);
+        PCNode l8 = PCNodesProvider.UnlabeledLeafWithColumn(7);
+        PCNode l9 = PCNodesProvider.UnlabeledLeafWithColumn(8);
+        PCNode l10 = PCNodesProvider.UnlabeledLeafWithColumn(9);
+        PCNode l11 = PCNodesProvider.UnlabeledLeafWithColumn(10);
+        PCNode l12 = PCNodesProvider.UnlabeledLeafWithColumn(11);
+        PCNode l13 = PCNodesProvider.UnlabeledLeafWithColumn(12);
+        PCNode l14 = PCNodesProvider.UnlabeledLeafWithColumn(13);
+        PCNode l15 = PCNodesProvider.UnlabeledLeafWithColumn(14);
+        
+        p1.AppendNeighbour(p2);
+        p1.Parent = p2;
+        p1.AppendNeighbour(l9);
+        l9.Parent = p1;
+        l9.AppendNeighbour(p1);
+        p1.AppendNeighbour(l8);
+        l8.Parent = p1;
+        l8.AppendNeighbour(p1);
+        p1.AppendNeighbour(l7);
+        l7.Parent = p1;
+        l7.AppendNeighbour(p1);
+        
+        p5.AppendNeighbour(p2);
+        p5.Parent = p2;
+        p5.AppendNeighbour(l6);
+        l6.Parent = p5;
+        l6.AppendNeighbour(p5);
+        p5.AppendNeighbour(l5);
+        l5.Parent = p5;
+        l5.AppendNeighbour(p5);
+
+        p2.AppendNeighbour(p1);
+        p2.AppendNeighbour(p5);
+        p2.AppendNeighbour(p3);
+        p2.Parent = p3;
+        p2.AppendNeighbour(l4);
+        l4.Parent = p2;
+        l4.AppendNeighbour(p2);
+
+        p3.AppendNeighbour(p2);
+        p3.AppendNeighbour(c1);
+        p3.AppendNeighbour(c2);
+        
+        c1.AppendNeighbour(p3);
+        p3.Parent = c1;
+        c1.AppendNeighbour(l3);
+        l3.Parent = c1;
+        l3.AppendNeighbour(c1);
+        c1.AppendNeighbour(p4);
+        p4.Parent = c1;
+        p4.AppendNeighbour(c1);
+        c1.AppendNeighbour(p6);
+        p6.Parent = c1;
+        p6.AppendNeighbour(c1);
+        
+        p4.AppendNeighbour(l2);
+        l2.Parent = p4;
+        l2.AppendNeighbour(p4);
+        p4.AppendNeighbour(l1);
+        l1.Parent = p4;
+        l1.AppendNeighbour(p4);
+
+        p6.AppendNeighbour(l15);
+        l15.Parent = p6;
+        l15.AppendNeighbour(p6);
+        p6.AppendNeighbour(p7);
+        p7.Parent = p6;
+        p7.AppendNeighbour(p6);
+
+        l14.Parent = p7;
+        l14.AppendNeighbour(p7);
+        p7.AppendNeighbour(l14);
+        l13.Parent = p7;
+        l13.AppendNeighbour(p7);
+        p7.AppendNeighbour(l13);
+        
+        c2.AppendNeighbour(p3);
+        c2.AppendNeighbour(l12);
+        l12.Parent = c2;
+        l12.AppendNeighbour(c2);
+        c2.AppendNeighbour(l11);
+        l11.Parent = c2;
+        l11.AppendNeighbour(c2);
+        c2.AppendNeighbour(l10);
+        l10.Parent = c2;
+        l10.AppendNeighbour(c2);
+
+        int[,] matrix = new int[,]
+        {
+            { 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0 }
+        };
+        int rows = 1;
+        int columns = 15;
+        
+        PCTree tree = new PCTree(matrix, rows, columns);
+        tree.Leaves.Add(l1);
+        tree.Leaves.Add(l2);
+        tree.Leaves.Add(l3);
+        tree.Leaves.Add(l4);
+        tree.Leaves.Add(l5);
+        tree.Leaves.Add(l6);
+        tree.Leaves.Add(l7);
+        tree.Leaves.Add(l8);
+        tree.Leaves.Add(l9);
+        tree.Leaves.Add(l10);
+        tree.Leaves.Add(l11);
+        tree.Leaves.Add(l12);
+        tree.Leaves.Add(l13);
+        tree.Leaves.Add(l14);
+        tree.Leaves.Add(l15);
+        TerminalPathFinder finder = new TerminalPathFinder(tree);
+
+        finder.LabelNodes();
+        
+        Assert.That(p1.Label, Is.EqualTo(NodeLabel.Partial));
+        Assert.That(p2.Label, Is.EqualTo(NodeLabel.Partial));
+        Assert.That(p3.Label, Is.EqualTo(NodeLabel.Partial));
+        Assert.That(p4.Label, Is.EqualTo(NodeLabel.Full));
+        Assert.That(p5.Label, Is.EqualTo(NodeLabel.Full));
+        Assert.That(p6.Label, Is.EqualTo(NodeLabel.Partial));
+        Assert.That(p7.Label, Is.EqualTo(NodeLabel.Full));
+        Assert.That(c1.Label, Is.EqualTo(NodeLabel.Partial));
+        Assert.That(c2.Label, Is.EqualTo(NodeLabel.Empty));
+        Assert.That(l1.Label, Is.EqualTo(NodeLabel.Full));
+        Assert.That(l2.Label, Is.EqualTo(NodeLabel.Full));
+        Assert.That(l3.Label, Is.EqualTo(NodeLabel.Full));
+        Assert.That(l4.Label, Is.EqualTo(NodeLabel.Empty));
+        Assert.That(l5.Label, Is.EqualTo(NodeLabel.Full));
+        Assert.That(l6.Label, Is.EqualTo(NodeLabel.Full));
+        Assert.That(l7.Label, Is.EqualTo(NodeLabel.Full));
+        Assert.That(l8.Label, Is.EqualTo(NodeLabel.Empty));
+        Assert.That(l9.Label, Is.EqualTo(NodeLabel.Full));
+        Assert.That(l10.Label, Is.EqualTo(NodeLabel.Empty));
+        Assert.That(l11.Label, Is.EqualTo(NodeLabel.Empty));
+        Assert.That(l12.Label, Is.EqualTo(NodeLabel.Empty));
+        Assert.That(l13.Label, Is.EqualTo(NodeLabel.Full));
+        Assert.That(l14.Label, Is.EqualTo(NodeLabel.Full));
+        Assert.That(l15.Label, Is.EqualTo(NodeLabel.Empty));
+    }
 
     [Test]
     public void Find_NoTerminalNode()
