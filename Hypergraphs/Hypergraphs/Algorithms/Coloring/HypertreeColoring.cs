@@ -11,17 +11,17 @@ public class HypertreeColoring : BaseColoring<Hypergraph>
     private int[] _validColoring;
     public int ChromaticNumber => _validColoring.Max() + 1;
 
-    private GreedyColoring _greedyColoring;
+    private GraphGreedyColoring _graphGreedyColoring;
 
     public HypertreeColoring()
     {
-        _greedyColoring = new GreedyColoring();
+        _graphGreedyColoring = new GraphGreedyColoring();
     } 
     
     public override int[] ComputeColoring(Hypergraph h)
     {
         Graph hostTree = HypertreeHostTreeFactory.FromHypertree(h);
-        _validColoring = _greedyColoring.Apply(hostTree);
+        _validColoring = _graphGreedyColoring.Apply(hostTree);
         return _validColoring;
     }
     

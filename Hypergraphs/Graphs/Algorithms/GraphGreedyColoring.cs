@@ -2,7 +2,7 @@
 
 namespace Hypergraphs.Graphs.Algorithms;
 
-public class GreedyColoring
+public class GraphGreedyColoring
 {
     private int[] _validColoring;
     private int _chromaticNumber;

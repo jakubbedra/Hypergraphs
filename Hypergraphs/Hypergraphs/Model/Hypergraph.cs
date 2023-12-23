@@ -307,4 +307,14 @@ public class Hypergraph
                 vertices.Add(v);
         return vertices;
     }
+    
+    public List<int> GetVertexEdges(int v)
+    {
+        List<int> edges = new List<int>();
+        for (int e = 0; e < _m; e++)
+            if (_matrix[v, e] > 0)
+                edges.Add(e);
+        return edges;
+    }
+    
 }
