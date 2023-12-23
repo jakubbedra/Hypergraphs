@@ -41,10 +41,9 @@ public class GreedyColoring : BaseColoring<Hypergraph>
 
                     // recolor the vertex so that edge j is not monochromatic
                     currentMinColor = GetMinNonConflictingColor(currentMinColor, h, vertices[i], coloring);
-
-                    coloring[vertices[i]] = currentMinColor;
                 }
             }
+            coloring[vertices[i]] = currentMinColor;
         }
         
         return coloring;
@@ -53,16 +52,36 @@ public class GreedyColoring : BaseColoring<Hypergraph>
     private int GetMinNonConflictingColor(int color, Hypergraph h, int v, int[] coloring)
     {
         List<int> vertexEdges = h.GetVertexEdges(v);
-        foreach (int e in vertexEdges)
+
+        while (true)
         {
-            HashSet<Tuple<int, int>> edgeColors = h.GetEdgeVertices(e)
-                .Select(v => new Tuple<int, int>(v, coloring[v]))
-                .ToHashSet();
-            while (edgeColors.FirstOrDefault(c => c.Item2 == color && c.Item1 != v) != null)
+            bool monochromaticEdgeFound = false;
+            foreach (int e in vertexEdges)
             {
-                color++;
-            } 
+                HashSet<Tuple<int, int>> edgeColors = h.GetEdgeVertices(e)
+                    .Select(u => new Tuple<int, int>(u, coloring[u]))
+                    .ToHashSet();
+                // todo: omijamy case, gdzie musimy nadpisac kolor wierzcholka v xd
+                // todo: albo i nie xddddd
+            
+                // todo: kurwa ja tu nie sprawdzam czy krawedzie sa monochromatyczne tylko czy istnieje wierzcholek
+                // todo: ktora ma ten sam kolor co wierzcholek v
+            
+                // when eny edge will be monochromatic
+                // while (edgeColors.FirstOrDefault(c => c.Item2 == color && c.Item1 != v) != null)
+                if (edgeColors.All(c => c.Item2 == color || c.Item1 == v)) // check if monochromatic when color will be applied
+                {
+                    monochromaticEdgeFound = true;
+                    color++;
+                    break;
+                } 
+            }
+            if (!monochromaticEdgeFound)
+            {
+                return color;
+            }
         }
+        
 
         return color;
     }

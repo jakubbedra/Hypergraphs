@@ -28,11 +28,37 @@ public class GreedyColoringTest
     }
     
     [Test]
-    public void ComputeColoring_RandomUniformGraph()
+    public void ComputeColoring_Graph()
     {
+        List<List<int>> hyperedges = new List<List<int>>
+        {
+            new List<int> { 0, 1 },
+            new List<int> { 0, 2 },
+            new List<int> { 0, 3 },
+            new List<int> { 0, 4 },
+            new List<int> { 1, 2 },
+            new List<int> { 1, 3 },
+            new List<int> { 1, 4 },
+            new List<int> { 2, 3 },
+            new List<int> { 2, 4 },
+            new List<int> { 3, 4 },
+        };
         int n = 5;
-        int m = 10;
-        int r = 2;
+        Hypergraph h = HypergraphFactory.FromHyperEdgesList(n, hyperedges);
+        GreedyColoring coloring = new GreedyColoring();
+        HypergraphColoringValidator validator = new HypergraphColoringValidator();
+
+        int[] colors = coloring.ComputeColoring(h);
+
+        Assert.True(validator.IsValid(h, colors));//TODO: FIX
+    }
+    
+    [Test]
+    public void ComputeColoring_RandomUniformHypergraph()
+    {
+        int n = 100;
+        int m = 420;
+        int r = 3;
         UniformHypergraphGenerator generator = new UniformHypergraphGenerator();
         Hypergraph h = generator.GenerateSimple(n, m, r);
         GreedyColoring coloring = new GreedyColoring();
