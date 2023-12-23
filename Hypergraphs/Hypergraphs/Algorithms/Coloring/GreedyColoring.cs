@@ -23,7 +23,7 @@ public class GreedyColoring : BaseColoring<Hypergraph>
         for (var i = 0; i < x.Length; i++)
             x[i] = _r.NextDouble();
         
-        Array.Sort(vertices, x);
+        Array.Sort(x, vertices);
 
         HashSet<int> visitedEdges = new HashSet<int>();
 
@@ -35,10 +35,6 @@ public class GreedyColoring : BaseColoring<Hypergraph>
                 if (h.Matrix[vertices[i], j] != 0 && !visitedEdges.Contains(j))
                 {
                     visitedEdges.Add(j);
-                    HashSet<Tuple<int, int>> edgeColors = h.GetEdgeVertices(j)
-                        .Select(v => new Tuple<int, int>(v, coloring[v]))
-                        .ToHashSet();
-
                     // recolor the vertex so that edge j is not monochromatic
                     currentMinColor = GetMinNonConflictingColor(currentMinColor, h, vertices[i], coloring);
                 }
@@ -61,15 +57,8 @@ public class GreedyColoring : BaseColoring<Hypergraph>
                 HashSet<Tuple<int, int>> edgeColors = h.GetEdgeVertices(e)
                     .Select(u => new Tuple<int, int>(u, coloring[u]))
                     .ToHashSet();
-                // todo: omijamy case, gdzie musimy nadpisac kolor wierzcholka v xd
-                // todo: albo i nie xddddd
-            
-                // todo: kurwa ja tu nie sprawdzam czy krawedzie sa monochromatyczne tylko czy istnieje wierzcholek
-                // todo: ktora ma ten sam kolor co wierzcholek v
-            
-                // when eny edge will be monochromatic
-                // while (edgeColors.FirstOrDefault(c => c.Item2 == color && c.Item1 != v) != null)
-                if (edgeColors.All(c => c.Item2 == color || c.Item1 == v)) // check if monochromatic when color will be applied
+                // check if monochromatic when color will be applied
+                if (edgeColors.All(c => c.Item2 == color || c.Item1 == v))
                 {
                     monochromaticEdgeFound = true;
                     color++;
@@ -81,9 +70,6 @@ public class GreedyColoring : BaseColoring<Hypergraph>
                 return color;
             }
         }
-        
-
-        return color;
     }
     
 }

@@ -56,9 +56,9 @@ public class GreedyColoringTest
     [Test]
     public void ComputeColoring_RandomUniformHypergraph()
     {
-        int n = 100;
-        int m = 420;
-        int r = 3;
+        int n = 40;
+        int m = 4200;
+        int r = 4;
         UniformHypergraphGenerator generator = new UniformHypergraphGenerator();
         Hypergraph h = generator.GenerateSimple(n, m, r);
         GreedyColoring coloring = new GreedyColoring();
