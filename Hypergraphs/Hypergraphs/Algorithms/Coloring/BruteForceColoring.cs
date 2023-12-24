@@ -49,7 +49,6 @@ public class BruteForceColoring : BaseColoring<Hypergraph>
     {
         if (index == h.N)
         {
-            
             return _coloringValidator.IsValid(h, _validColoring);
         }
 

@@ -6,30 +6,62 @@ namespace Hypergraphs.Algorithms;
 public class GreedyColoring : BaseColoring<Hypergraph>
 {
     private static Random _r = new Random();
-    
+
+    private readonly bool _randomizeVertices;
+    private int[]? _startPermutation;
+
+    public int[]? StartPermutation
+    {
+        set => _startPermutation = value;
+    }
+
+    public GreedyColoring(bool randomizeVertices = false)
+    {
+        _randomizeVertices = randomizeVertices;
+        _startPermutation = null;
+    }
+
+    public GreedyColoring(int[] startPermutation)
+    {
+        _randomizeVertices = false;
+        _startPermutation = startPermutation;
+    }
+
+
     public override int[] ComputeColoring(Hypergraph h)
     {
         int[] coloring = new int[h.N];
         // color all vertices with 1
         for (var i = 0; i < coloring.Length; i++)
-            coloring[i] = 1;
+            coloring[i] = 0;//TODO: warning!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         int[] vertices = new int[h.N];
-        for (var i = 0; i < vertices.Length; i++)
-            vertices[i] = i;
+        if (_startPermutation == null)
+        {
+            for (var i = 0; i < vertices.Length; i++)
+                vertices[i] = i;
+        }
+        else
+        {
+            for (var i = 0; i < vertices.Length; i++)
+                vertices[i] = _startPermutation[i];
+        }
         
         // randomize vertices
-        double[] x = new double[h.N];
-        for (var i = 0; i < x.Length; i++)
-            x[i] = _r.NextDouble();
-        
-        Array.Sort(x, vertices);
+        if (_randomizeVertices)
+        {
+            double[] x = new double[h.N];
+            for (var i = 0; i < x.Length; i++)
+                x[i] = _r.NextDouble();
+
+            Array.Sort(x, vertices);
+        }
 
         HashSet<int> visitedEdges = new HashSet<int>();
 
         for (var i = 0; i < vertices.Length; i++)
         {
-            int currentMinColor = 1;
+            int currentMinColor = 0;//TODO: warning!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             for (int j = 0; j < h.M; j++)
             {
                 if (h.Matrix[vertices[i], j] != 0 && !visitedEdges.Contains(j))

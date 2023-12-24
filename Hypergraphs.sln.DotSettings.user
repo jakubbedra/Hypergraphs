@@ -2,6 +2,10 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3e3eef8f_002Dd1f2_002D406b_002Da845_002D917590befdc1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ComputeColoring_RandomUniform" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.GreedyColoringTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.VertexPermutationColoringTest.ComputeColoring_2ColorableHypergraph&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.ColorVariationColoringTest.ComputeColoring_2ColorableHypergraph&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.ColorVariationColoringTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.VertexPermutationColoringTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	

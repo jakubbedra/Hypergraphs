@@ -14,12 +14,12 @@ public class GreedyColoringTest
             new List<int> { 0, 1, 2 },
             new List<int> { 3, 4, 6, 7 },
             new List<int> { 8, 9, 10 },
-            new List<int>() { 8, 7, 6 },
+            new List<int> { 8, 7, 6 },
             new List<int> { 1, 2, 3, 4, 5 },
         };
         int n = 11;
         Hypergraph h = HypergraphFactory.FromHyperEdgesList(n, hyperedges);
-        GreedyColoring coloring = new GreedyColoring();
+        GreedyColoring coloring = new GreedyColoring(true);
         HypergraphColoringValidator validator = new HypergraphColoringValidator();
 
         int[] colors = coloring.ComputeColoring(h);
@@ -45,7 +45,7 @@ public class GreedyColoringTest
         };
         int n = 5;
         Hypergraph h = HypergraphFactory.FromHyperEdgesList(n, hyperedges);
-        GreedyColoring coloring = new GreedyColoring();
+        GreedyColoring coloring = new GreedyColoring(true);
         HypergraphColoringValidator validator = new HypergraphColoringValidator();
 
         int[] colors = coloring.ComputeColoring(h);
@@ -61,7 +61,7 @@ public class GreedyColoringTest
         int r = 4;
         UniformHypergraphGenerator generator = new UniformHypergraphGenerator();
         Hypergraph h = generator.GenerateSimple(n, m, r);
-        GreedyColoring coloring = new GreedyColoring();
+        GreedyColoring coloring = new GreedyColoring(true);
         HypergraphColoringValidator validator = new HypergraphColoringValidator();
 
         int[] colors = coloring.ComputeColoring(h);
