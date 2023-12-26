@@ -3,6 +3,7 @@ using Hypergraphs.Model;
 
 namespace Hypergraphs.Algorithms;
 
+// depracated, remove
 public class BruteForceColoring : BaseColoring<Hypergraph>
 {
     private int[]? _validColoring;
