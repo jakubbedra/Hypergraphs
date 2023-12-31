@@ -7,6 +7,16 @@
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.ColorVariationColoringTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.VertexPermutationColoringTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.MonteCarlo.NestedMonteCarloSearchTest.ComputeColoring_Sample&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.MonteCarlo.NestedRolloutPolicyAdaptationTest.ComputeColoring&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.MonteCarlo.NestedMonteCarloSearchTest.ComputeColoring_RandomUniform&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Generators.UniformHypergraphGeneratorTest.GenerateConnectedTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.MonteCarlo.NestedMonteCarloSearchTest.ComputeColoring_SmallHypertree&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.MonteCarlo.NestedMonteCarloSearchTest.ComputeColoring_RandomConnectedUniform_Medium&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9b839943_002Db62e_002D422d_002D8ab4_002Dc62cd74da6e4/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ComputeColoring_Sample" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEBE6F37-5F2F-4DA9-B8D2-29ABDC6747F2::net6.0::HypergraphsTests.Hypergraphs.Algorithms.MonteCarlo.NestedMonteCarloSearchTest.ComputeColoring_Sample&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
