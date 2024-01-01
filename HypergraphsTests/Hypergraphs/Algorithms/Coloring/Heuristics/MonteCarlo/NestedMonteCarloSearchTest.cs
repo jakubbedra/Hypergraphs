@@ -24,7 +24,7 @@ public class NestedMonteCarloSearchTest
         HypergraphColoringValidator validator = new HypergraphColoringValidator();
 
         Stopwatch stopwatch = new Stopwatch();
-        NMCS2 nmcs = new NMCS2(h, 2, 10, 3, new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
+        NMCS nmcs = new NMCS(h, 2, 10, 3, new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
 
         stopwatch.Start();
         int[]? coloring = nmcs.ComputeColoring();
@@ -51,7 +51,7 @@ public class NestedMonteCarloSearchTest
         HypergraphColoringValidator validator = new HypergraphColoringValidator();
 
         Stopwatch stopwatch = new Stopwatch();
-        NMCS2 nmcs = new NMCS2(h, 2, 10, 3, vertexOrder);
+        NMCS nmcs = new NMCS(h, 2, 10, 3, vertexOrder);
 
         stopwatch.Start();
         int[]? coloring = nmcs.ComputeColoring();
@@ -78,7 +78,7 @@ public class NestedMonteCarloSearchTest
         HypergraphColoringValidator validator = new HypergraphColoringValidator();
 
         Stopwatch stopwatch = new Stopwatch();
-        NMCS2 nmcs = new NMCS2(h, 2, 10, 3, vertexOrder);
+        NMCS nmcs = new NMCS(h, 2, 10, 3, vertexOrder);
 
         stopwatch.Start();
         int[]? coloring = nmcs.ComputeColoring();

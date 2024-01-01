@@ -4,8 +4,10 @@ using Hypergraphs.Model;
 
 namespace HypergraphsTests.Hypergraphs.Algorithms;
 
-public class GreedyColoringTest
+public class GreedyTestBase
 {
+    protected BaseGreedy _coloringAlgorithm;
+
     [Test]
     public void ComputeColoring_2ColorableHypergraph()
     {
@@ -19,10 +21,9 @@ public class GreedyColoringTest
         };
         int n = 11;
         Hypergraph h = HypergraphFactory.FromHyperEdgesList(n, hyperedges);
-        GreedyColoring coloring = new GreedyColoring(true);
         HypergraphColoringValidator validator = new HypergraphColoringValidator();
 
-        int[] colors = coloring.ComputeColoring(h);
+        int[] colors = _coloringAlgorithm.ComputeColoring(h);
 
         Assert.True(validator.IsValid(h, colors));
     }
@@ -45,10 +46,9 @@ public class GreedyColoringTest
         };
         int n = 5;
         Hypergraph h = HypergraphFactory.FromHyperEdgesList(n, hyperedges);
-        GreedyColoring coloring = new GreedyColoring(true);
         HypergraphColoringValidator validator = new HypergraphColoringValidator();
 
-        int[] colors = coloring.ComputeColoring(h);
+        int[] colors = _coloringAlgorithm.ComputeColoring(h);
 
         Assert.True(validator.IsValid(h, colors));//TODO: FIX
     }
@@ -61,14 +61,11 @@ public class GreedyColoringTest
         int r = 4;
         UniformHypergraphGenerator generator = new UniformHypergraphGenerator();
         Hypergraph h = generator.GenerateSimple(n, m, r);
-        GreedyColoring coloring = new GreedyColoring(true);
         HypergraphColoringValidator validator = new HypergraphColoringValidator();
 
-        int[] colors = coloring.ComputeColoring(h);
+        int[] colors = _coloringAlgorithm.ComputeColoring(h);
 
-        Assert.True(validator.IsValid(h, colors));//TODO: FIX
+        Assert.True(validator.IsValid(h, colors));
     }
-    
-    // todo: do for all generators when they will be implemented
     
 }
