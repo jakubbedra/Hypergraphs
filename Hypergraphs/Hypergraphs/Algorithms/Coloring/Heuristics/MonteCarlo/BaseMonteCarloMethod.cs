@@ -15,8 +15,23 @@ public abstract class BaseMonteCarloMethod
     protected double[,] _policy;
 
     public int NumberOfEpochs { get; set; }
+    
+    public BaseMonteCarloMethod() {}
 
     public BaseMonteCarloMethod(Hypergraph hypergraph, int maxNumberOfColors, int numberOfEpochs, int maxDepth, int[] vertexOrder)
+    {
+        _hypergraph = hypergraph;
+        _maxNumberOfColors = maxNumberOfColors; // at least 2 colors
+        _policy = new double[hypergraph.N, _maxNumberOfColors];
+        for (int i = 0; i < hypergraph.N; i++)
+        for (int j = 0; j < maxNumberOfColors; j++)
+            _policy[i, j] = 1.0;
+        NumberOfEpochs = numberOfEpochs;
+        _maxDepth = maxDepth;
+        _vertexOrder = vertexOrder;
+    }
+
+    public void UpdateParams(Hypergraph hypergraph, int maxNumberOfColors, int numberOfEpochs, int maxDepth, int[] vertexOrder)
     {
         _hypergraph = hypergraph;
         _maxNumberOfColors = maxNumberOfColors; // at least 2 colors
@@ -43,7 +58,7 @@ public abstract class BaseMonteCarloMethod
                 colors[i] = -1;
             score = Execute(0, colors, _maxDepth);
             epoch++;
-        } while (Math.Abs(score - _hypergraph.M) < 0.01 && epoch < NumberOfEpochs);
+        } while (!(Math.Abs(score - _hypergraph.M) < 0.01) && epoch < NumberOfEpochs);
 
         if (!(Math.Abs(score - _hypergraph.M) < 0.01)) return null;
 

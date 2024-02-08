@@ -5,7 +5,7 @@ namespace Hypergraphs.Algorithms;
 public class NRPA : BaseMonteCarloMethod
 {
 
-    private double _alpha;
+    private double _alpha = 0.1;
 
     public NRPA(Hypergraph hypergraph, int maxNumberOfColors, int numberOfEpochs, int maxDepth, int[] vertexOrder,
         double alpha) :
@@ -13,6 +13,12 @@ public class NRPA : BaseMonteCarloMethod
     {
         _alpha = alpha;
     }
+    
+    public NRPA(Hypergraph hypergraph, int maxNumberOfColors, int numberOfEpochs, int maxDepth, int[] vertexOrder) :
+        base(hypergraph, maxNumberOfColors, numberOfEpochs, maxDepth, vertexOrder)
+    { }
+    
+    public NRPA() : base() {}
 
     public override double Execute(int vertex, int[] colors, int level)
     {

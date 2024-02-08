@@ -25,6 +25,80 @@ public class ConsecutiveOnesTest
 
         Assert.That(permutation, Is.EqualTo(expectedPermutation));
     }
+    
+    [Test]
+    public void GetPermutation_BioLeft()
+    {
+        int[,] matrix =
+        {
+            { 0, 0, 0, 0, 1, 0, 0, 1 }, // 0
+            { 1, 1, 1, 0, 0, 0, 0, 0 }, // 1
+            { 1, 1, 0, 0, 0, 0, 0, 0 }, // 2
+            { 1, 0, 1, 0, 0, 0, 1, 0 }, // 3
+            { 0, 1, 0, 0, 1, 0, 0, 1 }, // 4
+            { 0, 1, 0, 0, 1, 0, 0, 1 }, // 5
+            { 0, 0, 0, 0, 0, 1, 1, 1 }, // 6
+            { 0, 0, 0, 0, 1, 0, 1, 1 }, // 7
+            { 0, 0, 0, 1, 0, 0, 1, 1 }, // 8
+        };
+        int n = 9;
+        int m = 8;
+        int[] expectedPermutation = { 3, 5, 0, 4, 2, 1 };
+        ConsecutiveOnes c1p = new ConsecutiveOnes(matrix, n, m);
+        
+        int[]? permutation = c1p.GetPermutation();
+
+        Assert.That(permutation, Is.Null);
+    }
+    
+    [Test]
+    public void GetPermutation_BioRight()
+    {
+        int[,] matrix =
+        {
+            { 0, 0, 0, 1, 1, 0, 0, 1 }, // 0
+            { 1, 0, 1, 1, 0, 0, 0, 0 }, // 1
+            { 1, 0, 0, 1, 0, 0, 0, 0 }, // 2
+            { 1, 0, 1, 1, 0, 0, 0, 0 }, // 3
+            { 0, 1, 0, 1, 1, 0, 0, 1 }, // 4
+            { 0, 1, 0, 1, 1, 0, 0, 1 }, // 5
+            { 0, 0, 0, 1, 0, 1, 1, 1 }, // 6
+            { 0, 0, 0, 1, 1, 0, 0, 1 }, // 7
+            { 0, 0, 0, 0, 0, 0, 1, 1 }, // 8
+        };
+        int n = 9;
+        int m = 8;
+        int[] expectedPermutation = { 3, 5, 0, 4, 2, 1 };
+        ConsecutiveOnes c1p = new ConsecutiveOnes(matrix, n, m);
+        
+        int[]? permutation = c1p.GetPermutation();
+
+        Assert.That(permutation, Is.Null);
+    }
+    
+    [Test]
+    public void GetPermutation_Bio3()
+    {
+        int[,] matrix =
+        {
+            { 0, 1, 0, 0, 0, 1, 0 }, // 0
+            { 0, 1, 0, 1, 0, 1, 1 }, // 1
+            { 0, 1, 0, 1, 1, 0, 0 }, // 2
+            { 1, 1, 0, 1, 0, 1, 1 }, // 3
+            { 0, 1, 1, 1, 1, 0, 0 }, // 4
+            { 1, 1, 0, 1, 0, 1, 1 }, // 5
+            { 0, 0, 0, 1, 1, 0, 0 }, // 6
+            { 0, 1, 0, 0, 0, 1, 0 }, // 7
+        };
+        int n = 8;
+        int m = 7;
+        int[] expectedPermutation = { 3, 5, 0, 4, 2, 1 };
+        ConsecutiveOnes c1p = new ConsecutiveOnes(matrix, n, m);
+        
+        int[]? permutation = c1p.GetPermutation();
+
+        Assert.That(permutation, Is.Null);
+    }
 
     [Test]
     public void GetPermutation_ConsecutiveOnes_TwoConnectedComponents()
