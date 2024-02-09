@@ -8,6 +8,21 @@ public class HyperstarGenerator
 
     public Hypergraph Generate(int n, int m, int verticesInCenter = -1)
     {
+        // 1. fill in the verticesInCenter first rows
+        
+        // 2. Select r (or a random value from 1 to n-verticesInCenter) vertices. 
+        
+        // 3. If there are any vertices left in the verticesInNoEdge set, then we need to make sure, at least one of them is picked in this iteration
+        
+        // 4. if it's the last iteration -> make sure verticesInNoEdge set is empty, if needed the last edge should contain all the vertices
+
+        // randomize the matrix
+        
+        return null;
+    }
+
+    public Hypergraph Generate2(int n, int m, int verticesInCenter = -1)
+    {
         // choose center vertex/vertices
         // 2^(n-|C|) - 1/0 = max_m => |C| = n-log_{2}(max_m + 1/0)
         if (verticesInCenter == -1)
