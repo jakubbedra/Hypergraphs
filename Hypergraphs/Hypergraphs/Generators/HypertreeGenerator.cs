@@ -17,8 +17,7 @@ public class HypertreeGenerator
             verticesInNoEdge.Add(v);
         TreeGenerator generator = new TreeGenerator();
         Graph tree = generator.Generate(n);
-        List<HashSet<int>> subtrees = GenerateSubtrees(tree);
-
+        List<HashSet<int>> subtrees = new List<HashSet<int>>();//GenerateSubtrees(tree);
 
         /*
          * reworked:
@@ -33,30 +32,29 @@ public class HypertreeGenerator
             if (e == m - 1 && verticesInNoEdge.Count != 0)
             {
                 // find an edge with all the remaining vertices
-                
+                FindSmallestSubtree(tree, verticesInNoEdge.ToHashSet());
                 break;
             }
             int startVertex;
             int endVertex;
-            if (verticesInNoEdge.Count != 0)
-                startVertex = verticesInNoEdge[_r.Next(verticesInNoEdge.Count)];
-            else
-                startVertex = _r.Next(n);
-            if (chosenVertices.Count != 0)
-                endVertex = chosenVertices[_r.Next(chosenVertices.Count)];
-            else
-                do
-                {
-                    endVertex = _r.Next(n);
-                } while (endVertex == startVertex);
-
+            
             HashSet<int> subtree;
             do
             {
+                if (verticesInNoEdge.Count != 0)
+                    startVertex = verticesInNoEdge[_r.Next(verticesInNoEdge.Count)];
+                else
+                    startVertex = _r.Next(n);
+                if (chosenVertices.Count != 0)
+                    endVertex = chosenVertices[_r.Next(chosenVertices.Count)];
+                else
+                    do
+                    {
+                        endVertex = _r.Next(n);
+                    } while (endVertex == startVertex);
                 subtree = RandomDfs(endVertex, startVertex, -1, tree);
             } while (
-                subtrees.Any(st => st.All(v => subtree.Contains(v)) &&
-                                   subtree.Any(u => st.Contains(u)))
+                subtrees.Any(st => st.SetEquals(subtree))
             );
 
             subtrees.Add(subtree);
@@ -68,16 +66,9 @@ public class HypertreeGenerator
                     chosenVertices.Add(v);
                 }
             }
-
-            /**
-             * - choose a random vertex (if verticesInNoEdge is not empty then select from this set), and a random vertex from already visitred ones
-- start from the random vertex from visited ones and do DFS until the non-visited vertex is found 
-(the dfs must be in random neighbour order)
-             */
-            // todo: last iteration corner case
         }
 
-        return null;
+        return HypergraphFactory.FromHyperEdgesList(n, subtrees.Select(st => st.ToList()).ToList());
     }
 
     private HashSet<int> RandomDfs(int targetVertex, int vertex, int parent, Graph tree)
@@ -101,22 +92,43 @@ public class HypertreeGenerator
 
         return subtree;
     }
-
-    private List<HashSet<int>> GenerateSubtrees(Graph tree)
+    
+    private HashSet<int> FindSmallestSubtree(Graph tree, HashSet<int> targetVertices)
     {
-        List<HashSet<int>> subtrees = new List<HashSet<int>>();
+        HashSet<int> smallestSubtree = null;
+        int minSubtreeSize = int.MaxValue;
 
-        HashSet<int> dfs(int vertex, int parent)
+        foreach (int vertex in targetVertices)
         {
-            HashSet<int> subtree = new HashSet<int>() { vertex };
-            foreach (int u in tree.Neighbours(vertex).Where(v => v != parent))
-            foreach (int w in dfs(u, vertex))
-                subtree.Add(w);
-            subtrees.Add(subtree);
-            return subtree;
+            HashSet<int> subtree = DFS(vertex, -1, tree, targetVertices);
+            if (subtree.Count < minSubtreeSize)
+            {
+                minSubtreeSize = subtree.Count;
+                smallestSubtree = subtree;
+            }
         }
 
-        dfs(0, -1);
-        return subtrees;
+        return smallestSubtree;
     }
+    
+    private HashSet<int> DFS(int vertex, int parent, Graph tree, HashSet<int> targetVertices)
+    {
+        HashSet<int> subtree = new HashSet<int>() { vertex };
+
+        // If the current vertex is one of the target vertices, remove it from the set
+        targetVertices.Remove(vertex);
+
+        // If all target vertices are found, return the subtree
+        if (targetVertices.Count == 0)
+            return subtree;
+
+        foreach (int neighbor in tree.Neighbours(vertex).Where(v => v != parent))
+        {
+            HashSet<int> subtreeFromNeighbor = DFS(neighbor, vertex, tree, new HashSet<int>(targetVertices));
+            subtree.UnionWith(subtreeFromNeighbor);
+        }
+
+        return subtree;
+    }
+    
 }
