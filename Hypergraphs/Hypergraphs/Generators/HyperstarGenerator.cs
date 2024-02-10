@@ -16,7 +16,6 @@ public class HyperstarGenerator
         for (int e = 0; e < m; e++)
             matrix[v, e] = 0;
 
-        // todo: if a vertex is in no edge, then add it in last iteration/edge
         HashSet<int> verticesInNoEdge = new HashSet<int>();
         for (int v = 0; v < n; v++)
             verticesInNoEdge.Add(v);
@@ -82,7 +81,7 @@ public class HyperstarGenerator
         {
             N = n,
             M = m,
-            Matrix = matrix//todo: finalMatrix
+            Matrix = finalMatrix
         };
     }
 
