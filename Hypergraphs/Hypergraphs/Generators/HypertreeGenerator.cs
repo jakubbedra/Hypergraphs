@@ -19,7 +19,7 @@ public class HypertreeGenerator
         Graph tree = generator.Generate(n);
         List<HashSet<int>> subtrees = GenerateSubtrees(tree);
 
-        
+
         /*
          * reworked:
          * 1. choose a random vertex (if verticesInNoEdge is not empty then select from this set), and a random vertex from already visitred ones
@@ -27,13 +27,14 @@ public class HypertreeGenerator
          * 3. if no more vertices are available to visit OR edge size limit reached, return the edge
          * 4. this way we do not need to generate every single possible subtree
          */
-        
+
         for (int e = 0; e < m; e++)
         {
-            if (e  == m-1 && verticesInNoEdge.Count != 0))
+            if (e == m - 1 && verticesInNoEdge.Count != 0)
             {
                 // find an edge with all the remaining vertices
                 
+                break;
             }
             int startVertex;
             int endVertex;
@@ -43,12 +44,21 @@ public class HypertreeGenerator
                 startVertex = _r.Next(n);
             if (chosenVertices.Count != 0)
                 endVertex = chosenVertices[_r.Next(chosenVertices.Count)];
-            else do
-            {
-                endVertex = _r.Next(n);
-            } while (endVertex == startVertex);
+            else
+                do
+                {
+                    endVertex = _r.Next(n);
+                } while (endVertex == startVertex);
 
-            HashSet<int> subtree = RandomDfs(endVertex, startVertex, -1, tree);
+            HashSet<int> subtree;
+            do
+            {
+                subtree = RandomDfs(endVertex, startVertex, -1, tree);
+            } while (
+                subtrees.Any(st => st.All(v => subtree.Contains(v)) &&
+                                   subtree.Any(u => st.Contains(u)))
+            );
+
             subtrees.Add(subtree);
             foreach (int v in subtree)
             {
@@ -58,16 +68,12 @@ public class HypertreeGenerator
                     chosenVertices.Add(v);
                 }
             }
-            
+
             /**
              * - choose a random vertex (if verticesInNoEdge is not empty then select from this set), and a random vertex from already visitred ones
 - start from the random vertex from visited ones and do DFS until the non-visited vertex is found 
 (the dfs must be in random neighbour order)
-
-
-
              */
-            
             // todo: last iteration corner case
         }
 
@@ -95,7 +101,7 @@ public class HypertreeGenerator
 
         return subtree;
     }
-    
+
     private List<HashSet<int>> GenerateSubtrees(Graph tree)
     {
         List<HashSet<int>> subtrees = new List<HashSet<int>>();
@@ -113,5 +119,4 @@ public class HypertreeGenerator
         dfs(0, -1);
         return subtrees;
     }
-    
 }
