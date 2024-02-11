@@ -18,7 +18,7 @@ public class ConnectedHypergraphGeneratorTest
         for (int i = 0; i < Iterations; i++)
         {
             Hypergraph h = generator.Generate(n, m);
-            bool isConnected = connectivityCheck.Apply(h);// todo: most likely need to rework connectivity check
+            bool isConnected = connectivityCheck.Apply(h);
             Assert.That(isConnected, Is.True);
         }
     }

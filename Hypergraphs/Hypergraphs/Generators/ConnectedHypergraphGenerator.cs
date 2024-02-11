@@ -59,7 +59,15 @@ public class ConnectedHypergraphGenerator
             }
             e1++;
         }
-        
+
+        // check for isolated vertices
+        if (verticesInNoEdge.Count != 0)
+        {
+            int selectedEdge = _r.Next(m);
+            foreach (int v in verticesInNoEdge)
+                matrix[v, selectedEdge] = 1;
+        }
+
         // shuffle the matrix rows
         List<int> shuffledVertices = new List<int>(n);
         for (int v = 0; v < n; v++)
