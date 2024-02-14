@@ -32,7 +32,16 @@ public class HypertreeGenerator
             if (e == m - 1 && verticesInNoEdge.Count != 0)
             {
                 // find an edge with all the remaining vertices
-                FindSmallestSubtree(tree, verticesInNoEdge.ToHashSet());
+                HashSet<int> smallestSubtree = FindSmallestSubtree(tree, verticesInNoEdge.ToHashSet());
+                foreach (int v in smallestSubtree)
+                {
+                    if (verticesInNoEdge.Contains(v))
+                    {
+                        verticesInNoEdge.Remove(v);
+                        chosenVertices.Add(v);
+                    }
+                }
+                subtrees.Add(smallestSubtree);
                 break;
             }
             int startVertex;

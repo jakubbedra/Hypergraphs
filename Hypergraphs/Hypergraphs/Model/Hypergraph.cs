@@ -264,7 +264,7 @@ public class Hypergraph
         {
             for (int j = 0; j < _m; j++)
             {
-                sb.Append($"{i}; ");
+                sb.Append($"{_matrix[i,j]}; ");
             }
 
             sb.Append("\n");

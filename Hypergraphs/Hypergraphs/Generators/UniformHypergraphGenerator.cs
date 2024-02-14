@@ -51,9 +51,7 @@ public class UniformHypergraphGenerator : BaseGenerator
         {
             List<int> currentEdge = new List<int>();
             for (int i = 0; i < r - 1; i++)
-            {
                 currentEdge.Add(vertices.Pop());
-            }
 
             currentEdge.Add(previousEdge[_random.Next(r)]);
             previousEdge = currentEdge;
@@ -66,9 +64,7 @@ public class UniformHypergraphGenerator : BaseGenerator
             List<int> currentEdge = new List<int>();
             int verticesCount = vertices.Count;
             for (int i = 0; i < verticesCount; i++)
-            {
                 currentEdge.Add(vertices.Pop());
-            }
 
             List<int> previousEdgeCopy = new List<int>(previousEdge);
             for (int i = 0; i < r - verticesCount; i++)
@@ -87,18 +83,12 @@ public class UniformHypergraphGenerator : BaseGenerator
         int[] verticesDegree = new int[n];
         for (var i = 0; i < verticesDegree.Length; i++)
             verticesDegree[i] = 0;
+
         foreach (List<int> hyperedge in hyperedges)
         foreach (int v in hyperedge)
             verticesDegree[v]++;
 
         Hypergraph hypergraph = HypergraphFactory.FromHyperEdgesList(n, hyperedges);
-        List<int> incorrectEdges2 = new List<int>();
-        for (int e = 0; e < hypergraph.M; e++)
-        {
-            int edgeCardinality = hypergraph.EdgeCardinality(e);
-            if (edgeCardinality != r)
-                incorrectEdges2.Add(e);// todo: to 4 tworzy sie przed whilem juz 0_0
-        }
         // choose a random vertex
         // connect those edges, which are no longer of size r, with a random vertex, that is not included in any of them
         while (m > 0)
@@ -106,13 +96,13 @@ public class UniformHypergraphGenerator : BaseGenerator
             // delete random vertex
             hypergraph.WeakDeleteVertex(_random.Next(n));
 
-            // search edges which are no longer of size r
+            // find edges which are no longer of size r
             List<int> incorrectEdges = new List<int>();
             for (int e = 0; e < hypergraph.M; e++)
             {
                 int edgeCardinality = hypergraph.EdgeCardinality(e);
                 if (edgeCardinality != r)
-                    incorrectEdges.Add(e);// todo: to 4 tworzy sie przed whilem juz 0_0
+                    incorrectEdges.Add(e);
             }
             List<int> canBeInEdges = new List<int>();
             for (int v = 0; v < n; v++)

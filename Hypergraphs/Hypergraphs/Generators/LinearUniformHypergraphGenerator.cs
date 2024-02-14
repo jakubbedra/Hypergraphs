@@ -1,4 +1,5 @@
-﻿using Hypergraphs.Model;
+﻿using Hypergraphs.Extensions;
+using Hypergraphs.Model;
 
 namespace Hypergraphs.Generators;
 
@@ -13,65 +14,74 @@ public class LinearUniformHypergraphGenerator
         for (int e = 0; e < m; e++)
             matrix[v, e] = 0;
 
-        HashSet<int> verticesInNoEdge = new HashSet<int>();
-        for (int v = 0; v < n; v++)
-            verticesInNoEdge.Add(v);
-        List<int> chosenVertices = new List<int>();
-
         for (int e = 0; e < m; e++)
         {
-            HashSet<int> edge = GenerateRandomEdge(e, r, matrix, chosenVertices, verticesInNoEdge);
-            foreach (int v in edge)
-                matrix[v, e] = 1;
+            HashSet<int> edge = GenerateRandomEdge(n, m, e, r, matrix);
+            if (edge.Count == r)
+            {
+                foreach (int v in edge)
+                {
+                    matrix[v, e] = 1;
+                }
+            }
         }
-
-        return new Hypergraph()
+        
+        Hypergraph hypergraph = new Hypergraph()
         {
             N = n,
             M = m,
             Matrix = matrix
         };
+        for (int e = m-1; e >= 0; e--)
+            if (hypergraph.GetEdgeVertices(e).Count != r)
+                hypergraph.StrongDeleteEdge(e);
+        for (int v = n-1; v >= 0; v--)
+            if (hypergraph.VertexDegree(v) == 0)
+                hypergraph.StrongDeleteVertex(v);
+        return hypergraph;
     }
 
-    private HashSet<int> GenerateRandomEdge(int e, int r, int[,] matrix, List<int> chosenVertices, HashSet<int> verticesInNoEdge)
+    private HashSet<int> GenerateRandomEdge(int n, int m, int e, int r, int[,] matrix)
     {
-        // pick random vertex 
-        int v1 = chosenVertices[_r.Next(chosenVertices.Count)];
-        HashSet<int> edge = new HashSet<int> { v1 };
-        for (int i = 0; i < r; i++)
+        HashSet<int> edge = new HashSet<int>();
+        
+        List<int> randomVertices = new List<int>();
+        for (int v = 0; v < n; v++)
+            randomVertices.Add(v);
+        randomVertices.Shuffle();
+
+        while (randomVertices.Count > 0 && edge.Count != r)
         {
-            int v2 = -1;
-            do
-            {
-                v2 = chosenVertices[_r.Next(chosenVertices.Count)];
-            } while (edge.Contains(v2) || Conflict(v2, e, matrix, edge)); // while chosen vertex conflicts
-
-            edge.Add(v2);
-            if (verticesInNoEdge.Contains(v2))
-            {
-                verticesInNoEdge.Remove(v2);
-                chosenVertices.Add(v2);
-            }
+            int v = randomVertices.First();
+            randomVertices.RemoveAt(0);
+            edge.Add(v);
+            // find all edges that contain v and then all vertices in those edges
+            HashSet<int> neighbours = FindNeighbours(n, m, v, e, r, matrix);
+            
+            // remove neighbours from possible vertices
+            foreach (int neighbour in neighbours)
+                randomVertices.Remove(neighbour);
         }
-
+        
         return edge;
     }
 
-    private bool Conflict(int v, int currentEdge, int[,] matrix, HashSet<int> edge)
+    private HashSet<int> FindNeighbours(int n, int m, int v, int e, int r, int[,] matrix)
     {
-        for (int e = 0; e < currentEdge; e++)
-        {
-            int verticesInEdgeCount = 0;
-            if (matrix[v, e] == 1) verticesInEdgeCount++;
+        // find edges that contain v
+        HashSet<int> edges = new HashSet<int>();
+        for (int e1 = 0; e1 < e; e1++)
+            if (matrix[v, e1] == 1)
+                edges.Add(e1);
+        
+        // return all vertices in those edges
+        HashSet<int> neighbours = new HashSet<int>();
+        foreach (int edge in edges)
+            for (int vertex = 0; vertex < n; vertex++)
+                if (matrix[vertex, edge] == 1)
+                    neighbours.Add(vertex);
 
-            foreach (int vertex in edge)
-                if (matrix[vertex, e] == 1)
-                    verticesInEdgeCount++;
-
-            if (verticesInEdgeCount > 1) return true;
-        }
-
-        return false;
+        return neighbours;
     }
     
 }
