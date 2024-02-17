@@ -60,6 +60,18 @@ public class Hypergraph
         }
     }
 
+    public int Delta()
+    {
+        int delta = 0;
+        for (int v = 0; v < _n; v++)
+        {
+            int degree = VertexDegree(v);
+            if (degree > delta) delta = degree;
+        }
+
+        return delta;
+    }
+
     public bool VertexInEdge(int vertex, int edge)
     {
         if (vertex < 0 || vertex >= _n)
@@ -264,7 +276,7 @@ public class Hypergraph
         {
             for (int j = 0; j < _m; j++)
             {
-                sb.Append($"{_matrix[i,j]}; ");
+                sb.Append($"{_matrix[i, j]}; ");
             }
 
             sb.Append("\n");
@@ -307,7 +319,7 @@ public class Hypergraph
                 vertices.Add(v);
         return vertices;
     }
-    
+
     public List<int> GetVertexEdges(int v)
     {
         List<int> edges = new List<int>();
@@ -316,5 +328,4 @@ public class Hypergraph
                 edges.Add(e);
         return edges;
     }
-    
 }
