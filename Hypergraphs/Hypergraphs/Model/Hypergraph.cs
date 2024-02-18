@@ -328,4 +328,9 @@ public class Hypergraph
                 edges.Add(e);
         return edges;
     }
+
+    public HashSet<int> Neighbours(int v)
+    {
+        return GetVertexEdges(v).SelectMany(GetEdgeVertices).ToHashSet();
+    }
 }
