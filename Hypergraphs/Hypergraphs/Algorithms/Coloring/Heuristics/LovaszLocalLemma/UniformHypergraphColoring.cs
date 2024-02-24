@@ -2,10 +2,30 @@
 
 namespace Hypergraphs.Algorithms.Heuristics.LovaszLocalLemma;
 
-public class UniformHypergraphColoring
+public class UniformHypergraphColoring : BaseUniformHypergraphColoring
 {
-    public int[] ComputeColoring(Hypergraph hypergraph)
+    
+    public override int[] ComputeColoring(Hypergraph hypergraph)
     {
-        return null;
+        _colors = new int[hypergraph.N];
+        for (var v = 0; v < _colors.Length; v++)
+        {
+            _colors[v] = -1; // uncolored
+        }
+
+        _frozenVertices = new HashSet<int>();
+        _hypergraph = hypergraph;
+        _sqrtDelta = (int)Math.Floor(Math.Sqrt((double)_hypergraph.Delta()));
+        _possibleVertexColors = new Dictionary<int, List<int>>();
+
+        InitializePossibleVertexColors();
+        PhaseI();
+        InitializePossibleVertexColors(10*_sqrtDelta);
+        PhaseII();
+        InitializePossibleVertexColors(20*_sqrtDelta);
+        PhaseIII();
+
+        return _colors;
     }
+    
 }
