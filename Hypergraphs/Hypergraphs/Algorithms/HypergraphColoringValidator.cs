@@ -29,10 +29,7 @@ public class HypergraphColoringValidator
                 }
             }
             
-            if (color2 == -1)
-            {
-                return false;
-            }
+            if (color2 == -1) return false;
         }
 
         return true;
