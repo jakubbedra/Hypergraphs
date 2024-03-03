@@ -25,11 +25,11 @@ public class HyperpathGenerator
         int row = 0;
         int[,] finalMatrix = new int[n, m];
         foreach (int vertex in vertices)
+        {
             for (int e = 0; e < m; e++)
-            {
                 finalMatrix[row, e] = matrix[vertex, e];
-                row++;
-            }
+            row++;
+        }
         return new Hypergraph()
         {
             N = n,

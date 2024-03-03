@@ -24,8 +24,11 @@ public class HypercycleGenerator
         int col = 0;
         int[,] finalMatrix = new int[n, m];
         foreach (int vertex in vertices)
+        {
             for (int e = 0; e < m; e++)
                 finalMatrix[col, e] = matrix[vertex, e];
+            col++;
+        }
 
         return new Hypergraph()
         {

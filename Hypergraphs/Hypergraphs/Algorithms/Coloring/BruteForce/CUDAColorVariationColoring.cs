@@ -2,6 +2,7 @@
 using Hypergraphs.Model;
 using ILGPU;
 using ILGPU.Runtime;
+using ILGPU.Runtime.CPU;
 using ILGPU.Runtime.Cuda;
 
 namespace Hypergraphs.Algorithms;
@@ -38,7 +39,7 @@ public class CUDAColorVariationColoring : BaseColoring<Hypergraph>
         return colors.ToArray();
     }
 
-    List<int> VariationColoringFirstStep(int maxNumberOfColors, List<int> vertexColors, Hypergraph hypergraph)
+    private List<int> VariationColoringFirstStep(int maxNumberOfColors, List<int> vertexColors, Hypergraph hypergraph)
     {
         int maxParallelExecutions = 1000;
         if (vertexColors.Count == _h.N)
@@ -70,28 +71,27 @@ public class CUDAColorVariationColoring : BaseColoring<Hypergraph>
         for (int i = 0; i < cases.Count; i++)
         for (int j = 0; j < cases[i].Length; j++)
             casesMatrix[i, j] = cases[i][j];
-        // parallelize each case
-        // todo: primitive calculations, we must not include classes like the validator and even hypergraph
 
+
+        // Context context = Context.Create(builder => builder.CPU());
+        // Accelerator accelerator = context.GetPreferredDevice(preferCPU: true).CreateAccelerator(context);
         
         Context context = Context.Create(builder => builder.Cuda());
-        // Context context = Context.Create(builder => builder.CPU());
         Accelerator accelerator = context.GetPreferredDevice(preferCPU: false).CreateAccelerator(context);
-        // Accelerator accelerator = context.GetPreferredDevice(preferCPU: true).CreateAccelerator(context);
 
-        
         // Load the data.
-        var hypergraphData = accelerator.Allocate2DDenseY<int>(new Index2D(hypergraph.N, hypergraph.M)); // todo x i y nie na odwrot?
+        var hypergraphData = accelerator.Allocate2DDenseY<int>(new Index2D(hypergraph.N, hypergraph.M));
         var initialColorings = accelerator.Allocate2DDenseY<int>(new Index2D(cases.Count, hypergraph.N));
-        MemoryBuffer1D<int, Stride1D.Dense> deviceOutput = accelerator.Allocate1D<int>(1);
+        var deviceOutput = accelerator.Allocate1D<int>(1);
 
         hypergraphData.CopyFromCPU(hypergraph.Matrix);
         initialColorings.CopyFromCPU(casesMatrix);
         deviceOutput.CopyFromCPU(new[]{-1});
 
         // load / precompile the kernel
-        Action<Index1D, ArrayView2D<int, Stride2D.DenseY>, ArrayView2D<int, Stride2D.DenseY>, ArrayView<int>, int, int> loadedKernel = 
-            accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView2D<int, Stride2D.DenseY>, ArrayView2D<int, Stride2D.DenseY>, ArrayView<int>, int, int>(VariationColoringGPU);
+        var loadedKernel = accelerator.LoadAutoGroupedStreamKernel<
+            Index1D, ArrayView2D<int, Stride2D.DenseY>, ArrayView2D<int, Stride2D.DenseY>, ArrayView<int>, int, int
+        >(VariationColoringGPU);
 
         // finish compiling and tell the accelerator to start computing the kernel
         loadedKernel(cases.Count, hypergraphData.View, initialColorings.View, deviceOutput.View, maxNumberOfColors, startVertices);
@@ -99,10 +99,8 @@ public class CUDAColorVariationColoring : BaseColoring<Hypergraph>
         // wait for the accelerator to be finished with whatever it's doing in this case it just waits for the kernel to finish.
         accelerator.Synchronize();
 
-        // moved output data from the GPU to the CPU for output to console
-
-        
         int[] hostOutput = deviceOutput.GetAsArray1D();
+        
         
         List<int> colors = new List<int>();
         if (hostOutput[0] != -1)

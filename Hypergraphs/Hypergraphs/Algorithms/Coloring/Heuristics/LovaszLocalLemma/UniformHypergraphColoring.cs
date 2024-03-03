@@ -15,7 +15,12 @@ public class UniformHypergraphColoring : BaseUniformHypergraphColoring
 
         _frozenVertices = new HashSet<int>();
         _hypergraph = hypergraph;
-        _sqrtDelta = (int)Math.Floor(Math.Sqrt((double)_hypergraph.Delta()));
+        // todo: zmienic sqrtDelta !!!! i bedzie git wtedy
+        
+        // _sqrtDelta = (int)Math.Floor(Math.Sqrt((double)_hypergraph.Delta()));
+        int r = hypergraph.EdgeCardinality(0);
+        _sqrtDelta = (int)Math.Floor(Math.Pow((double)_hypergraph.Delta(), 1.0/ ((double)r - 1.0)));
+        
         _possibleVertexColors = new Dictionary<int, List<int>>();
 
         InitializePossibleVertexColors();
