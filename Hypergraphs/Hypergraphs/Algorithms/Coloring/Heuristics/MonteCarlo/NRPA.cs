@@ -18,8 +18,6 @@ public class NRPA : BaseMonteCarloMethod
         base(hypergraph, maxNumberOfColors, numberOfEpochs, maxDepth, vertexOrder)
     { }
     
-    public NRPA() : base() {}
-
     public override double Execute(int vertex, int[] colors, int level)
     {
         if (level == 0) return Playout(vertex, colors);
