@@ -37,7 +37,7 @@ public static class TerminalPathRearrangementUtils
                 }
                 else if (upperNode.Type == NodeType.P)
                 {
-                    upperNode.Neighbours.ForEach(n => n.Parent = upperNode);
+                    upperNode.Neighbours.Where(n => n.Type != NodeType.C).ToList().ForEach(n => n.Parent = upperNode);
                     upperNode.Neighbours.ForEach(n => n.Neighbours[n.Neighbours.IndexOf(currentNode)] = upperNode);
                     // centralCNode.AppendNeighbour(upperNode);
                     upper.Add(upperNode);
@@ -104,9 +104,9 @@ public static class TerminalPathRearrangementUtils
             PCNode node1 = centralCNode.Neighbours[0];
             PCNode node2 = centralCNode.Neighbours[1];
 
-            node1.Parent = node2;
+            if (node2.Type != NodeType.Leaf && node1.Type != NodeType.C) node1.Parent = node2;
             node1.Neighbours[node1.Neighbours.IndexOf(centralCNode)] = node2;
-            node2.Parent = node1;
+            if (node1.Type != NodeType.Leaf && node2.Type != NodeType.C) node2.Parent = node1;
             node2.Neighbours[node2.Neighbours.IndexOf(centralCNode)] = node1;
             return node1;
         }
@@ -193,8 +193,8 @@ public static class TerminalPathRearrangementUtils
             neighbour2.Neighbours.Remove(centralCNode);
             neighbour1.PrependNeighbour(neighbour2);
             neighbour2.PrependNeighbour(neighbour1);
-            neighbour1.Parent = neighbour2;
-            neighbour2.Parent = neighbour1;
+            if (neighbour2.Type != NodeType.Leaf && neighbour1.Type != NodeType.C) neighbour1.Parent = neighbour2;
+            if (neighbour1.Type != NodeType.Leaf && neighbour2.Type != NodeType.C) neighbour2.Parent = neighbour1;
             centralCNode = neighbour1;
         }
         
@@ -360,19 +360,24 @@ public static class TerminalPathRearrangementUtils
         }
         else if (right == null && left == null)
         {
-            PCNode? fullNode = currentNeighbours.FirstOrDefault(n => n.Label == NodeLabel.Full);
-            if (fullNode != null)
-            {
-                int rotationsLeft = currentNeighbours.IndexOf(fullNode);
-                currentNeighbours.RotateLeft(rotationsLeft);
-            }
-
-            if (LabelChangeCountExceeded(currentNeighbours))
-            {
-                PCNode? emptyNode = currentNeighbours.FindLast(n => n.Label == NodeLabel.Empty);
-                int rotationsLeft = currentNeighbours.IndexOf(emptyNode) + 1;
-                currentNeighbours.RotateLeft(rotationsLeft);
-            }
+            PCNode? firstFullNode = currentNeighbours.FirstOrDefault(n => n.Label == NodeLabel.Full);
+            PCNode? firstEmptyNode = currentNeighbours.FirstOrDefault(n => n.Label == NodeLabel.Empty);
+            int indexOfFirstFull = firstFullNode != null ? currentNeighbours.IndexOf(firstFullNode) : -1;
+            int indexOfFirstEmpty = firstEmptyNode != null ? currentNeighbours.IndexOf(firstEmptyNode) : -1;
+            currentNeighbours.RotateLeft(Math.Max(indexOfFirstFull, indexOfFirstEmpty));
+            
+            // if (fullNode != null)
+            // {
+            //     int rotationsLeft = currentNeighbours.IndexOf(fullNode);
+            //     currentNeighbours.RotateLeft(rotationsLeft);
+            // }
+            //
+            // if (LabelChangeCountExceeded(currentNeighbours))
+            // {
+            //     PCNode? emptyNode = currentNeighbours.FindLast(n => n.Label == NodeLabel.Empty);
+            //     int rotationsLeft = currentNeighbours.IndexOf(emptyNode) + 1;
+            //     currentNeighbours.RotateLeft(rotationsLeft);
+            // }
         }
         return true;
     }

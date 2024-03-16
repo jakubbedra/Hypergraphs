@@ -48,7 +48,7 @@ public class TerminalPathFinder
         return terminalPath;
     }
 
-    public void LabelNodes()
+    public void LabelNodes(int dupa)
     {
         List<PCNode> treeLeaves = _tree.Leaves;
         if (treeLeaves.Count == 0) return;
@@ -58,6 +58,42 @@ public class TerminalPathFinder
             if (leaf.Label == NodeLabel.Undefined)
             {
                 LabelNode(leaf);
+            }
+        }
+    }
+
+    
+    // TODO: TO FIX
+    
+    
+    public void LabelNodes()
+    {
+        List<PCNode> treeLeaves = _tree.Leaves;
+        if (treeLeaves.Count == 0) return;
+
+        HashSet<PCNode> visited = new HashSet<PCNode>();
+        Queue<PCNode> queue = new Queue<PCNode>();
+        treeLeaves.ForEach(l => queue.Enqueue(l));
+        treeLeaves.ForEach(l => visited.Add(l));
+        while (queue.Count > 0)
+        {
+            PCNode node = queue.Dequeue();
+            node.Neighbours
+                .Where(neighbour => !visited.Contains(neighbour))
+                .ToList()
+                .ForEach(neighbour =>
+                {
+                    visited.Add(neighbour);
+                    queue.Enqueue(neighbour);
+                });
+            int unlabeledNeighboursCount = node.Neighbours.Count(n => n.Label == NodeLabel.Undefined);
+            if (unlabeledNeighboursCount > 1 || (node.Type == NodeType.C && node.Neighbours.Any(n => n.Type != NodeType.C && n.Label == NodeLabel.Undefined)))// or if c-node has any non c-node unlabeled neighbours
+            {
+                queue.Enqueue(node);
+            }
+            else
+            {
+                AssignLabel(node);
             }
         }
     }

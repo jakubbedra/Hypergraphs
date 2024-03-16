@@ -6,8 +6,16 @@ public class PCNode
     public NodeLabel Label { get; set; } //todo: move t oa dictionary -> cleaning won't cause any problems
 
     // null for C - nodes
-    public PCNode? Parent { get; set; }
-    
+    private PCNode? _parent;
+    public PCNode? Parent
+    {
+        get => _parent;
+        set
+        {
+            if (Type != NodeType.C) _parent = value;
+        }
+    }
+
     // only for leaves
     public int? Column { get; set; }
 

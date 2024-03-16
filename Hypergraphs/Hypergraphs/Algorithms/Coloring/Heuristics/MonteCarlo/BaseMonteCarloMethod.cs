@@ -137,10 +137,8 @@ public abstract class BaseMonteCarloMethod
     {
         HashSet<int> edgeColors = new HashSet<int>();
         for (int v = 0; v < _hypergraph.N; v++)
-            if (_hypergraph.Matrix[v, e] != 0)
+            if (_hypergraph.Matrix[_vertexOrder[v], e] != 0)
                 edgeColors.Add(colors[_vertexOrder[v]]);
-                // edgeColors.Add(colors[v]);
-
         return edgeColors.Count == 1;
     }
     

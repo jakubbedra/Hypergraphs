@@ -7,13 +7,13 @@ namespace Hypergraphs.Algorithms;
 public class NRPAColoring : BaseColoring<Hypergraph>
 {
     private readonly int NumberOfEpochs = 10;
-    private readonly int MaxDepth = 10;
+    private readonly int MaxDepth = 3;
     
     public override int[] ComputeColoring(Hypergraph hypergraph)
     {
         List<int> vertices = new List<int>();
         for (int v = 0; v < hypergraph.N; v++)
-            vertices.Add(0);
+            vertices.Add(v);
         vertices.Shuffle();
 
         for (int c = 2; c < hypergraph.N; c++)
@@ -24,6 +24,6 @@ public class NRPAColoring : BaseColoring<Hypergraph>
             if (colors != null) return colors;
         }
 
-        throw new Exception();
+        return vertices.ToArray();
     }
 }
