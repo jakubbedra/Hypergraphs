@@ -19,7 +19,7 @@ public class UniformHypergraphColoring : BaseUniformHypergraphColoring
         
         // _sqrtDelta = (int)Math.Floor(Math.Sqrt((double)_hypergraph.Delta()));
         int r = hypergraph.EdgeCardinality(0);
-        _sqrtDelta = (int)Math.Floor(Math.Pow((double)_hypergraph.Delta(), 1.0/ ((double)r - 1.0)));
+        _sqrtDelta = (int)Math.Ceiling(Math.Pow((double)_hypergraph.Delta(), 1.0/ ((double)r - 1.0)));
         
         _possibleVertexColors = new Dictionary<int, List<int>>();
 

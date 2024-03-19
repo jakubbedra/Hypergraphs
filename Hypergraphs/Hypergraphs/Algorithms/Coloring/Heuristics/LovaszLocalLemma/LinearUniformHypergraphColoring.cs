@@ -103,6 +103,7 @@ public class LinearUniformHypergraphColoring
         List<int> uncoloredVertices = componentEdges.ToList()
             .SelectMany(e => _hypergraph.GetEdgeVertices(e))
             .Where(v => _colors[v] == -1)
+            .ToHashSet()
             .ToList();
         // brute-force using the vertices' lists
         BruteForceColoring(componentEdges, uncoloredVertices, 0);

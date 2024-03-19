@@ -15,7 +15,7 @@ public class ThreeUniformHypergraphColoring : BaseUniformHypergraphColoring
 
         _frozenVertices = new HashSet<int>();
         _hypergraph = hypergraph;
-        _sqrtDelta = (int)Math.Floor(Math.Sqrt((double)_hypergraph.Delta()));
+        _sqrtDelta = (int)Math.Ceiling(Math.Sqrt((double)_hypergraph.Delta()));
         _possibleVertexColors = new Dictionary<int, List<int>>();
         InitializePossibleVertexColors();
         

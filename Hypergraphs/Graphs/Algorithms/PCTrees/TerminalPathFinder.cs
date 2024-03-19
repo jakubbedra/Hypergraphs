@@ -87,7 +87,7 @@ public class TerminalPathFinder
                     queue.Enqueue(neighbour);
                 });
             int unlabeledNeighboursCount = node.Neighbours.Count(n => n.Label == NodeLabel.Undefined);
-            if (unlabeledNeighboursCount > 1 || (node.Type == NodeType.C && node.Neighbours.Any(n => n.Type != NodeType.C && n.Label == NodeLabel.Undefined)))// or if c-node has any non c-node unlabeled neighbours
+            if (unlabeledNeighboursCount > 1 )// or if c-node has any non c-node unlabeled neighbours
             {
                 queue.Enqueue(node);
             }
@@ -97,6 +97,22 @@ public class TerminalPathFinder
             }
         }
     }
+    
+    
+    
+    
+    
+    
+    /**
+     * todo: wiekszosc przypadkow przechodzi nawet dla size={100;500}
+     * wygenerowac po prostu zbior danych i na podstawe niego napierdalac i tyle xd
+     */
+    
+    
+    
+    
+    
+    
     
     private void LabelNode(PCNode node)
     {
