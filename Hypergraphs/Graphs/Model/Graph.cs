@@ -14,10 +14,10 @@ public class Graph
 
     public int N
     {
-        get { return _n;}
+        get { return _n; }
         set { _n = value; }
     }
-    
+
     private int _m;
 
     public int M
@@ -99,7 +99,7 @@ public class Graph
             _matrix[i, v] = 0;
             _matrix[v, i] = 0;
         }
-        
+
         for (int i = 0; i < _n; i++)
         {
             for (int j = v + 1; j < _n; j++)
@@ -107,6 +107,7 @@ public class Graph
                 _matrix[j - 1, i] = _matrix[j, i];
             }
         }
+
         for (int i = 0; i < _n; i++)
         {
             for (int j = v + 1; j < _n; j++)
@@ -162,5 +163,14 @@ public class Graph
         _matrix[v, u] = w;
         _matrix[u, v] = w;
     }
-    
+
+    public int VertexDegree(int v)
+    {
+        int degree = 0;
+        for (var u = 0; u < _n; u++)
+            if (_matrix[v, u] > 0)
+                degree++;
+
+        return degree;
+    }
 }

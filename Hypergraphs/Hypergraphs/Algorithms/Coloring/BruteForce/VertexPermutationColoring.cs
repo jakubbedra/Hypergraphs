@@ -8,16 +8,16 @@ public class VertexPermutationColoring : BaseColoring<Hypergraph>
 
     private int[]? _bestColoring;
     
-    private GreedyColoring _greedyColoring;
+    private MonochromeRepair _monochromeRepair;
 
     public VertexPermutationColoring()
     {
-        _greedyColoring = new GreedyColoring();
+        _monochromeRepair = new MonochromeRepair();
     }
     
     public override int[] ComputeColoring(Hypergraph h)
     {
-        _greedyColoring = new GreedyColoring();
+        _monochromeRepair = new MonochromeRepair();
         List<int> availableVertices = new List<int>();
         for (int i = 0; i < h.N; i++)
             availableVertices.Add(i);
@@ -28,8 +28,8 @@ public class VertexPermutationColoring : BaseColoring<Hypergraph>
     {
         if (availableVertices.Count == 0)
         {
-            _greedyColoring.StartPermutation = permutation.ToArray();
-            return _greedyColoring.ComputeColoring(h);
+            _monochromeRepair.StartPermutation = permutation.ToArray();
+            return _monochromeRepair.ComputeColoring(h);
         }
 
         List<int> availableVerticesCopy = new List<int>(availableVertices);

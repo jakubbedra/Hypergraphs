@@ -102,6 +102,40 @@ public class HypercycleColoringTest
         Assert.That(result, Is.True);
         Assert.That(usedColors, Is.EqualTo(expectedChromaticNumber));
     }
+
+    [Test]
+    public void ApplyColoring_Simple3ColorableHypercycleWith5EdgesAnd10Vertices()
+    {
+        List<List<int>> edges = new List<List<int>>
+        {
+            new List<int> { 0, 1, 2, 3 },
+            new List<int> { 2, 3, 4, 5 },
+            new List<int> { 7, 8, 9 },
+            new List<int> { 0, 1 },
+            new List<int> { 1, 2 },
+            new List<int> { 2, 3 },
+            new List<int> { 3, 4 },
+            new List<int> { 4, 5 },
+            new List<int> { 5, 6 },
+            new List<int> { 6, 7 },
+            new List<int> { 7, 8 },
+            new List<int> { 8, 9 },
+            new List<int> { 9, 10 },
+            new List<int> { 10, 0 },
+        };
+        int n = 11;
+        int expectedChromaticNumber = 3;
+        Hypergraph h = HypergraphFactory.FromHyperEdgesList(n, edges);
+        HypergraphColoringValidator validator = new HypergraphColoringValidator();
+        
+        HypercycleColoring coloring = new HypercycleColoring();
+        int[] validColoring = coloring.ComputeColoring(h);
+        bool result = validator.IsValid(h, validColoring);
+        int usedColors = validColoring.Distinct().Count();
+
+        Assert.That(result, Is.True);
+        Assert.That(usedColors, Is.EqualTo(expectedChromaticNumber));
+    }
     
     [Test]
     public void ApplyColoring_SimpleHypercycleWith10EdgesAnd20Vertices()
@@ -193,38 +227,94 @@ public class HypercycleColoringTest
         Assert.That(result, Is.True);
         Assert.That(usedColors, Is.EqualTo(expectedChromaticNumber));
     } 
-    
+  
+    private static string path = @"C:\Users\theKonfyrm\Desktop\hypercycle\";
+
     [Test]
     public void ApplyColoring_RandomHypercycle()
     {
-        List<Hypergraph> hypergraphs = new List<Hypergraph>();
-        int n = 10;
-        int m = 10;
-        for (int i=0; i<10; i++)
+        List<Tuple<int, int>> sizes = new List<Tuple<int, int>>(){
+            Tuple.Create(50,10),
+        };
+        foreach (var size in sizes)
         {
-            try
+            List<Hypergraph> hypergraphs = new List<Hypergraph>();
+            int n = size.Item1;
+            int m = size.Item2;
+            for (int i = 0; i < 1000; i++)
             {
-                int expectedChromaticNumber = 2;
-                HypercycleGenerator generator = new HypercycleGenerator();
-                Hypergraph h = generator.Generate(n, m);
-                HypergraphColoringValidator validator = new HypergraphColoringValidator();
+                try
+                {
+                    int expectedChromaticNumber = 2;
+                    HypercycleGenerator generator = new HypercycleGenerator();
+                    Hypergraph h = generator.Generate(n, m);
+                    HypergraphColoringValidator validator = new HypergraphColoringValidator();
 
-                HypercycleColoring coloring = new HypercycleColoring();
-                int[] validColoring = coloring.ComputeColoring(h); // todo: jeszcze cos sie wyjebalo............
-                bool result = validator.IsValid(h, validColoring);
-                int usedColors = validColoring.Distinct().Count();
+                    HypercycleColoring coloring = new HypercycleColoring();
+                    int[] validColoring = coloring.ComputeColoring(h); // todo: jeszcze cos sie wyjebalo............
+                    bool result = validator.IsValid(h, validColoring);
+                    int usedColors = validColoring.Distinct().Count();
 
-                hypergraphs.Add(h);
-                // Assert.That(result, Is.True);
-                // Assert.That(usedColors, Is.EqualTo(expectedChromaticNumber));
+                    hypergraphs.Add(h);
+                    // Assert.That(result, Is.True);
+                    // Assert.That(usedColors, Is.EqualTo(expectedChromaticNumber));
+                }
+                catch (Exception)
+                {
+                    i--;
+                }
             }
-            catch (Exception)
-            {
-                i--;
-            }
+
+            // Console.WriteLine(JsonConvert.SerializeObject(hypergraphs));
+            File.WriteAllText($"{path}hypercycles_{n}_{m}.json", JsonConvert.SerializeObject(hypergraphs));
         }
-        // Console.WriteLine(JsonConvert.SerializeObject(hypergraphs));
-        File.WriteAllText($"hypercycles_{n}_{m}.json", JsonConvert.SerializeObject(hypergraphs));
+    }
+    
+    private static string path2 = @"C:\Users\theKonfyrm\Desktop\hypercycle3col\";
+
+    [Test]
+    public void ApplyColoring_Random3ColorableHypercycle()
+    {
+        List<Tuple<int, int>> sizes = new List<Tuple<int, int>>(){
+            Tuple.Create(21,31),
+            Tuple.Create(49,49),
+            Tuple.Create(109,209),
+            // Tuple.Create(21,49),
+            // Tuple.Create(109,249),
+        };
+        foreach (var size in sizes)
+        {
+            List<Hypergraph> hypergraphs = new List<Hypergraph>();
+            int n = size.Item1;
+            int m = size.Item2;
+            for (int i = 0; i < 1000; i++)
+            {
+                try
+                {
+                    int expectedChromaticNumber = 2;
+                    // var generator = new ThreeColorableHypercycleGenerator();
+                    var generator = new HypercycleGenerator();
+                    Hypergraph h = generator.Generate(n, m);
+                    HypergraphColoringValidator validator = new HypergraphColoringValidator();
+
+                    HypercycleColoring coloring = new HypercycleColoring();
+                    int[] validColoring = coloring.ComputeColoring(h); // todo: jeszcze cos sie wyjebalo............
+                    bool result = validator.IsValid(h, validColoring);
+                    int usedColors = validColoring.Distinct().Count();
+
+                    hypergraphs.Add(h);
+                    // Assert.That(result, Is.True);
+                    // Assert.That(usedColors, Is.EqualTo(expectedChromaticNumber));
+                }
+                catch (Exception)
+                {
+                    i--;
+                }
+            }
+
+            // Console.WriteLine(JsonConvert.SerializeObject(hypergraphs));
+            File.WriteAllText($"{path2}3_colorable_hypercycles_{n}_{m}.json", JsonConvert.SerializeObject(hypergraphs));
+        }
     }
     /*
      

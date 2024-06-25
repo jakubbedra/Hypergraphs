@@ -8,7 +8,7 @@ public class GreedyColoringTest : GreedyTestBase
     [SetUp]
     public void Setup()
     {
-        _coloringAlgorithm = new GreedyColoring(true);
+        _coloringAlgorithm = new MonochromeRepair(true);
     }
     
 }

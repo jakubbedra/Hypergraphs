@@ -8,6 +8,13 @@ public class HyperstarGeneratorTest
     private static readonly int Iterations = 100;
 
     [Test]
+    public void Export()
+    {
+        
+    }
+    
+    
+    [Test]
     public void GenerateTest_SmallHyperstar()
     {
         int n = 10;

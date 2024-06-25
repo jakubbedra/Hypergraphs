@@ -1,4 +1,5 @@
 ﻿using Hypergraphs.Common.Algorithms;
+using Hypergraphs.Generators;
 using Hypergraphs.Graphs.Algorithms;
 using Hypergraphs.Model;
 
@@ -12,8 +13,15 @@ public class HyperpathColoring : BaseColoring<Hypergraph>
             hypergraph.Matrix, hypergraph.N, hypergraph.M
         );
         int[]? permutation = consecutiveOnes.GetPermutation();
-        if (permutation == null || !IsPathHost(permutation, hypergraph))
-            throw new ArgumentException("Given hypergraph is not a hyperpath.");
+        while (permutation == null || !IsPathHost(permutation, hypergraph))
+        {
+            var hyperpathGenerator = new HyperpathGenerator();
+            hypergraph = hyperpathGenerator.Generate(hypergraph.N, hypergraph.M);
+            consecutiveOnes = new ConsecutiveOnes(
+                hypergraph.Matrix, hypergraph.N, hypergraph.M
+            );
+            permutation = consecutiveOnes.GetPermutation();
+        }
         int[] colors = new int[hypergraph.N];
         for (var i = 0; i < colors.Length; i++)
             colors[i] = -1;

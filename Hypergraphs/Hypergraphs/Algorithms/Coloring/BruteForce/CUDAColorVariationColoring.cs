@@ -63,7 +63,7 @@ public class CUDAColorVariationColoring : BaseColoring<Hypergraph>
         List<int[]> cases = new List<int[]>();
         GetStartColors(startVertices, 0, maxNumberOfColors, new List<int>(), cases);
         int[,] casesMatrix = new int[cases.Count, hypergraph.N];
-        
+
         for (int i = 0; i < cases.Count; i++)
         for (int j = 0; j < hypergraph.N; j++)
             casesMatrix[i, j] = 0;
@@ -74,34 +74,43 @@ public class CUDAColorVariationColoring : BaseColoring<Hypergraph>
 
 
         // Context context = Context.Create(builder => builder.CPU());
-        // Accelerator accelerator = context.GetPreferredDevice(preferCPU: true).CreateAccelerator(context);
-        
+        // Accelerator accelerator = context.GetPreferredDevice(preferCPU: true)
+            // .CreateAccelerator(context);
+
         Context context = Context.Create(builder => builder.Cuda());
-        Accelerator accelerator = context.GetPreferredDevice(preferCPU: false).CreateAccelerator(context);
+        Accelerator accelerator = context.GetPreferredDevice(preferCPU: false)
+        .CreateAccelerator(context);
 
         // Load the data.
-        var hypergraphData = accelerator.Allocate2DDenseY<int>(new Index2D(hypergraph.N, hypergraph.M));
-        var initialColorings = accelerator.Allocate2DDenseY<int>(new Index2D(cases.Count, hypergraph.N));
+        var hypergraphData = accelerator
+            .Allocate2DDenseY<int>(new Index2D(hypergraph.N, hypergraph.M));
+        var initialColorings = accelerator
+            .Allocate2DDenseY<int>(new Index2D(cases.Count, hypergraph.N));
         var deviceOutput = accelerator.Allocate1D<int>(1);
 
         hypergraphData.CopyFromCPU(hypergraph.Matrix);
         initialColorings.CopyFromCPU(casesMatrix);
-        deviceOutput.CopyFromCPU(new[]{-1});
+        deviceOutput.CopyFromCPU(new[] { -1 });
 
         // load / precompile the kernel
         var loadedKernel = accelerator.LoadAutoGroupedStreamKernel<
-            Index1D, ArrayView2D<int, Stride2D.DenseY>, ArrayView2D<int, Stride2D.DenseY>, ArrayView<int>, int, int
+            Index1D,
+            ArrayView2D<int, Stride2D.DenseY>,
+            ArrayView2D<int, Stride2D.DenseY>,
+            ArrayView<int>, int, int
         >(VariationColoringGPU);
 
         // finish compiling and tell the accelerator to start computing the kernel
-        loadedKernel(cases.Count, hypergraphData.View, initialColorings.View, deviceOutput.View, maxNumberOfColors, startVertices);
+        loadedKernel(cases.Count, hypergraphData.View, initialColorings.View,
+            deviceOutput.View, maxNumberOfColors, startVertices);
 
-        // wait for the accelerator to be finished with whatever it's doing in this case it just waits for the kernel to finish.
+        // wait for the accelerator to be finished with whatever it's doing
+        // in this case it just waits for the kernel to finish.
         accelerator.Synchronize();
 
         int[] hostOutput = deviceOutput.GetAsArray1D();
-        
-        
+
+
         List<int> colors = new List<int>();
         if (hostOutput[0] != -1)
         {
@@ -118,7 +127,8 @@ public class CUDAColorVariationColoring : BaseColoring<Hypergraph>
         return colors;
     }
 
-    private void GetStartColors(int maxDepth, int currentDepth, int maxNumberOfColors, List<int> lastColors, List<int[]> colors)
+    private void GetStartColors(int maxDepth, int currentDepth,
+        int maxNumberOfColors, List<int> lastColors, List<int[]> colors)
     {
         if (currentDepth >= maxDepth)
         {
@@ -129,7 +139,8 @@ public class CUDAColorVariationColoring : BaseColoring<Hypergraph>
         for (int i = 0; i < maxNumberOfColors; i++)
         {
             lastColors.Add(i);
-            GetStartColors(maxDepth, currentDepth + 1, maxNumberOfColors, lastColors, colors);
+            GetStartColors(maxDepth, currentDepth + 1,
+                maxNumberOfColors, lastColors, colors);
             lastColors.Remove(i);
         }
     }
@@ -139,14 +150,12 @@ public class CUDAColorVariationColoring : BaseColoring<Hypergraph>
         ArrayView2D<int, Stride2D.DenseY> hypergraphMatrix,
         ArrayView2D<int, Stride2D.DenseY> colorings,
         ArrayView<int> output,
-        int maxNumberOfColors,
-        int startVertex
-    )
+        int maxNumberOfColors, int startVertex)
     {
         int n = hypergraphMatrix.IntExtent.X;
         int m = hypergraphMatrix.IntExtent.Y;
         int currentColoring = index.X;
-        
+
         do
         {
             if (output[0] != -1) return;
@@ -155,11 +164,16 @@ public class CUDAColorVariationColoring : BaseColoring<Hypergraph>
                 output[0] = currentColoring;
                 return;
             }
-            IncrementCounter(colorings, currentColoring, startVertex, n, maxNumberOfColors);
-        } while (!SearchSpaceExhausted(startVertex, n, maxNumberOfColors, colorings, currentColoring));
+            IncrementCounter(
+                colorings, currentColoring, startVertex, n, maxNumberOfColors
+            );
+        } while (!SearchSpaceExhausted(
+                     startVertex, n, maxNumberOfColors, colorings, currentColoring
+                 ));
     }
-    
-    private static void IncrementCounter(ArrayView2D<int, Stride2D.DenseY> colorings, int currentColoring, int startVertex, int n, int c)
+
+    private static void IncrementCounter(ArrayView2D<int, Stride2D.DenseY> colorings,
+        int currentColoring, int startVertex, int n, int c)
     {
         int index = n - 1;
         while (index >= startVertex)
@@ -171,8 +185,9 @@ public class CUDAColorVariationColoring : BaseColoring<Hypergraph>
             index--;
         }
     }
-    
-    private static bool SearchSpaceExhausted(int startVertex, int n, int maxColors, ArrayView2D<int, Stride2D.DenseY> colorings, int currentColoring)
+
+    private static bool SearchSpaceExhausted(int startVertex, int n, int maxColors,
+        ArrayView2D<int, Stride2D.DenseY> colorings, int currentColoring)
     {
         for (int v = startVertex; v < n; v++)
             if (colorings[new Index2D(currentColoring, startVertex)] != maxColors - 1)
@@ -180,7 +195,8 @@ public class CUDAColorVariationColoring : BaseColoring<Hypergraph>
         return true;
     }
 
-    private static bool IsValidColoring(ArrayView2D<int, Stride2D.DenseY> hypergraphMatrix, int n, int m, ArrayView2D<int, Stride2D.DenseY> colorings, int currentColoring)
+    private static bool IsValidColoring(ArrayView2D<int, Stride2D.DenseY> hypergraphMatrix, int n, int m,
+        ArrayView2D<int, Stride2D.DenseY> colorings, int currentColoring)
     {
         for (int i = 0; i < m; i++)
         {
@@ -208,5 +224,4 @@ public class CUDAColorVariationColoring : BaseColoring<Hypergraph>
 
         return true;
     }
-    
 }

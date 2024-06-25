@@ -1,6 +1,8 @@
-﻿using Hypergraphs.Graphs.Algorithms;
+﻿using Hypergraphs.Generators;
+using Hypergraphs.Graphs.Algorithms;
 using Hypergraphs.Graphs.Model;
 using Hypergraphs.Hypergraphs.Factory;
+using Hypergraphs.Hypergraphs.Factory.Valdator;
 using Hypergraphs.Model;
 
 namespace HypergraphsTests.Model;
@@ -90,6 +92,91 @@ public class HypertreeHostTreeFactoryTest
         bool result = check.Apply(hostTree);
 
         Assert.That(result, Is.True);
+    }
+
+    [Test]
+    public void IsHostTreeValidityTest_10_10()
+    {
+        int iterations = 1000;
+        int n = 10;
+        int m = 10;
+        HypertreeGenerator generator = new HypertreeGenerator();
+        HostGraphValidator validator = new HostGraphValidator();
+        for (int i = 0; i < iterations; i++)
+        {
+            Hypergraph hypergraph = generator.Generate(n, m);
+            Graph hostTree = HypertreeHostTreeFactory.FromHypertree(hypergraph);
+            bool result = validator.IsValid(hypergraph, hostTree);
+            Assert.That(result, Is.True);
+        }
+    }
+    
+    [Test]
+    public void IsHostTreeValidityTest_10_50()
+    {
+        int iterations = 1000;
+        int n = 10;
+        int m = 50;
+        HypertreeGenerator generator = new HypertreeGenerator();
+        HostGraphValidator validator = new HostGraphValidator();
+        for (int i = 0; i < iterations; i++)
+        {
+            Hypergraph hypergraph = generator.Generate(n, m);
+            Graph hostTree = HypertreeHostTreeFactory.FromHypertree(hypergraph);
+            bool result = validator.IsValid(hypergraph, hostTree);
+            Assert.That(result, Is.True);
+        }
+    }
+
+    [Test]
+    public void IsHostTreeValidityTest_100_100()
+    {
+        int iterations = 1000;
+        int n = 100;
+        int m = 100;
+        HypertreeGenerator generator = new HypertreeGenerator();
+        HostGraphValidator validator = new HostGraphValidator();
+        for (int i = 0; i < iterations; i++)
+        {
+            Hypergraph hypergraph = generator.Generate(n, m);
+            Graph hostTree = HypertreeHostTreeFactory.FromHypertree(hypergraph);
+            bool result = validator.IsValid(hypergraph, hostTree);
+            Assert.That(result, Is.True);
+        }
+    }
+    
+    [Test]
+    public void IsHostTreeValidityTest_1000_100()
+    {
+        int iterations = 1000;
+        int n = 1000;
+        int m = 100;
+        HypertreeGenerator generator = new HypertreeGenerator();
+        HostGraphValidator validator = new HostGraphValidator();
+        for (int i = 0; i < iterations; i++)
+        {
+            Hypergraph hypergraph = generator.Generate(n, m);
+            Graph hostTree = HypertreeHostTreeFactory.FromHypertree(hypergraph);
+            bool result = validator.IsValid(hypergraph, hostTree);
+            Assert.That(result, Is.True);
+        }
+    }
+    
+    [Test]
+    public void IsHostTreeValidityTest_100_1000()
+    {
+        int iterations = 1000;
+        int n = 100;
+        int m = 1000;
+        HypertreeGenerator generator = new HypertreeGenerator();
+        HostGraphValidator validator = new HostGraphValidator();
+        for (int i = 0; i < iterations; i++)
+        {
+            Hypergraph hypergraph = generator.Generate(n, m);
+            Graph hostTree = HypertreeHostTreeFactory.FromHypertree(hypergraph);
+            bool result = validator.IsValid(hypergraph, hostTree);
+            Assert.That(result, Is.True);
+        }
     }
     
 }

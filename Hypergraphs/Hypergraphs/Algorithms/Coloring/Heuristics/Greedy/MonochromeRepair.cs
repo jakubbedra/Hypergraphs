@@ -2,7 +2,7 @@
 
 namespace Hypergraphs.Algorithms;
 
-public class GreedyColoring : BaseGreedy
+public class MonochromeRepair : BaseGreedy
 {
     private static Random _r = new Random();
 
@@ -14,13 +14,13 @@ public class GreedyColoring : BaseGreedy
         set => _startPermutation = value;
     }
 
-    public GreedyColoring(bool randomizeVertices = false)
+    public MonochromeRepair(bool randomizeVertices = false)
     {
         _randomizeVertices = randomizeVertices;
         _startPermutation = null;
     }
 
-    public GreedyColoring(int[] startPermutation)
+    public MonochromeRepair(int[] startPermutation)
     {
         _randomizeVertices = false;
         _startPermutation = startPermutation;

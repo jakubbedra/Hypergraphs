@@ -32,4 +32,29 @@ public class BreadthFirstSearch
 
         return bfsOrder;
     }
+    
+    public List<int> GetOrder(Graph g, int startVertex, HashSet<int> visited)
+    {
+        List<int> bfsOrder = new List<int>();
+
+        int v = startVertex;
+        Queue<int> q = new Queue<int>();
+        q.Enqueue(v);
+
+        while (q.Count != 0)
+        {
+            v = q.Dequeue();
+            if (!visited.Contains(v))
+            {
+                bfsOrder.Add(v);
+                visited.Add(v);
+                var neighbours = g.Neighbours(v);
+                foreach (int neighbour in neighbours)
+                    if (!visited.Contains(neighbour))
+                        q.Enqueue(neighbour);
+            }
+        }
+
+        return bfsOrder;
+    }
 }

@@ -31,9 +31,43 @@ public abstract class BaseGreedy : BaseColoring<Hypergraph>
         {
             List<Tuple<int, int>> edgeColors = h.GetEdgeVertices(e)
                 .Where(u => u != vertex)
+                .Where(u => coloring[u] != -1)
                 .Select(u => new Tuple<int, int>(u, coloring[u]))
                 .ToList();
             if (edgeColors.Count > 0)
+            {
+                int color = edgeColors[0].Item2;
+                if (edgeColors.All(c => c.Item2 == color))
+                    conflictingColors.Add(color);
+            }
+        }
+
+        return conflictingColors;
+    }
+    
+    protected int GetMinNonConflictingColor2(Hypergraph h, int vertex, int[] coloring)
+    {
+        HashSet<int> conflictingColors = GetConflictingColors2(h, vertex, coloring);
+        int currentMinColor = 0;
+
+        while (conflictingColors.Contains(currentMinColor))
+            currentMinColor++;
+        return currentMinColor;
+    }
+
+    protected HashSet<int> GetConflictingColors2(Hypergraph h, int vertex, int[] coloring)
+    {
+        List<int> vertexEdges = h.GetVertexEdges(vertex);
+        HashSet<int> conflictingColors = new HashSet<int>();
+
+        foreach (int e in vertexEdges)
+        {
+            List<Tuple<int, int>> edgeColors = h.GetEdgeVertices(e)
+                .Where(u => u != vertex)
+                .Where(u => coloring[u] != -1)
+                .Select(u => new Tuple<int, int>(u, coloring[u]))
+                .ToList();
+            if (edgeColors.Count == h.EdgeCardinality(e) - 1)
             {
                 int color = edgeColors[0].Item2;
                 if (edgeColors.All(c => c.Item2 == color))

@@ -10,7 +10,7 @@ public class DSatur : BaseGreedy
         int[] coloring = new int[h.N];
         // color all vertices with 0
         for (var i = 0; i < coloring.Length; i++)
-            coloring[i] = 0;
+            coloring[i] = -1;
 
         _vertexOrder = new int[h.N];
 
@@ -26,10 +26,10 @@ public class DSatur : BaseGreedy
             List<int> candidates = unvisitedVertices.Where(v => GetConflictingColors(h, v, coloring).Count == count)
                 .ToList();
 
-            int chosenVertex = candidates.MaxBy(v => h.VertexDegree(v));
+            int chosenVertex = candidates.MaxBy(h.VertexDegree);
             unvisitedVertices.Remove(chosenVertex);
 
-            coloring[chosenVertex] = GetMinNonConflictingColor(h, chosenVertex, coloring);
+            coloring[chosenVertex] = GetMinNonConflictingColor2(h, chosenVertex, coloring);//todo: keep in mind this change
             
             _vertexOrder[i] = chosenVertex;
         }

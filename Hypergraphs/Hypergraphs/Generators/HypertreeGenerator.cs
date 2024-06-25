@@ -63,7 +63,7 @@ public class HypertreeGenerator
                     } while (endVertex == startVertex);
                 subtree = RandomDfs(endVertex, startVertex, -1, tree);
             } while (
-                subtrees.Any(st => st.SetEquals(subtree))
+                subtrees.Any(st => st.SetEquals(subtree)) || subtree.Count < 2
             );
 
             subtrees.Add(subtree);

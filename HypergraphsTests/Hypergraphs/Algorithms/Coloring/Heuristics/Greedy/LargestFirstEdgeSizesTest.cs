@@ -4,13 +4,13 @@ using Hypergraphs.Model;
 
 namespace HypergraphsTests.Hypergraphs.Algorithms;
 
-public class SimplifiedDSaturTest : GreedyTestBase
+public class LargestFirstEdgeSizesTest : GreedyTestBase
 {
     
     [SetUp]
     public void Setup()
     {
-        _coloringAlgorithm = new SimplifiedDSatur();
+        _coloringAlgorithm = new LargestFirstEdgeSizes();
     }
 
 }
