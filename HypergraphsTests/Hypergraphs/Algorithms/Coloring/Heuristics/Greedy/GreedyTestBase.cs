@@ -50,7 +50,7 @@ public class GreedyTestBase
 
         int[] colors = _coloringAlgorithm.ComputeColoring(h);
 
-        Assert.True(validator.IsValid(h, colors));//TODO: FIX
+        Assert.True(validator.IsValid(h, colors));
     }
     
     [Test]

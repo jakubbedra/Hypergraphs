@@ -72,11 +72,6 @@ public class PCTree
             if(!TerminalPathRearrangementUtils.RearrangePath(terminalPath))
                 return false;
             
-            
-            // tODO: dla i=3 niepotrzebnie flipujemy 1 z nullem chyba
-            // yup, zamienilo sie miejscami z jedynka xd ( ale moze chodzilo o to zeby wyrownac z prawa i lewa, idk)
-            
-            
             TerminalPathRearrangementUtils.SplitAndMergePathV2(terminalPath);
             finder.ClearNodeLabels();
             _currentRow++;
@@ -107,7 +102,6 @@ public class PCTree
 
     private void TraverseNode(PCNode node, List<PCNode> terminalPath, int i, List<int> columnOrder, HashSet<PCNode> visited)
     {
-        // todo: traverse single node : top, right (recursive), bottom
         visited.Add(node);
         
         if (terminalPath.Count > 1)
@@ -154,27 +148,17 @@ public class PCTree
 
     public int[]? GetPermutation()
     {
-        // todo
         HashSet<PCNode> visited = new HashSet<PCNode>();
         List<int> columnOrder = new List<int>();
 
         TerminalPathFinder finder = new TerminalPathFinder(this);
-        finder.LabelNodes(); // todo: Implement cleaning node labels
+        finder.LabelNodes();
         List<PCNode>? terminalPath = finder.FindTerminalPath();
         if (terminalPath == null)
             return null;
 
-        TerminalPathRearrangementUtils.RearrangePath(terminalPath);//todo: check if it works
+        TerminalPathRearrangementUtils.RearrangePath(terminalPath);
         TraverseNode(terminalPath[0], terminalPath, 0, columnOrder, visited);
-
-        // while there are still unvisited leaves
-        // foreach (PCNode leaf in _leaves)
-        // {
-        // if (!visited.Contains(leaf))
-        // {
-        // Dfs(leaf, columnOrder, visited);
-        // }
-        // }
 
         return columnOrder.ToArray();
     }
@@ -198,7 +182,7 @@ public class PCTree
         }
     }
 
-    public int GetValueInCurrentRow(int column) // todo might have circular dependency -> eliminate it?
+    public int GetValueInCurrentRow(int column)
     {
         return _matrix[_currentRow, column];
     }

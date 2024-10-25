@@ -13,7 +13,6 @@ public class HyperpathGenerator
     {
     }
 
-    // todo: przepisac na taki format macierzowy tez hyperstar generator
     public Hypergraph Generate(int n, int m)
     {
         int[,] matrix = GenerateConsecutiveOnesMatrix(n, m);

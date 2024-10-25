@@ -135,7 +135,7 @@ public class HypercycleColoring : BaseColoring<Hypergraph>
         List<int> vertexEdges = hypergraph.GetVertexEdges(vertex);
         foreach (int e in vertexEdges)
         {
-            HashSet<int> edgeColors = new HashSet<int>(); // todo: we can treat no color as a separate color
+            HashSet<int> edgeColors = new HashSet<int>(); 
             foreach (int v in hypergraph.GetEdgeVertices(e))
                 edgeColors.Add(colors[v]);
 
@@ -189,7 +189,6 @@ public class HypercycleColoring : BaseColoring<Hypergraph>
         return true;
     }
 
-    // todo: return set of connected 2-edges 
     private bool TwoEdgeExists(Hypergraph hypergraph)
     {
         for (int e = 0; e < hypergraph.M; e++)
@@ -212,7 +211,6 @@ public class HypercycleColoring : BaseColoring<Hypergraph>
         {
             if (checkedEdges.Contains(e1)) continue;
             List<int> tmp = new List<int>() { e1 };
-            // todo: check if the edge already present in a sequence
             for (var e2 = e1 + 1; e2 < twoEdges.Count; e2++)
                 if (hypergraph.EdgesIntersect(e1, e2))
                 {

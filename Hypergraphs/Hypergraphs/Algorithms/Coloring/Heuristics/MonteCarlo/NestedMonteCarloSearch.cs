@@ -33,7 +33,7 @@ public class NestedMonteCarloSearch
         List<Move> moves = new List<Move>();
         do
         {
-            Tuple<double,List<Move>> result = Execute(new List<Move>(), 3);// todo: extract maxLevel
+            Tuple<double,List<Move>> result = Execute(new List<Move>(), 3);
             score = result.Item1;
             moves = result.Item2;
             epoch++;

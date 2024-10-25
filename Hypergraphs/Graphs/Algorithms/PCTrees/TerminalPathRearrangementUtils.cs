@@ -67,9 +67,6 @@ public static class TerminalPathRearrangementUtils
                 {
                     lowerNeighbours.ForEach(n => n.Parent = centralCNode);
                     lowerNeighbours.ForEach(n => n.Neighbours[n.Neighbours.IndexOf(currentNode)] = centralCNode);
-                    // todo: add to central c node
-                    // lowerNeighbours.Reverse();
-                    // lowerNeighbours.ForEach(n => centralCNode.PrependNeighbour(n)); // todo: reverse?
                     lowerNeighbours.ForEach(n => lower.Add(n));
                 }
                 else if (lowerNode.Type == NodeType.P)
@@ -85,11 +82,8 @@ public static class TerminalPathRearrangementUtils
                 {
                     lowerNeighbours.ForEach(n => n.Parent = centralCNode);
                     lowerNeighbours.ForEach(n => n.Neighbours[n.Neighbours.IndexOf(currentNode)] = centralCNode);
-                    // lowerNeighbours.Reverse();
-                    // lowerNeighbours.ForEach(n => centralCNode.PrependNeighbour(n)); // todo: reverse?
-                    lowerNeighbours.Reverse();// TODO : I think we should reverse here also...
+                    lowerNeighbours.Reverse();
                     
-                    // todo: reverse only if previous node is on the right?
                     lowerNeighbours.ForEach(n => lower.Add(n));
                 }
             }
@@ -110,8 +104,6 @@ public static class TerminalPathRearrangementUtils
             node2.Neighbours[node2.Neighbours.IndexOf(centralCNode)] = node1;
             return node1;
         }
-        
-        // todo: merge c-nodes
         
         return centralCNode;
     }
@@ -136,19 +128,8 @@ public static class TerminalPathRearrangementUtils
                 Label = NodeLabel.Full,
                 Column = currentNode.Column,
                 Neighbours = currentNode.Neighbours.Where(n => n.Label == NodeLabel.Full).ToList()
-                
-                
-                
-                // todo: remove original node from neighbours list (parent is already replaced)
-                
-                
-                
-                
-            };// todo: set parent
+            };
             upperNode.Neighbours.ForEach(n => n.Neighbours.Remove(currentNode));
-            //upperNode.Neighbours.ForEach(n => n.Parent = upperNode);
-            //upperNode.Neighbours.ForEach(n => n.AppendNeighbour(upperNode));
-            //upperNode.Neighbours.ForEach(n => n.Neighbours.Remove(currentNode));
 
             if (upperNode.Neighbours.Count == 1)
                 upperNode = upperNode.Neighbours[0];
@@ -163,9 +144,6 @@ public static class TerminalPathRearrangementUtils
                 Neighbours = currentNode.Neighbours.Where(n => n.Label == NodeLabel.Empty).ToList()
             };
             lowerNode.Neighbours.ForEach(n => n.Neighbours.Remove(currentNode));
-            //lowerNode.Neighbours.ForEach(n => n.Parent = lowerNode);
-            //lowerNode.Neighbours.ForEach(n => n.AppendNeighbour(lowerNode));
-            //lowerNode.Neighbours.ForEach(n => n.Neighbours.Remove(currentNode));
             
             if (lowerNode.Neighbours.Count == 1)
                 lowerNode = lowerNode.Neighbours[0];
@@ -203,32 +181,6 @@ public static class TerminalPathRearrangementUtils
 
     private static void MergeNode(PCNode nodeToMerge, List<PCNode> nodesList, PCNode centralCNode, bool isLower = false)
     {
-        // if (nodeToMerge.Neighbours.Count > 0)
-        // {
-        //     // merge C-node
-        //     if (nodeToMerge.Type == NodeType.C)
-        //     {
-        //         if (isLower) nodeToMerge.Neighbours.Reverse();
-        //         nodeToMerge.Neighbours.ForEach(node => nodesList.Add(node));
-        //         nodeToMerge.Neighbours.ForEach(node => node.PrependNeighbour(centralCNode));
-        //         nodeToMerge.Neighbours.ForEach(node => node.Parent = centralCNode);
-        //     }
-        //     else // link P-node
-        //     {
-        //         nodeToMerge.Parent = centralCNode;
-        //         nodeToMerge.PrependNeighbour(centralCNode);
-        //         nodesList.Add(nodeToMerge);
-        //     }
-        // }
-        // else if (nodeToMerge.Type == NodeType.Leaf)
-        // {
-        //     nodeToMerge.Parent = centralCNode;
-        //     nodeToMerge.PrependNeighbour(centralCNode);
-        //     nodesList.Add(nodeToMerge);
-        // }
-        // if (nodeToMerge.Type != NodeType.Leaf)
-        // {
-            // merge C-node
             if (nodeToMerge.Neighbours.Count != 0)
             {
                 if (nodeToMerge.Type == NodeType.C)
@@ -246,13 +198,6 @@ public static class TerminalPathRearrangementUtils
                     nodesList.Add(nodeToMerge);
                 }
             }
-            // }
-        // else
-        // {
-            // nodeToMerge.Parent = centralCNode;
-            // nodeToMerge.PrependNeighbour(centralCNode);
-            // nodesList.Add(nodeToMerge);
-        // }
     }
 
     // terminalPath must be already labeled (probably matrix and row will not be needed)
@@ -289,11 +234,10 @@ public static class TerminalPathRearrangementUtils
             }
             else
             {
-                if (partialNeighboursCount > 0) return false;//todo: nie powinno byc true?
+                if (partialNeighboursCount > 0) return false;
             }
 
             // find the partial node(s)
-// todo: we need to flip all other nodes that came before if we flip a next one xdddd (albo i nie bo lewe i prawe powinny zostac w tych samych miejscach)
             if (current.Type == NodeType.C)
             {
                 if (!OrderCNode(current, left, right)) return false;
@@ -309,7 +253,7 @@ public static class TerminalPathRearrangementUtils
 
     public static bool OrderCNode(PCNode current, PCNode? left, PCNode? right)
     {
-        List<PCNode> currentNeighbours = current.Neighbours;//todo:cahngeto deep copy?
+        List<PCNode> currentNeighbours = current.Neighbours;
         // check that between those two from both sides are only Empty/Full nodes respectively
         if (left == null && right != null)
         {
@@ -335,22 +279,23 @@ public static class TerminalPathRearrangementUtils
             int rotationsLeft = currentNeighbours.IndexOf(left);
             currentNeighbours.RotateLeft(rotationsLeft);
             // check if 1s and 0s are consecutive
-            // if (currentNeighbours[1].Label != NodeLabel.Full) // todo: we need to flip all other nodes that came before if we flip a next one xdddd
-            if (!CheckCOrder(current)) // todo: we need to flip all other nodes that came before if we flip a next one xdddd
+            // if (currentNeighbours[1].Label != NodeLabel.Full) 
+            if (!CheckCOrder(current))
             {
                 //current.Flip(); // make ones be on top of the path
                 currentNeighbours.RotateLeft(1);
                 currentNeighbours.Reverse();
-            }// todo: current naighbours is shallow copy
+            }
+
             if (LabelChangeCountExceeded(currentNeighbours)) return false;
         }
         else if (right != null && left != null)
         {
             // somewhere in the middle
-            int rotationsLeft = currentNeighbours.IndexOf(left);//todo: might be null!!!!!!
+            int rotationsLeft = currentNeighbours.IndexOf(left);
             currentNeighbours.RotateLeft(rotationsLeft);
             // check if 1s and 0s are consecutive
-            if (!CheckCOrder(current))// todo: problem w tym ze i tak czy srak nie mamy fulli tutaj, wiec trzeba sprawdzac caly porzadek cykliczny w sensie left -> full -> right -> empty
+            if (!CheckCOrder(current))
             {
                 //current.Flip(); // make ones be on top of the path
                 currentNeighbours.RotateLeft(1);

@@ -110,8 +110,6 @@ FAZA II:
         {
             List<int> edgeVertices = _hypergraph.GetEdgeVertices(e);
             
-            // todo: jezeli przypiszemy v kolor c, i w tez mialo kolor c, to usuwamy ten kolor z dostepnych dla u kolorow
-            
             // if c is the same color as w, remove c from Lu
             foreach (int v in edgeVertices)
             {
@@ -180,8 +178,6 @@ FAZA II:
             int sqrtDelta = (int)Math.Floor(Math.Sqrt((double)_delta));
             foreach (int uncoloredVertex in uncoloredVertices)
             {
-                // todo: nie ma filtrowania po kolorze!!!!
-
                 _possibleVertexColors[uncoloredVertex].Remove(assignedColor);
                 if (_possibleVertexColors[uncoloredVertex].Count == 9 * sqrtDelta)
                 {
@@ -196,7 +192,6 @@ FAZA II:
         }
     }
     
-    // todo: różnica jest taka że usuwaliśmy tylko z Lv, a tera usuwamy też z Lu
     private void ColorEdgePhase2(List<int> edge, int coloredVertex, int assignedColor)
     {
         // check if monochromatic

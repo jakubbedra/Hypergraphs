@@ -251,7 +251,7 @@ public class HypercycleColoringTest
                     HypergraphColoringValidator validator = new HypergraphColoringValidator();
 
                     HypercycleColoring coloring = new HypercycleColoring();
-                    int[] validColoring = coloring.ComputeColoring(h); // todo: jeszcze cos sie wyjebalo............
+                    int[] validColoring = coloring.ComputeColoring(h); 
                     bool result = validator.IsValid(h, validColoring);
                     int usedColors = validColoring.Distinct().Count();
 
@@ -298,7 +298,7 @@ public class HypercycleColoringTest
                     HypergraphColoringValidator validator = new HypergraphColoringValidator();
 
                     HypercycleColoring coloring = new HypercycleColoring();
-                    int[] validColoring = coloring.ComputeColoring(h); // todo: jeszcze cos sie wyjebalo............
+                    int[] validColoring = coloring.ComputeColoring(h); 
                     bool result = validator.IsValid(h, validColoring);
                     int usedColors = validColoring.Distinct().Count();
 
@@ -341,7 +341,6 @@ public class HypercycleColoringTest
 . . . 1 . . . . . 1
 . 1 1 1 . 1 1 1 1 1
 
-// todo: sprawdzic czy zalezy od kolejnosci     
 9 0 1 2 8 3 4 6 7 5  
 . . 1 1 1 1 . . . .  
 1 1 1 . . . . . 1 1  

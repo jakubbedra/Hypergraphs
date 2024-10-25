@@ -29,7 +29,7 @@ public class DSatur : BaseGreedy
             int chosenVertex = candidates.MaxBy(h.VertexDegree);
             unvisitedVertices.Remove(chosenVertex);
 
-            coloring[chosenVertex] = GetMinNonConflictingColor2(h, chosenVertex, coloring);//todo: keep in mind this change
+            coloring[chosenVertex] = GetMinNonConflictingColor2(h, chosenVertex, coloring);
             
             _vertexOrder[i] = chosenVertex;
         }

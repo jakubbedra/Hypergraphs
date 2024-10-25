@@ -795,7 +795,7 @@ public class TerminalPathRearrangementUtilsTest
     }
 
     [Test]
-    public void SplitAndMergePath_OnePNodePath()// todo: co jezeli bedziemy mieli np n-1 full i 1 empty?
+    public void SplitAndMergePath_OnePNodePath()
     {
         PCNode node1 = new PCNode()
         {
@@ -1006,7 +1006,7 @@ public class TerminalPathRearrangementUtilsTest
 
         PCNode centralCNode = TerminalPathRearrangementUtils.SplitAndMergePathV2(new List<PCNode>() { node1 });
 
-        Assert.That(centralCNode.Neighbours.Count, Is.EqualTo(4));//todo
+        Assert.That(centralCNode.Neighbours.Count, Is.EqualTo(4));
     }
     
     [Test]
@@ -1097,7 +1097,6 @@ public class TerminalPathRearrangementUtilsTest
         neighboursC1.ForEach(n => c1.AppendNeighbour(n));
         neighboursC1.ForEach(n => n.AppendNeighbour(c1));
         neighboursC1.ForEach(n => n.Parent = c1);
-        // todo: przesunac kolejnosc w cnodzie tak aby to z lewej (p2) bylo jako pierwsze
         
         // c1.Flip();
         // c1.Neighbours.RotateLeft(c1.Neighbours.IndexOf(p2)); // take the left one to 0th slot
@@ -1105,12 +1104,6 @@ public class TerminalPathRearrangementUtilsTest
         List<PCNode> terminalPath = new List<PCNode>() { p1, c1, p2 };
         TerminalPathRearrangementUtils.RearrangePath(terminalPath);
         PCNode centralCNode = TerminalPathRearrangementUtils.SplitAndMergePathV2(terminalPath);
-
-        //Assert.That(centralCNode.Neighbours.Count, Is.EqualTo(4));//todo
-        
-        
-        //todo: add unit test for rearrangement utils with cnode with empty top and empty bottom
-        
     }
 
     [Test]

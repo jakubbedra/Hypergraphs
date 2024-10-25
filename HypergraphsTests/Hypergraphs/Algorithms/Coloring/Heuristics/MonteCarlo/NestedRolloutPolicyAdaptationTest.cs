@@ -62,7 +62,6 @@ public class NestedRolloutPolicyAdaptationTest
         Hypergraph h = HypergraphFactory.FromHyperEdgesList(n, hyperedges);
         HypergraphColoringValidator validator = new HypergraphColoringValidator();
 
-        // todo: zrobic wersje z hashmapa
         // NestedRolloutPolicyAdaptation nrpa = new NestedRolloutPolicyAdaptation(h, 2, 10);
         int[] vertexOrder = new int[n];
         for (int i = 0; i < n; i++)

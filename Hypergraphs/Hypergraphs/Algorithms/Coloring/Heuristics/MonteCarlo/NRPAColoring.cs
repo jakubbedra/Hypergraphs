@@ -18,7 +18,6 @@ public class NRPAColoring : BaseColoring<Hypergraph>
 
         for (int c = 2; c < hypergraph.N; c++)
         {
-            // todo: vertex order?
             NRPA nrpa = new NRPA(hypergraph, c, NumberOfEpochs, MaxDepth, vertices.ToArray());
             int[]? colors = nrpa.ComputeColoring();
             if (colors != null) return colors;

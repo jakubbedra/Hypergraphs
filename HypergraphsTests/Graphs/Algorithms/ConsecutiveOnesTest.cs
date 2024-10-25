@@ -174,7 +174,7 @@ public class ConsecutiveOnesTest
         Assert.That(permutation, Is.EqualTo(expectedPermutation));
     }
 
-    [Test] // TODO
+    [Test]
     public void GetPermutation_ConsecutiveOnes_DuplicatedColumns()
     {
         int[,] matrix =

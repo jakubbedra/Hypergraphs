@@ -3,7 +3,7 @@
 public class PCNode
 {
     public NodeType Type { get; set; }
-    public NodeLabel Label { get; set; } //todo: move t oa dictionary -> cleaning won't cause any problems
+    public NodeLabel Label { get; set; }
 
     // null for C - nodes
     private PCNode? _parent;

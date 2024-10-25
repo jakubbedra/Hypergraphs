@@ -643,10 +643,9 @@ public class TerminalPathFinderTest
         Assert.That(terminalPath, Is.EqualTo(new List<PCNode>(){p1, p3, c1}));
     }
 
-    [Test]//todo: zrobic jeszcze test labelowania dla tego przypadku
+    [Test]
     public void Find_TwoTerminalNodes_MoreComplexCase()
     {
-        // todo: tutaj moge wziac to z artykulu https://drops.dagstuhl.de/storage/00lipics/lipics-vol204-esa2021/LIPIcs.ESA.2021.43/LIPIcs.ESA.2021.43.pdf
         PCNode p1 = new PCNode() {Type = NodeType.P, Label = NodeLabel.Partial};
         PCNode p2 = new PCNode() {Type = NodeType.P, Label = NodeLabel.Partial};
         PCNode p3 = new PCNode() {Type = NodeType.P, Label = NodeLabel.Partial};

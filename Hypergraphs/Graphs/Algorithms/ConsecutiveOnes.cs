@@ -76,11 +76,6 @@ public class ConsecutiveOnes
 
     public int[]? GetPermutation()
     {
-        // todo: get rid of duplicate columns (store their indices for later on, will be used fo creating final permutation)
-        // todo: we have the trimmed matrix, so no need to reconstruct the original one, just return the row permutation based on
-        // todo: the trimmed matrix, it will still return the correct answer
-        // definicja elementow maxymalnych: https://en.wikipedia.org/wiki/Maximal_and_minimal_elements
-        // czyli tutaj beda takie, ktore maja najmniej wchodzacych krawedzi!!!! i stad jest X2 i X3 w drugim kroku a w pierwszym X1
         RemoveDuplicateColumns();
 
         Graph overlapGraph = new Graph(_m); // vertices representing columns
@@ -108,9 +103,6 @@ public class ConsecutiveOnes
             if (permutedRows == null) return null;
             submatrices.Add(permutedRows!);
         }
-
-        // todo: component graph (there exists an edge a -> b if a contains b)
-        // todo: to dont make a separate structure, just a simple adjacency list will be enough
 
         int[,] containmentDigraph = new int[_m, _m];
         for (int i = 0; i < _m; i++)
@@ -140,7 +132,6 @@ public class ConsecutiveOnes
             int currentComponent =
                 unvisitedComponents.MinBy(c => GetInEdgesCount(componentDigraph, c, unvisitedComponents));
 
-            // todo: glue matrix together
             Column?[] submatrix = submatrices[currentComponent];
             HashSet<int> currentColumns = connectedComponents[currentComponent];
           
@@ -148,7 +139,6 @@ public class ConsecutiveOnes
 
             if (beginningIndex == -1) return null;
             
-            // todo: all columns start indices should be based on 0, but might be a good idea to check later on it its actually true
             foreach (int column in currentColumns)
             {
                 // reposition the 1s
@@ -161,7 +151,6 @@ public class ConsecutiveOnes
                 visitedColumns.Add(currentColumn);
             unvisitedComponents.Remove(currentComponent);
         }
-        // todo: need to trim the matrix (remove duplicates) at the beggining
         // compare the matrix rows with the og (trimmed) matrix
 
         int[] rowsPermutation = new int[_n];
@@ -169,7 +158,7 @@ public class ConsecutiveOnes
             rowsPermutation[i] = -1;
         for (int i = 0; i < _n; i++)
         {
-            for (int j = 0; j < _n; j++) // sprawdzamy gdzie jest nowy index tego wiersza
+            for (int j = 0; j < _n; j++)
             {
                 bool rowsEqual = true;
                 for (int k = 0; k < _m && rowsEqual; k++)
@@ -188,7 +177,6 @@ public class ConsecutiveOnes
 
     private int CalculateBeginningIndex(List<int> visitedColumns, HashSet<int> currentColumns, int[,] containmentDigraph, Column?[] finalMatrix)
     {
-        // todo: check if correct later on
         for (int i = 0; i < _n; i++)
         {
             bool correctRow = true;
@@ -264,11 +252,8 @@ public class ConsecutiveOnes
         // check if all the 1s in the matrix need to be moved one deeper
         // if the depth would exceed the maximum allowed (_n), return null
 
-        // wpierdol a
         columns[a] = new Column(0, sizeA);
-        // policz dużość części wspólnej a i b
         int ab = GetOrFillDotProduct(a, b);
-        // postaw b na dole (jezeli sie da)
         columns[b] = new Column(columns[a]!.StartIndex + columns[a]!.Length - ab, sizeB);
 
         if (columns[b]!.StartIndex + columns[b]!.Length > _n) // max depth exceeded - algorithm terminated

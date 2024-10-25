@@ -71,7 +71,6 @@
 //         for (int j = 0; j < cases[i].Length; j++)
 //             casesMatrix[i, j] = cases[i][j];
 //         // parallelize each case
-//         // todo: primitive calculations, we must not include classes like the validator and even hypergraph
 //
 //         
 //         Context context = Context.Create(builder => builder.Cuda());
@@ -81,7 +80,7 @@
 //
 //         
 //         // Load the data.
-//         var hypergraphData = accelerator.Allocate2DDenseY<int>(new Index2D(hypergraph.N, hypergraph.M)); // todo x i y nie na odwrot?
+//         var hypergraphData = accelerator.Allocate2DDenseY<int>(new Index2D(hypergraph.N, hypergraph.M)); 
 //         var initialColorings = accelerator.Allocate2DDenseY<int>(new Index2D(cases.Count, hypergraph.N));
 //         MemoryBuffer1D<int, Stride1D.Dense> deviceOutput = accelerator.Allocate1D<int>(1);
 //

@@ -67,7 +67,7 @@ public abstract class BaseMonteCarloMethod
     
     public abstract double Execute(int vertex, int[] colors, int level);
     
-    protected double Playout(int vertex, int[] colors) //todo: pass vertex order
+    protected double Playout(int vertex, int[] colors)
     {
         while (vertex < _hypergraph.N)
         {

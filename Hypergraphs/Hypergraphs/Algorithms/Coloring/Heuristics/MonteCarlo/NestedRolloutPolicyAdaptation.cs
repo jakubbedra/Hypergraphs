@@ -35,7 +35,7 @@ public class NestedRolloutPolicyAdaptation
         List<Move> moves = new List<Move>();
         do
         {
-            Tuple<double, List<Move>> result = Execute(new List<Move>(), 3); // todo: extract maxLevel
+            Tuple<double, List<Move>> result = Execute(new List<Move>(), 3);
             score = result.Item1;
             moves = result.Item2;
             epoch++;
@@ -63,7 +63,7 @@ public class NestedRolloutPolicyAdaptation
         foreach (Move move in possibleMoves)
         {
             state.Add(move);
-            Tuple<double, List<Move>> result = Execute(state, level - 1);//todo: przekaz ruch
+            Tuple<double, List<Move>> result = Execute(state, level - 1);
             state.Remove(move);
             
             if (result.Item1 >= bestScore)

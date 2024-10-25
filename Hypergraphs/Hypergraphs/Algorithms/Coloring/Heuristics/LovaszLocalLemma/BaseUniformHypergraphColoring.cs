@@ -99,7 +99,6 @@ public abstract class BaseUniformHypergraphColoring
     private bool IsEdgeMonochromatic(int e)
     {
         HashSet<int> edgeColors = new HashSet<int>();
-        // todo: filter uncolored vertices? (just in case)
         _hypergraph.GetEdgeVertices(e).ForEach(v => edgeColors.Add(_colors[v]));
         return edgeColors.Count > 1;
     }
@@ -111,7 +110,7 @@ public abstract class BaseUniformHypergraphColoring
             .ToHashSet();
         foreach (int vertex in componentVertices)
         {
-            if (!_frozenVertices.Contains(vertex))//todo: should we not check if the vertex is colored?
+            if (!_frozenVertices.Contains(vertex))
             {
                 List<int> vertexColors = _possibleVertexColors[vertex];
                 int c = vertexColors[_r.Next(vertexColors.Count)];

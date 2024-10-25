@@ -31,7 +31,7 @@ public class MonochromeRepair : BaseGreedy
         int[] coloring = new int[h.N];
         // color all vertices with 1
         for (var i = 0; i < coloring.Length; i++)
-            coloring[i] = 0; //TODO: warning!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            coloring[i] = 0;
 
         _vertexOrder = new int[h.N];
         if (_startPermutation == null)
@@ -59,7 +59,7 @@ public class MonochromeRepair : BaseGreedy
 
         for (var i = 0; i < _vertexOrder.Length; i++)
         {
-            int currentMinColor = 0; //TODO: warning!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            int currentMinColor = 0;
             for (int j = 0; j < h.M; j++)
             {
                 if (h.Matrix[_vertexOrder[i], j] != 0 && !visitedEdges.Contains(j))

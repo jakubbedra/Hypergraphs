@@ -15,7 +15,6 @@ public class HypercycleGenerator
         _forceCycleSubhypergraph = forceCycleSubhypergraph;
     }
 
-    // todo: wygemerowac z n-krawedziami
     public Hypergraph Generate(int n, int m)
     {
         int[,] matrix = GenerateHypercycleMatrix(n, m);
@@ -78,7 +77,6 @@ public class HypercycleGenerator
         };
     }
 
-// todo: rember about handling n-edges case!
     public int[,] GenerateHypercycleMatrix(int n, int m, bool skip2Edges = false)
     {
         int[,] matrix = new int[n, m];
@@ -90,7 +88,7 @@ public class HypercycleGenerator
         List<CircularOnesColumn> possibleEdges = GeneratePossibleColumns(n, skip2Edges);
         List<CircularOnesColumn> chosenEdges = new List<CircularOnesColumn>();
         HashSet<UndirectedEdge>
-            unsatisfiedEdges = new HashSet<UndirectedEdge>(); //todo: filter based on this instead of just vertices
+            unsatisfiedEdges = new HashSet<UndirectedEdge>();
 
         // if (!_forceCycleSubhypergraph)
         for (int v = 0; v < n; v++)
@@ -140,7 +138,7 @@ public class HypercycleGenerator
             // if it is the last iteration and some vertices are left unassigned to any edge somehow, then
             // the last edge should contain every such vertex and must overlap with a random column
             CircularOnesColumn chosenEdge;
-            if (e == m - 1 && unsatisfiedEdges.Count != 0 && !unsatisfiedEdges.Contains(specialEdge)) //todo
+            if (e == m - 1 && unsatisfiedEdges.Count != 0 && !unsatisfiedEdges.Contains(specialEdge))
             {
                 chosenEdge = possibleEdges
                     .Where(edge =>
@@ -155,7 +153,6 @@ public class HypercycleGenerator
             {
                 chosenEdge = possibleEdges[_r.Next(possibleEdges.Count())];
             }
-            // todo: analogicznie dla hipergwiazd moge zrobic :)
 
             for (int v = chosenEdge.StartIndex; v < chosenEdge.EndIndex; v++)
             {
@@ -166,7 +163,7 @@ public class HypercycleGenerator
             chosenEdges.Add(chosenEdge);
             for (int v = chosenEdge.StartIndex;
                  v <= chosenEdge.EndIndex;
-                 v++) //todo: moze byc jakis fuckup z tymi indeksami 0_0
+                 v++) 
             {
                 if (v != chosenEdge.EndIndex)
                 {
@@ -178,8 +175,7 @@ public class HypercycleGenerator
                 matrix[v % n, e] = 1;
             }
 
-            if (unsatisfiedEdges.Count ==
-                0) // TODO: KURWA JEGO MAC NIE USUWAJA SIE UNSATISFIED EDGES WGL.................
+            if (unsatisfiedEdges.Count == 0) 
             {
                 unsatisfiedEdges.Add(specialEdge);
                 possibleEdges.Add(new CircularOnesColumn() { StartIndex = 0, Size = n });

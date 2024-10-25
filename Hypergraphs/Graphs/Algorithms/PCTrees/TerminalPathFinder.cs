@@ -19,23 +19,16 @@ public class TerminalPathFinder
     
     public List<PCNode>? FindTerminalPath()
     {
-        // Dictionary<PCNode, bool> visited = new Dictionary<PCNode, bool>();
         List<PCNode> terminalPath = new List<PCNode>();
         
         // check if all nodes labeled
-        
-        // todo: find all partial nodes during labeling
-
         if (_partialNodes.Count >= 0 && _partialNodes.Count < 3)
             return _partialNodes;
 
-        // albo po porstu znalezc dowolnego node'a ktory ma tylko jednego sasiada
-        // bedacego w _partialNodes i bierzemy kazdego kolejnego sasiada ktory jest
-        // w partial nodes a nie ma go w terminalPath jeszcze
         PCNode currentNode = _partialNodes.First(node => node.Neighbours.Count(neighbour => _partialNodes.Contains(neighbour)) == 1);
         terminalPath.Add(currentNode);
         
-        while (terminalPath.Count != _partialNodes.Count) // todo: trza tp na ifa jakos zmienic, bo to jest warunek zwracajacy nulla jak nie przejdziemy przez wzsystkie
+        while (terminalPath.Count != _partialNodes.Count) 
         {
             PCNode? neighbour = currentNode!.Neighbours
                 .FirstOrDefault(node => _partialNodes.Contains(node) && !terminalPath.Contains(node));
@@ -62,9 +55,6 @@ public class TerminalPathFinder
         }
     }
 
-    
-    // TODO: TO FIX
-    
     
     public void LabelNodes()
     {
@@ -103,27 +93,13 @@ public class TerminalPathFinder
     
     
     
-    /**
-     * todo: wiekszosc przypadkow przechodzi nawet dla size={100;500}
-     * wygenerowac po prostu zbior danych i na podstawe niego napierdalac i tyle xd
-     */
-    
-    
-    
-    
-    
-    
-    
     private void LabelNode(PCNode node)
     {
-        // jezeli sa jakies dzieci nieolabelowane to labeluj je
         List<PCNode> unlabeledChildren = node.Neighbours.Where(n => n.Parent == node && node.Parent != n && n.Label == NodeLabel.Undefined).ToList();
         unlabeledChildren.ForEach(c => LabelNode(c));
         
-        // labelujemy
         AssignLabel(node);
         
-        // idziemy do przodka
         if (node.Parent != null && node.Parent.Label == NodeLabel.Undefined) LabelNode(node.Parent);
     }
 
@@ -147,7 +123,7 @@ public class TerminalPathFinder
             }
             else if (emptyNeighboursCount == node.Neighbours.Count - 1)
             {
-                node.Label = NodeLabel.Empty; // todo: is this ok?
+                node.Label = NodeLabel.Empty;
             }
             else 
             {

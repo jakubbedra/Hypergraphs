@@ -21,14 +21,6 @@ public class ThreeUniformHypergraphColoringTest
         int[] colors = coloring.ComputeColoring(hypergraph);
         bool result = validator.IsValid(hypergraph, colors);
         
-        // todo; czasami sie wywala, mozliwe ze wystarczy walnac petle ze robimy kilka powtorzen,
-        // bo algos jest randomowy i mamy pewne szanse niepowodzenia
-        // a co do tego ze nie zawsze sa wszystkie kolory po kolei: losujemy kolory wiec raczej nie beda XD
-        
-        
-        // TODO: dodac te losowanie po kilka razy najlepiej
-        
-        
         Assert.IsTrue(result);
     }
     

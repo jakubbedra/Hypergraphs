@@ -118,8 +118,6 @@ public class PCTreeTest
     [Test]
     public void GetPermutation_OnePNodeTree()
     {
-        // todo:  to jeszcze zrobic testy na puste przypadki
-        //todo i wymieszac permutacje kolumn w tym drugim 
     }
 
     [Test]

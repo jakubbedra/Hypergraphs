@@ -43,9 +43,6 @@ public class BruteForceColoring : BaseColoring<Hypergraph>
 
         return _validColoring;
     }
-// todo: trzeba jakos wstrzyknac stan poczatkowy w postaci tablicy, np: [0,0,0,0,0] albo [0,0,1,0,0,0]
-// todo: oraz stan koncowy, w sensie to ma byc od jakiego do jakiego pokolorowania sprawdzamy
-// dodac na podstawie tego TaskBruteForceColoring  i GpuBruteForceColoring
     private bool isKColorable(int index, Hypergraph h, int[] from, int[] to)
     {
         if (index == h.N)
